@@ -13,9 +13,12 @@
 			var modalContent = modalsElms[i];
 			var modal = new PlainModal(modalContent);
 			modal.closeButton = modalContent.querySelector(".close-button");
-			var delay = modalsElms[i].getAttribute("data-delay");
 
-			if (modalsElms[i].getAttribute("data-exit") == "1") {
+			var delay = modalsElms[i].getAttribute("data-delay");
+			var isExit = modalsElms[i].getAttribute("data-exit");
+
+			if (isExit == 1) {
+				alert("hello");
 				if (delay > 0) {
 					delayPopups.push({ modal: modal, delay: delay });
 				} else {
@@ -27,22 +30,28 @@
 		}
 
 		for (i in delayPopups) {
-			setTimeout(function (i) {
-				delayPopups[i].modal.open();
-			}, delayPopups[i].delay, i);
+			setTimeout(
+				function (i) {
+					delayPopups[i].modal.open();
+				},
+				delayPopups[i].delay,
+				i
+			);
+		}
+		
+		if (exitModals.length > 0) {
+			window.onbeforeunload = function (event) {
+				if (!popupsDisplayed) {
+					for (var i in exitModals) {
+						exitModals[i].open();
+					}
+					popupsDisplayed = true;
+					return "random";
+				}
+			};
 		}
 		
 	});
 
-	if (exitModals > 0) {
-		window.onbeforeunload = function () {
-			if (!popupsDisplayed) {
-				for (var i in exitModals) {
-					exitModals[i].open();
-				}
-				popupsDisplayed = true;
-				return "true";
-			}
-		};
-	}
+
 })(jQuery);

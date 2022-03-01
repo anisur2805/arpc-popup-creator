@@ -55,10 +55,11 @@ class Popup_Creator {
                   }
                   
                   $show_in = get_post( $show_in_obj );
-                  $showIn_id = $show_in->ID;
+                  $showIn_id = $show_in->ID; 
+                  
                   if( is_page( $showIn_id ) ) {
                   ?>
-                  <div class="popup-creator" id="popup-creator" data-id="popup-<?php echo get_the_ID(); ?>" data-popup-size="<?php echo esc_attr( $image_size ); ?>" data-exit="<?php echo esc_attr( $exit ); ?>" data-delay="<?php echo esc_attr( $delay ); ?>" data-show="<?php echo $showIn_id; ?>">
+                  <div class="popup-creator" id="popup-creator" data-id="popup-<?php echo get_the_ID(); ?>" data-popup-size="<?php echo esc_attr( $image_size ); ?>" data-exit="<?php echo esc_attr( $exit ); ?>" data-delay="<?php echo $delay ?>" data-show="<?php echo $showIn_id; ?>">
                         <?php if( $pc_url ) { ?>
                               <a target="_blank" href="<?php echo esc_url( $pc_url); ?>">
                                     <img src="<?php echo esc_url( $feature_image ); ?>" alt="<?php _e('Popup', 'popup-creator') ?>" />
@@ -122,6 +123,7 @@ class Popup_Creator {
                   'exclude_from_search'   => false,
                   'capability_type'       => 'post',
                   'rewrite'               => array('slug' => 'popup', 'with_front' => true),
+                  'menu_icon'             => 'dashicons-screenoptions',
             );
             register_post_type('popup', $args);
       }
