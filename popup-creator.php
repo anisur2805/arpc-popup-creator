@@ -45,6 +45,7 @@ class Popup_Creator {
                   $delay = get_post_meta(get_the_ID(), 'pc_show_in_delay', true);
                   $feature_image = get_the_post_thumbnail_url( get_the_ID(), $image_size );
                   $pc_url = get_post_meta(get_the_ID(), 'pc_url', true );
+                  $show_in = get_post_meta(get_the_ID(), 'pc_ww_show', true );
                   
                   if( $delay ) {
                         $delay *= 1000;
@@ -52,8 +53,14 @@ class Popup_Creator {
                         $delay = 0;
                   }
                   
+                  if( $show_in ) {
+                        $show_in = get_post( $show_in );
+                  }
+                  
+                  
+                  
                   ?>
-                  <div class="popup-creator" id="popup-creator" data-id="popup-<?php echo get_the_ID(); ?>" data-popup-size="<?php echo esc_attr( $image_size ); ?>" data-exit="<?php echo esc_attr( $exit ); ?>" data-delay="<?php echo esc_attr( $delay ); ?>">
+                  <div class="popup-creator" id="popup-creator" data-id="popup-<?php echo get_the_ID(); ?>" data-popup-size="<?php echo esc_attr( $image_size ); ?>" data-exit="<?php echo esc_attr( $exit ); ?>" data-delay="<?php echo esc_attr( $delay, $show_in ); ?>">
                         <?php if( $pc_url ) { ?>
                               <a target="_blank" href="<?php echo esc_url( $pc_url); ?>">
                                     <img src="<?php echo esc_url( $feature_image ); ?>" alt="<?php _e('Popup', 'popup-creator') ?>" />
