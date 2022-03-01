@@ -45,7 +45,8 @@ class Popup_Creator {
                   $delay = get_post_meta(get_the_ID(), 'pc_show_in_delay', true);
                   $feature_image = get_the_post_thumbnail_url( get_the_ID(), $image_size );
                   $pc_url = get_post_meta(get_the_ID(), 'pc_url', true );
-                  $show_in = get_post_meta(get_the_ID(), 'pc_ww_show', true );
+                  $show_in_obj = get_post_meta(get_the_ID(), 'pc_ww_show', true );
+                   
                   
                   if( $delay ) {
                         $delay *= 1000;
@@ -53,14 +54,11 @@ class Popup_Creator {
                         $delay = 0;
                   }
                   
-                  if( $show_in ) {
-                        $show_in = get_post( $show_in );
-                  }
-                  
-                  
-                  
+                  $show_in = get_post( $show_in_obj );
+                  $showIn_id = $show_in->ID;
+                  if( is_page( $showIn_id ) ) {
                   ?>
-                  <div class="popup-creator" id="popup-creator" data-id="popup-<?php echo get_the_ID(); ?>" data-popup-size="<?php echo esc_attr( $image_size ); ?>" data-exit="<?php echo esc_attr( $exit ); ?>" data-delay="<?php echo esc_attr( $delay, $show_in ); ?>">
+                  <div class="popup-creator" id="popup-creator" data-id="popup-<?php echo get_the_ID(); ?>" data-popup-size="<?php echo esc_attr( $image_size ); ?>" data-exit="<?php echo esc_attr( $exit ); ?>" data-delay="<?php echo esc_attr( $delay ); ?>" data-show="<?php echo $showIn_id; ?>">
                         <?php if( $pc_url ) { ?>
                               <a target="_blank" href="<?php echo esc_url( $pc_url); ?>">
                                     <img src="<?php echo esc_url( $feature_image ); ?>" alt="<?php _e('Popup', 'popup-creator') ?>" />
@@ -74,7 +72,7 @@ class Popup_Creator {
                   </div>
       
                   <?php 
-                  
+                  }
             }
             
             wp_reset_query();
@@ -116,6 +114,7 @@ class Popup_Creator {
                   'publicly_queryable'    => true,
                   'show_ui'               => true,
                   'show_in_menu'          => true,
+                  'show_in_rest'          => true,
                   'menu_position'         => 7,
                   'show_in_admin_bar'     => true,
                   'show_in_nav_menus'     => true,

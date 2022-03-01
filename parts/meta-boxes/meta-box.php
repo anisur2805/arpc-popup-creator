@@ -32,11 +32,11 @@ piklist('field', array(
 piklist('field', array(
       'type'    => 'radio',
       'field'   => 'pc_show_on_exit',
-      'label'   => __('Show on Exit', 'popup-creator'),
-      'value'   => 0,
+      'label'   => __('Display on', 'popup-creator'),
+      'value'   => 1,
       'choices' => array(
-            0  => __('Display on Exit', 'popup-creator'),
-            1  => __('Display on Page Load', 'popup-creator'),
+            0  => __('On Page Exit', 'popup-creator'),
+            1  => __('On Page Load', 'popup-creator'),
       ),
 ));
 
