@@ -1,0 +1,34 @@
+.pc_metabox_wrapper label {
+	min-width: 240px;
+	font-weight: 600;
+	display: inline-block;
+}
+
+.pc_form_group + .pc_form_group {
+	margin-top: 24px;
+}
+
+.pc_form_group input[type="radio"] + input {
+      
+}
+.pc_metabox_wrapper {
+	padding-top: 8px;
+}
+
+.pc_form_group div {
+      max-width: 120px;
+      display: inline-block;
+  }
+  
+  .pc_form_group {
+      display: flex;
+      align-items: center;
+  }
+  .pc_form_group div span {
+      display: inline-block;
+  }
+
+  .pc_form_group div span + span {
+      margin-top: 10px;
+  }
+  

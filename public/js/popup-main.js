@@ -1,4 +1,4 @@
-(function ($) {
+;(function ($) {
 	var exitModals = [];
 	var popupsDisplayed = false;
 	var delayPopups = [];
@@ -18,7 +18,6 @@
 			var isExit = modalsElms[i].getAttribute("data-exit");
 
 			if (isExit == 1) {
-				alert("hello");
 				if (delay > 0) {
 					delayPopups.push({ modal: modal, delay: delay });
 				} else {
@@ -50,8 +49,5 @@
 				}
 			};
 		}
-		
 	});
-
-
 })(jQuery);
