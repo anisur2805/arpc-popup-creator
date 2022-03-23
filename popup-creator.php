@@ -2,7 +2,7 @@
  /**
   * Plugin Name: PC Popup Creator
   * Description: Awesome Popup Creator
-  * Plugin URI:  http://github.com/pc-popup-creator
+  * Plugin URI:  http://github.com/anisur2805/pc-popup-creator
   * Version:     1.0
   * Author:      Anisur Rahman
   * Author URI:  http://github.com/anisur2805
@@ -23,15 +23,12 @@
  define( "PUC_ADMIN_URL", PUC_DIR_URL . 'admin' );
  define( "PUC_IMG_URL", PUC_PUBLIC_URL . "/images" ); 
  
-//  die('PUC_PUBLIC_URL' .PUC_PUBLIC_URL);
-//  die('PUC_ADMIN_URL' .PUC_ADMIN_URL);
- 
  require_once PUC_DIR_PATH . 'includes/popup-table.php';
  require_once PUC_DIR_PATH . 'includes/class.metabox.php';
  require_once PUC_DIR_PATH . 'admin/admin.php';
  require_once PUC_DIR_PATH . 'public/public.php';
  
- class Popup_Creator {
+ final class Popup_Creator {
   public function __construct() {
    add_action( 'plugin_loaded', [$this, 'load_text_domain'] );
    add_action( 'init', [$this, 'register_popup_creator'] );
@@ -150,8 +147,13 @@
             /**
              * Instantiate the plugin
              */
-            // if ( is_admin() ) {
+            function puc_init() {
                   new Popup_Creator();
+              }
+              
+              puc_init();
+              
+                  
             // }
 
       /**
