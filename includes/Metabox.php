@@ -1,5 +1,6 @@
 <?php
-class Popup_MetaBox {
+namespace APC\Popup\Creator;
+class Metabox {
  
     /**
      * Hook into the appropriate actions when the class is constructed.
@@ -66,10 +67,12 @@ class Popup_MetaBox {
 
         // Use get_post_meta to retrieve an existing value from the database.
         $delay = get_post_meta( $post->ID, 'pc_show_in_delay', true );
-        $auto_hide = get_post_meta( $post->ID, 'pc_auto_hide', true );
+        $auto_hide2 = get_post_meta( $post->ID, 'pc_auto_hide_pu', true );
         $image_size = get_post_meta( $post->ID, 'pc_image_size', true );
+        $show_on_exit = get_post_meta( $post->ID, 'pc_show_on_exit', true );
         $url = get_post_meta( $post->ID, 'pc_url', true );
         $is_active = get_post_meta( $post->ID, 'pc_active', true );
+        $selected_page = get_post_meta( $post->ID, 'pc_ww_show', true );
 
         // Display the form, using the current value.
         ?>
@@ -79,31 +82,30 @@ class Popup_MetaBox {
                 <label for="pc_active">
                     <?php _e( 'Is Active?', 'popup-creator' ); ?>
                 </label>
-                <input type="checkbox" name="pc_active" id="pc_active" value="1" <?php checked( 1, $this->get_popup_metabox_value( $is_active ) ) ?> /> <?php _e('Yes', 'popup-creator' ); ?>
-                <?php echo $is_active; ?>
+                <input type="checkbox" name="pc_active" id="pc_active" value="<?php echo esc_attr( $is_active ); ?>" <?php checked( 1, $this->get_popup_metabox_value( $is_active ) ); ?> />
             </div>
             
             <div class="pc_form_group">
-                <label for="pc_auto_hide">
+                <label for="pc_auto_hide_pu">
                     <?php _e( 'Auto Hide', 'popup-creator' ); ?>
                 </label>
-                <input type="checkbox" name="pc_auto_hide" id="pc_auto_hide" value="<?php echo $this->get_popup_metabox_value( $auto_hide ); ?>" /> <?php _e('Yes', 'popup-creator' ); ?>
+                <input type="checkbox" name="pc_auto_hide_pu" id="pc_auto_hide_pu" value="1" <?php checked( 1, $this->get_popup_metabox_value( $auto_hide2 ) );?> /> <?php echo esc_attr( $auto_hide2 ); ?>
             </div>
             
             <div class="pc_form_group">
                 <label for="pc_show_in_delay">
                     <?php _e( 'Show in Delay', 'popup-creator' ); ?>
                 </label>
-                <input type="text" id="pc_show_in_delay" name="pc_show_in_delay" value="<?php echo esc_attr( $delay ); ?>" size="25" />
+                <input type="text" id="pc_show_in_delay" name="pc_show_in_delay" placeholder="5000" value="<?php echo esc_attr( $delay ); ?>" size="25" />
             </div>
             
             <div class="pc_form_group">
                 <label for="pc_show_on_exit">
-                    <?php _e( 'Is Active?', 'popup-creator' ); ?>
+                    <?php _e( 'Show when', 'popup-creator' ); ?>
                 </label>
                 <div>
-                    <span><input type="radio" name="pc_show_on_exit" id="pc_show_on_exit" value="0" /> <?php _e('On Page Load', 'popup-creator' ); ?></span>
-                    <span><input type="radio" name="pc_show_on_exit" id="pc_show_on_exit" value="1" /> <?php _e('On Page Exit', 'popup-creator' ); ?></span>
+                    <span><input type="radio" name="pc_show_on_exit" id="pc_show_on_exit" value="0"  <?php checked( $show_on_exit, 0 );?>/> <?php _e('On Page Load', 'popup-creator' ); ?></span>
+                    <span><input type="radio" name="pc_show_on_exit" id="pc_show_on_exit" value="1"  <?php checked( $show_on_exit, 1 );?> /> <?php _e('On Page Exit', 'popup-creator' ); ?></span>
                 </div>
             </div>
             
@@ -140,7 +142,7 @@ class Popup_MetaBox {
                         'show_option_none'  => __('Select a page', 'popup-creator' ),
                         'option_none_value' => 0,
                         'echo'              => 1,
-                        // 'selected'          => $selected_page,
+                        'selected'          => $selected_page,
                     );
                     
                     wp_dropdown_pages( $args );
@@ -165,8 +167,8 @@ class Popup_MetaBox {
             update_post_meta($post_id, 'pc_url', sanitize_text_field( $_POST['pc_url'] ) );
         }
         
-        if( isset( $_POST['pc_auto_hide'] ) ) {
-            update_post_meta($post_id, 'pc_auto_hide', sanitize_text_field( $_POST['pc_auto_hide'] ) );
+        if( isset( $_POST['pc_auto_hide_pu'] ) ) {
+            update_post_meta($post_id, 'pc_auto_hide_pu', sanitize_text_field( $_POST['pc_auto_hide_pu'] ) );
         }
         
         if( isset( $_POST['pc_image_size'] ) ) {
@@ -177,11 +179,20 @@ class Popup_MetaBox {
             update_post_meta($post_id, 'pc_show_in_delay', sanitize_text_field( $_POST['pc_show_in_delay'] ) );
         }
         
+        if( isset( $_POST['pc_show_on_exit'] ) ) {
+            update_post_meta($post_id, 'pc_show_on_exit', sanitize_text_field( $_POST['pc_show_on_exit'] ) );
+        }
+        
+        if( isset( $_POST['pc_ww_show'] ) ) {
+            update_post_meta($post_id, 'pc_ww_show', sanitize_text_field( $_POST['pc_ww_show'] ) );
+        }
+        
         if( isset( $_POST['pc_active'] ) ) {
             update_post_meta($post_id, 'pc_active', true );
         } else {
             update_post_meta($post_id, 'pc_active', false );
-        }        
+        }
+             
     }
     
     public function get_popup_metabox_value( $value ) {
