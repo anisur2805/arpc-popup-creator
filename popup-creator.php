@@ -9,99 +9,95 @@
   * Text Domain: popup-creator
   * License:     GPL v2 or later
   * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
-  * Plugin Type: Piklist
   */
 
- if ( !defined( 'ABSPATH' ) ) {
-  exit;
- }
-
- // Constant Variables
- define( "PUC_DIR_PATH", plugin_dir_path( __FILE__ ) );
- define( "PUC_DIR_URL", plugin_dir_url( __FILE__ ) );
- define( "PUC_PUBLIC_URL", PUC_DIR_URL . 'public' );
- define( "PUC_ADMIN_URL", PUC_DIR_URL . 'admin' );
- define( "PUC_IMG_URL", PUC_PUBLIC_URL . "/images" ); 
- 
- require_once PUC_DIR_PATH . 'includes/popup-table.php';
- require_once PUC_DIR_PATH . 'includes/class.metabox.php';
- require_once PUC_DIR_PATH . 'admin/admin.php';
- require_once PUC_DIR_PATH . 'public/public.php';
- 
- final class Popup_Creator {
-  public function __construct() {
-   add_action( 'plugin_loaded', [$this, 'load_text_domain'] );
-   add_action( 'init', [$this, 'register_popup_creator'] );
-   add_action( 'init', [$this, 'register_image_size'] );
-   add_action( 'wp_footer', [$this, 'load_modal_on_footer'] );
-    
-   /**
-    * Instantiate Meta box
-    */
-    new Popup_Admin_Assets();
-    
-   /**
-    * Instantiate Meta box
-    */
-   new Popup_MetaBox();
-   
-  }
-
-  public function load_modal_on_footer() {
-   $args = array(
-    'post_type'   => 'popup',
-    'post_status' => 'publish',
-    'meta_key'    => 'pc_active',
-    'meta_value'  => 1,
-   );
-
-   $pc_query = new WP_Query( $args );
-   while ( $pc_query->have_posts() ) {
-      $pc_query->the_post();
-      $image_size    = get_post_meta( get_the_ID(), 'pc_image_size', true );
-      $exit          = get_post_meta( get_the_ID(), 'pc_show_on_exit', true );
-      $delay         = get_post_meta( get_the_ID(), 'pc_show_in_delay', true );
-      $feature_image = get_the_post_thumbnail_url( get_the_ID(), $image_size );
-      $pc_url        = get_post_meta( get_the_ID(), 'pc_url', true );
-      $show_in_obj   = get_post_meta( get_the_ID(), 'pc_ww_show', true );
-
-      if ( $delay ) {
-            $delay *= 1000;
-      } else {
-            $delay = 0;
-      }
-
-      $show_in   = get_post( $show_in_obj );
-      $showIn_id = $show_in->ID;
-
-            if ( is_page( $showIn_id ) ) {
-                  ?>
-                        <div class="popup-creator" id="popup-creator" data-id="popup-<?php echo get_the_ID(); ?>" data-popup-size="<?php echo esc_attr( $image_size ); ?>" data-exit="<?php echo esc_attr( $exit ); ?>" data-delay="<?php echo $delay ?>" data-show="<?php echo $showIn_id; ?>">
-                              <?php if ( $pc_url ) { ?>
-                                    <a target="_blank" href="<?php echo esc_url( $pc_url ); ?>">
-                                          <img src="<?php echo esc_url( $feature_image ); ?>" alt="<?php _e( 'Popup', 'popup-creator' )?>" />
-                                    </a>
-                              <?php } else {?>
-                                    <img src="<?php echo esc_url( $feature_image ); ?>" alt="<?php _e( 'Popup', 'popup-creator' )?>" />
-                                    <?php }?>
-                              <button class="close-button">
-                                    <img src="<?php echo esc_url( PUC_IMG_URL . '/close.svg' ) ?>" alt="Close" />
-                              </button>
-                        </div>
-                  <?php
-            }
-      }
-
-      wp_reset_query();
-
+if ( !defined( 'ABSPATH' ) ) {
+      exit;
 }
+
+// Constant Variables
+define( "PUC_DIR_PATH", plugin_dir_path( __FILE__ ) );
+define( "PUC_DIR_URL", plugin_dir_url( __FILE__ ) );
+define( "PUC_PUBLIC_URL", PUC_DIR_URL . 'public' );
+define( "PUC_ADMIN_URL", PUC_DIR_URL . 'admin' );
+define( "PUC_IMG_URL", PUC_PUBLIC_URL . "/images" ); 
+
+require_once PUC_DIR_PATH . 'includes/popup-table.php';
+require_once PUC_DIR_PATH . 'includes/class.metabox.php';
+require_once PUC_DIR_PATH . 'admin/admin.php';
+require_once PUC_DIR_PATH . 'public/public.php';
+      final class Popup_Creator {
+            public function __construct() {
+                  add_action( 'plugin_loaded', array( $this, 'load_text_domain') );
+                  add_action( 'init', array( $this, 'register_popup_creator') );
+                  add_action( 'init', array( $this, 'register_image_size') );
+                  add_action( 'wp_footer', array( $this, 'load_modal_on_footer') );
+
+                  /**
+                   * Instantiate Meta box
+                  */
+                  new Popup_Admin_Assets();
+
+                  /**
+                   * Instantiate Meta box
+                  */
+                  new Popup_MetaBox();
+            }
+
+            public function load_modal_on_footer() {
+                  $args = array(
+                        'post_type'   => 'popup',
+                        'post_status' => 'publish',
+                        'meta_key'    => 'pc_active',
+                        'meta_value'  => 1,
+                  );
+
+                  $pc_query = new WP_Query( $args );
+                  while ( $pc_query->have_posts() ) {
+                        $pc_query->the_post();
+                        $image_size    = get_post_meta( get_the_ID(), 'pc_image_size', true );
+                        $exit          = get_post_meta( get_the_ID(), 'pc_show_on_exit', true );
+                        $delay         = get_post_meta( get_the_ID(), 'pc_show_in_delay', true );
+                        $feature_image = get_the_post_thumbnail_url( get_the_ID(), $image_size );
+                        $pc_url        = get_post_meta( get_the_ID(), 'pc_url', true );
+                        $show_in_obj   = get_post_meta( get_the_ID(), 'pc_ww_show', true );
+
+                        if ( $delay ) {
+                              $delay *= 1000;
+                        } else {
+                              $delay = 0;
+                        }
+
+                        $show_in   = get_post( $show_in_obj );
+                        $showIn_id = $show_in->ID;
+
+                        if ( is_page( $showIn_id ) ) {
+                              ?>
+                                    <div class="popup-creator" id="popup-creator" data-id="popup-<?php echo get_the_ID(); ?>" data-popup-size="<?php echo esc_attr( $image_size ); ?>" data-exit="<?php echo esc_attr( $exit ); ?>" data-delay="<?php echo $delay ?>" data-show="<?php echo $showIn_id; ?>">
+                                          <?php if ( $pc_url ) { ?>
+                                                <a target="_blank" href="<?php echo esc_url( $pc_url ); ?>">
+                                                      <img src="<?php echo esc_url( $feature_image ); ?>" alt="<?php _e( 'Popup', 'popup-creator' )?>" />
+                                                </a>
+                                          <?php } else {?>
+                                                <img src="<?php echo esc_url( $feature_image ); ?>" alt="<?php _e( 'Popup', 'popup-creator' )?>" />
+                                                <?php }?>
+                                          <button class="close-button">
+                                                <img src="<?php echo esc_url( PUC_IMG_URL . '/close.svg' ) ?>" alt="Close" />
+                                          </button>
+                                    </div>
+                              <?php
+                        }
+                  }
+
+                  wp_reset_query();
+
+            }
             /**
              * Load plugin text domain 
              */
             public function load_text_domain() {
                   load_plugin_textdomain( 'popup-creator', false, plugin_dir_path( __FILE__ ) . 'languages' );
             }
-            
             
             /**
              * Register popup creator image sizes
@@ -116,8 +112,16 @@
                   $labels = array(
                         'name'               => __( 'Popups Creator', 'popup-creator' ),
                         'singular_name'      => __( 'Popup Creator', 'popup-creator' ),
-                        'featured_image'     => __( 'Popup Image' ),
-                        'set_featured_image' => __( 'Set Popup Image' ),
+                        'featured_image'     => __( 'Popup Image', 'popup-creator' ),
+                        'set_featured_image' => __( 'Set Popup Image', 'popup-creator' ),
+                        'search_items'       => __('Search Popup', 'popup-creator' ),
+                        'all_items'          => __('All Popups', 'popup-creator'),
+                        'add_new_item'       => __('Add New Popup', 'popup-creator'),
+                        'add_new'            => __('Add New Popup', 'popup-creator'),
+                        'new_item'           => __('New Popup', 'popup-creator'),
+                        'edit_item'          => __('Edit Popup', 'popup-creator'),
+                        'update_item'        => __('Update Popup', 'popup-creator'),
+                        'view_item'          => __('View Popup', 'popup-creator'),
                   );
                   $args = array(
                         'label'               => __( 'Popups', 'popup-creator' ),
@@ -141,22 +145,19 @@
                   );
                   register_post_type( 'popup', $args );
             }
-
-            }
+      }
             
-            /**
-             * Instantiate the plugin
-             */
-            function puc_init() {
-                  new Popup_Creator();
-              }
-              
-              puc_init();
-              
-                  
-            // }
+/**
+ * Instantiate the plugin
+ */
+function puc_init() {
+      new Popup_Creator();
+}
+      
+puc_init();
+// }
 
-      /**
-       * Enqueue admin assets 
-      */
-      new Popup_Assets();
+/**
+ * Enqueue admin assets 
+*/
+new Popup_Assets();
