@@ -1,0 +1,22 @@
+{
+    "name": "anisur2805/pc-popup-creator",
+    "description": "A plugin for Popup Modal",
+	"type": "wordpress-plugin",
+	"license": "GPLv2",
+    "autoload": {
+        "psr-4": {
+            "APC\\Popup\\Creator\\": "includes/"
+        },
+        "files": [
+			"includes/functions.php"
+		]
+    },
+    "authors": [
+        {
+            "name": "Anisur Rahman",
+			"email": "anisur2805@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}

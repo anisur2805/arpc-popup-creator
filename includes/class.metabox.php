@@ -1,4 +1,5 @@
 <?php
+namespace APC\Popup\Creator;
 class Popup_MetaBox {
  
     /**

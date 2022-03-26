@@ -1,8 +1,8 @@
 <?php
-
+namespace APC\Popup\Creator;
 class Popup_Admin_Assets { 
       public function __construct() {
-            add_action('admin_enqueue_scripts', [$this, 'load_assets']);
+            add_action('admin_enqueue_scripts', array( $this, 'load_assets' ) );
       }
       /**
        * Includes plugin asset files

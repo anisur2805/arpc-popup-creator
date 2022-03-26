@@ -1,7 +1,8 @@
 <?php 
+namespace APC\Popup\Creator;
 class Popup_Assets {
       public function __construct() {
-            add_action('wp_enqueue_scripts', [$this, 'load_assets']);
+            add_action('wp_enqueue_scripts', array( $this, 'load_assets' ) );
       }
       /**
        * Includes plugin asset files
