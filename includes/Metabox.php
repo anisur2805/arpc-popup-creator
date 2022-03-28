@@ -1,6 +1,6 @@
 <?php
 namespace APC\Popup\Creator;
-class Popup_MetaBox {
+class Metabox {
  
     /**
      * Hook into the appropriate actions when the class is constructed.

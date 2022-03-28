@@ -3,7 +3,7 @@ namespace APC\Popup\Creator;
 /**
  * Popup creator post type main class file
  */
-class Popup_Post_Type 
+class Post_Type 
 {
       public function __construct() {
             add_action( 'init', array( $this, 'register_popup_creator_post_type') );            

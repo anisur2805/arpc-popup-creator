@@ -4,7 +4,7 @@ namespace APC\Popup\Creator;
 
 class Data_Table {
 
-      private function __construct() {
+      public function __construct() {
             add_action( 'manage_popup_posts_columns', array( $this, 'add_columns' ) );
             add_filter( 'manage_edit-popup_sortable_columns', array( $this, 'columns_sortable' ) );
             add_action( 'pre_get_posts', array( $this, 'columns_sorting_logic' ) );
@@ -31,24 +31,24 @@ class Data_Table {
        */
       public function column_content( $column, $post_id ) {
             switch ( $column ) {
-            case 'image':
-                  echo get_the_post_thumbnail( $post_id, 'popup-creator-thumbnail' );
-                  break;
-            case 'show_on':
-                  $page_id = get_post_meta( $post_id, 'pc_ww_show', true );
-                  echo get_the_title( $page_id );
-                  break;
-            case 'show_time':
-                  $show_time = get_post_meta( $post_id, 'pc_show_on_exit', true );
-                  echo ( $show_time == 1 ? 'On Page Exit' : 'On Page Reload' );
-                  break;
-            case 'active':
-                  $is_active = get_post_meta( $post_id, 'pc_active', true );
-                  echo $is_active ? __( 'Yes', 'popup-creator' ) : __( 'No', 'popup-creator' );
-                  break;
+                  case 'image':
+                        echo get_the_post_thumbnail( $post_id, 'popup-creator-thumbnail' );
+                        break;
+                  case 'show_on':
+                        $page_id = get_post_meta( $post_id, 'pc_ww_show', true );
+                        echo get_the_title( $page_id );
+                        break;
+                  case 'show_time':
+                        $show_time = get_post_meta( $post_id, 'pc_show_on_exit', true );
+                        echo ( $show_time == 1 ? 'On Page Exit' : 'On Page Reload' );
+                        break;
+                  case 'active':
+                        $is_active = get_post_meta( $post_id, 'pc_active', true );
+                        echo $is_active ? __( 'Yes', 'popup-creator' ) : __( 'No', 'popup-creator' );
+                        break;
 
-            default:
-                  break;
+                  default:
+                        break;
             }
       }
 

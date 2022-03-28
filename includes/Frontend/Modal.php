@@ -1,11 +1,12 @@
 <?php 
-namespace APC\Popup\Creator;
+namespace APC\Popup\Creator\Frontend;
 
-class Frontend {
+class Modal {
       public function __construct() {
             add_action( 'wp_footer', array( $this, 'load_modal_on_footer' ) );
       }
       public function load_modal_on_footer() {
+            die("hello");
             $args = array(
                   'post_type'   => 'popup',
                   'post_status' => 'publish',

@@ -11,29 +11,24 @@
   * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
   */
 
-use APC\Popup\Creator\Data_Table;
+use APC\Popup\Creator\Admin;
+use APC\Popup\Creator\Assets;
 use APC\Popup\Creator\Frontend;
-use APC\Popup\Creator\Popup_Admin_Assets;
-use APC\Popup\Creator\Popup_Assets;
-use APC\Popup\Creator\Popup_MetaBox;
-use APC\Popup\Creator\Popup_Post_Type;
 
 if ( !defined( 'ABSPATH' ) ) {
       exit;
 }
+
 require_once __DIR__ . "/vendor/autoload.php";
 
-// require_once PUC_DIR_PATH . 'includes/popup-table.php';
-// require_once PUC_DIR_PATH . 'includes/class.metabox.php';
-// require_once PUC_DIR_PATH . 'includes/class.front-end.php';
-// require_once PUC_DIR_PATH . 'includes/class.post-type.php';
-// require_once PUC_DIR_PATH . 'admin/admin.php';
-// require_once PUC_DIR_PATH . 'public/public.php';
-
       final class Popup_Creator {
-            public function __construct() {
+            const version = '1.0';
+            
+            private function __construct() {
                   $this->define_constants();
                   add_action( 'plugins_loaded', array( $this, 'init_plugin') );
+                  
+                  register_activation_hook( __FILE__, array( $this, 'activate' ) );
             }
             
             /**
@@ -43,8 +38,9 @@ require_once __DIR__ . "/vendor/autoload.php";
              */
             public static function init() {
                   static $instance = false;
-                  if ( !$instance ) {
-                  $instance = new self();
+                  
+                  if ( ! $instance ) {
+                        $instance = new self();
                   }
 
                   return $instance;
@@ -56,12 +52,27 @@ require_once __DIR__ . "/vendor/autoload.php";
              * @return void
              */
             public function define_constants() {
-                  define( "PUC_DIR_PATH", plugin_dir_path( __FILE__ ) );
-                  define( "PUC_DIR_URL", plugin_dir_url( __FILE__ ) );
-                  define( "PUC_PUBLIC_URL", PUC_DIR_URL . 'public' );
-                  define( "PUC_ADMIN_URL", PUC_DIR_URL . 'admin' );
-                  define( "PUC_IMG_URL", PUC_PUBLIC_URL . "/images" ); 
+                  define( 'PUC_VERSION', self::version );
+                  define( 'PUC_FILE', __FILE__ );
+                  define( "PUC_PATH", __DIR__ );
+                  define( "PUC_URL", plugins_url( '', __FILE__ ) );
+                  define( "PUC_ASSETS", PUC_URL . '/assets' );
+                  define( "PUC_INCLUDES", PUC_URL . "/includes" ); 
             }
+            
+            /**
+             * Do stuff upon plugin installation
+             */
+            public function activate() {
+                  $installed = get_option( 'puc_installed' );
+                  
+                  if( ! $installed ) {
+                        update_option( 'puc_installed', time() );
+                  }
+                  
+                  update_option( 'puc_version', PUC_VERSION );
+            }
+            
 
             /**
              * Load plugin text domain 
@@ -71,25 +82,14 @@ require_once __DIR__ . "/vendor/autoload.php";
                   
                   if( is_admin() ) {
                         // Instantiate Meta box
-                        new Popup_Admin_Assets();
-                        
-                        // Instantiate Data Table
-                        new Data_Table();
-
-                        //Instantiate Meta box
-                        new Popup_MetaBox();
-                        
-                        // Instantiate Front End Popup
-                        new Popup_Post_Type();
-                        
+                        new Admin();
                   } else {
-                       
+                       // Instantiate Front End Popup
+                        new Frontend();    
                   }
-                  // Instantiate Front End Popup
-                   new Frontend();
-                        
-                   // Enqueue admin assets
-                   new Popup_Assets();                    
+                  
+                  new Assets();
+                                 
             }
            
       }
@@ -102,4 +102,6 @@ require_once __DIR__ . "/vendor/autoload.php";
 function puc_popup_creator() {
       return Popup_Creator::init();
 }
+
+// kick-off the plugin
 puc_popup_creator();
