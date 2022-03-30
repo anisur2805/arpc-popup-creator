@@ -14,6 +14,8 @@ class Admin {
 
             //Instantiate Meta box
             new Metabox();
+            
+            wp_enqueue_style( 'puc-metabox' );
 
             // Instantiate Front End Popup
             new Post_Type();

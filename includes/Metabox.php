@@ -96,12 +96,12 @@ class Metabox {
                 <label for="pc_show_in_delay">
                     <?php _e( 'Show in Delay', 'popup-creator' ); ?>
                 </label>
-                <input type="text" id="pc_show_in_delay" name="pc_show_in_delay" value="<?php echo esc_attr( $delay ); ?>" size="25" />
+                <input type="text" id="pc_show_in_delay" name="pc_show_in_delay" placeholder="5000" value="<?php echo esc_attr( $delay ); ?>" size="25" />
             </div>
             
             <div class="pc_form_group">
                 <label for="pc_show_on_exit">
-                    <?php _e( 'Show on', 'popup-creator' ); ?>
+                    <?php _e( 'Show when', 'popup-creator' ); ?>
                 </label>
                 <div>
                     <span><input type="radio" name="pc_show_on_exit" id="pc_show_on_exit" value="0"  <?php checked( $show_on_exit, 0 );?>/> <?php _e('On Page Load', 'popup-creator' ); ?></span>

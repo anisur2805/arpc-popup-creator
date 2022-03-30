@@ -34,7 +34,7 @@ class Assets {
 
  public function get_styles() {
   return [
-   'puc-style' => [
+   'puc-metabox' => [
     'src'     => PUC_ASSETS . '/css/metabox.css',
     'version' => filemtime( PUC_PATH . '/assets/css/metabox.css' ),
    ],

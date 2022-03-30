@@ -8,7 +8,7 @@ class Data_Table {
             add_action( 'manage_popup_posts_columns', array( $this, 'add_columns' ) );
             add_filter( 'manage_edit-popup_sortable_columns', array( $this, 'columns_sortable' ) );
             add_action( 'pre_get_posts', array( $this, 'columns_sorting_logic' ) );
-            add_filter( 'manage_popup_posts_custom_column', array( $this, 'column_content', 10, 2 ) );
+            add_filter( 'manage_popup_posts_custom_column', array( $this, 'column_content' ), 10, 2 );
       }
 
       /**
@@ -23,6 +23,7 @@ class Data_Table {
             $columns['show_time'] = __( 'Display Time', 'popup-creator' );
             $columns['image']     = __( 'Thumbnail', 'popup-creator' );
             $columns['date']      = __( 'Date', 'popup-creator' );
+            
             return $columns;
       }
 
