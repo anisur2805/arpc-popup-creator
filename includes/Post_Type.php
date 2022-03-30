@@ -23,6 +23,7 @@ class Post_Type
                   'edit_item'          => __('Edit Popup', 'popup-creator'),
                   'update_item'        => __('Update Popup', 'popup-creator'),
                   'view_item'          => __('View Popup', 'popup-creator'),
+                  'remove_featured_image' => __('Remove Popup Image', 'popup-creator'),
             );
             $args = array(
                   'label'               => __( 'Popups', 'popup-creator' ),

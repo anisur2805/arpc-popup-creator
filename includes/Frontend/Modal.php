@@ -1,12 +1,12 @@
-<?php 
+<?php
 namespace APC\Popup\Creator\Frontend;
-
 class Modal {
+      
       public function __construct() {
             add_action( 'wp_footer', array( $this, 'load_modal_on_footer' ) );
       }
+      
       public function load_modal_on_footer() {
-            die("hello");
             $args = array(
                   'post_type'   => 'popup',
                   'post_status' => 'publish',
@@ -44,7 +44,7 @@ class Modal {
                                           <img src="<?php echo esc_url( $feature_image ); ?>" alt="<?php _e( 'Popup', 'popup-creator' )?>" />
                                           <?php }?>
                                     <button class="close-button">
-                                          <img src="<?php echo esc_url( PUC_IMG_URL . '/close.svg' ) ?>" alt="Close" />
+                                          <img src="<?php echo esc_url( PUC_ASSETS . '/images/close.svg' ) ?>" alt="Close" />
                                     </button>
                               </div>
                         <?php
@@ -54,4 +54,5 @@ class Modal {
             wp_reset_query();
 
       }
+      
 }

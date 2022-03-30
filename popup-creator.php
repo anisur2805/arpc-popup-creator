@@ -85,7 +85,7 @@ require_once __DIR__ . "/vendor/autoload.php";
                         new Admin();
                   } else {
                        // Instantiate Front End Popup
-                        new Frontend();    
+                        new Frontend();
                   }
                   
                   new Assets();

@@ -16,6 +16,7 @@ class Admin {
             new Metabox();
             
             wp_enqueue_style( 'puc-metabox' );
+            wp_enqueue_script( 'puc-main-ajax' );
 
             // Instantiate Front End Popup
             new Post_Type();

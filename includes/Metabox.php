@@ -96,7 +96,7 @@ class Metabox {
                 <label for="pc_show_in_delay">
                     <?php _e( 'Show in Delay', 'popup-creator' ); ?>
                 </label>
-                <input type="text" id="pc_show_in_delay" name="pc_show_in_delay" placeholder="5000" value="<?php echo esc_attr( $delay ); ?>" size="25" />
+                <input class="regular-text" type="text" id="pc_show_in_delay" name="pc_show_in_delay" placeholder="5000" value="<?php echo esc_attr( $delay ); ?>" size="25" />
             </div>
             
             <div class="pc_form_group">
@@ -104,8 +104,8 @@ class Metabox {
                     <?php _e( 'Show when', 'popup-creator' ); ?>
                 </label>
                 <div>
-                    <span><input type="radio" name="pc_show_on_exit" id="pc_show_on_exit" value="0"  <?php checked( $show_on_exit, 0 );?>/> <?php _e('On Page Load', 'popup-creator' ); ?></span>
-                    <span><input type="radio" name="pc_show_on_exit" id="pc_show_on_exit" value="1"  <?php checked( $show_on_exit, 1 );?> /> <?php _e('On Page Exit', 'popup-creator' ); ?></span>
+                    <span><input type="radio" name="pc_show_on_exit" id="pc_show_on_exit" value="0"  <?php checked( $show_on_exit, 0 );?> /> <?php _e('On Page Exit', 'popup-creator' ); ?></span>
+                    <span><input type="radio" name="pc_show_on_exit" id="pc_show_on_exit" value="1"  <?php checked( $show_on_exit, 1 );?>/> <?php _e('On Page Load', 'popup-creator' ); ?></span>
                 </div>
             </div>
             
@@ -113,14 +113,14 @@ class Metabox {
                 <label for="pc_url">
                     <?php _e( 'Enter popup URL', 'popup-creator' ); ?>
                 </label>
-                <input type="url" id="pc_url" name="pc_url" value="<?php echo esc_attr( $url ); ?>" size="25" />
+                <input class="regular-text" type="url" id="pc_url" name="pc_url" value="<?php echo esc_attr( $url ); ?>" size="25" />
             </div>
             
             <div class="pc_form_group">
                 <label for="pc_image_size">
                     <?php _e( 'Select Image Size', 'popup-creator' ); ?>
                 </label>
-                <select name="pc_image_size" id="pc_image_size">
+                <select class="regular-text" name="pc_image_size" id="pc_image_size">
                     <option value="">Select Image Size</option>
                     <option value="original" <?php selected( 'original', $this->get_popup_metabox_value( $image_size ) ) ?> >Original</option>
                     <option value="landscape" <?php selected( 'landscape', $this->get_popup_metabox_value( $image_size ) ) ?> >Landscape</option>
@@ -136,7 +136,7 @@ class Metabox {
                 <?php 
                     $args          = array(
                         'depth'             => 1,
-                        'class'             => 'pc-admin-pages',
+                        'class'             => 'pc-admin-pages regular-text',
                         'id'                => 'pc_ww_show',
                         'name'              => 'pc_ww_show',
                         'show_option_none'  => __('Select a page', 'popup-creator' ),
