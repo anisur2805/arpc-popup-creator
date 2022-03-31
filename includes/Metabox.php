@@ -103,9 +103,9 @@ class Metabox {
                 <label for="pc_show_on_exit">
                     <?php _e( 'Show when', 'popup-creator' ); ?>
                 </label>
-                <div>
-                    <span><input type="radio" name="pc_show_on_exit" id="pc_show_on_exit" value="0"  <?php checked( $show_on_exit, 0 );?> /> <?php _e('On Page Exit', 'popup-creator' ); ?></span>
-                    <span><input type="radio" name="pc_show_on_exit" id="pc_show_on_exit" value="1"  <?php checked( $show_on_exit, 1 );?>/> <?php _e('On Page Load', 'popup-creator' ); ?></span>
+                <div class="pc_form_group_inner">
+                    <label><input type="radio" name="pc_show_on_exit" id="pc_show_on_exit" value="0"  <?php checked( $show_on_exit, 0 );?> /> <?php _e('On Page Exit', 'popup-creator' ); ?></label>
+                    <label><input type="radio" name="pc_show_on_exit" id="pc_show_on_exit" value="1"  <?php checked( $show_on_exit, 1 );?>/> <?php _e('On Page Load', 'popup-creator' ); ?></label>
                 </div>
             </div>
             
