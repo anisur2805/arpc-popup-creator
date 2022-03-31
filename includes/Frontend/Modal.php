@@ -1,5 +1,5 @@
 <?php
-namespace APC\Popup\Creator\Frontend;
+namespace APC\Popup\Frontend;
 class Modal {
       
       public function __construct() {

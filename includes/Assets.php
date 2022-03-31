@@ -1,6 +1,6 @@
 <?php
 
-namespace APC\Popup\Creator;
+namespace APC\Popup;
 
 class Assets {
   public function __construct() {

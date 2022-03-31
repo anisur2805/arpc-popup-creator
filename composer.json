@@ -5,7 +5,7 @@
 	"license": "GPLv2",
     "autoload": {
         "psr-4": {
-            "APC\\Popup\\Creator\\": "includes/"
+            "APC\\Popup\\": "includes/"
         },
         "files": [
 			"includes/functions.php"

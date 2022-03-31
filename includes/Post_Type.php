@@ -1,5 +1,5 @@
 <?php 
-namespace APC\Popup\Creator;
+namespace APC\Popup;
 /**
  * Popup creator post type main class file
  */

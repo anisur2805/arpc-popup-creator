@@ -11,9 +11,9 @@
   * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
   */
 
-use APC\Popup\Creator\Admin;
-use APC\Popup\Creator\Assets;
-use APC\Popup\Creator\Frontend;
+use APC\Popup\Admin;
+use APC\Popup\Assets;
+use APC\Popup\Frontend;
 
 if ( !defined( 'ABSPATH' ) ) {
       exit;

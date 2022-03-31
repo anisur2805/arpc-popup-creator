@@ -1,7 +1,7 @@
 <?php 
-namespace APC\Popup\Creator;
+namespace APC\Popup;
 
-use APC\Popup\Creator\Frontend\Modal;
+use APC\Popup\Frontend\Modal;
 
 class Frontend {
       public function __construct() {

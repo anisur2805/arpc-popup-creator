@@ -1,6 +1,6 @@
 <?php
 
-namespace APC\Popup\Creator;
+namespace APC\Popup;
 
 class Data_Table {
 

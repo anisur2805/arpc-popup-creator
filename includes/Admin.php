@@ -1,10 +1,10 @@
 <?php
 
-namespace APC\Popup\Creator;
+namespace APC\Popup;
 
-use APC\Popup\Creator\Data_Table;
-use APC\Popup\Creator\Metabox;
-use APC\Popup\Creator\Post_Type;
+use APC\Popup\Data_Table;
+use APC\Popup\Metabox;
+use APC\Popup\Post_Type;
 
 class Admin {
       public function __construct() {
