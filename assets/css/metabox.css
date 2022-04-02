@@ -4,37 +4,35 @@
 	display: inline-block;
 }
 
-.pc_form_group + .pc_form_group {
+.apc_form_group + .apc_form_group {
 	margin-top: 24px;
 }
 
-.pc_form_group input[type="radio"] + input {
-}
 .pc_metabox_wrapper {
 	padding-top: 8px;
 }
 
-.pc_form_group div {
+.apc_form_group div {
 	max-width: 120px;
 	display: inline-block;
 }
 
-.pc_form_group {
+.apc_form_group {
 	display: flex;
 	align-items: center;
 }
 
-.pc_form_group .pc_form_group_inner label {
+.apc_form_group .apc_form_group_inner label {
 	font-weight: 400;
 }
-.pc_form_group .pc_form_group_inner label + label {
-    margin-top: 10px;
+.apc_form_group .apc_form_group_inner label + label {
+	margin-top: 10px;
 }
 
-.pc_form_group div span {
+.apc_form_group div span {
 	display: inline-block;
 }
 
-.pc_form_group div span + span {
+.apc_form_group div span + span {
 	margin-top: 10px;
 }

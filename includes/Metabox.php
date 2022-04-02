@@ -78,45 +78,45 @@ class Metabox {
         ?>
         <div class="pc_metabox_wrapper">
             
-            <div class="pc_form_group">
+            <div class="apc_form_group">
                 <label for="pc_active">
                     <?php _e( 'Is Active?', 'popup-creator' ); ?>
                 </label>
                 <input type="checkbox" name="pc_active" id="pc_active" value="<?php echo esc_attr( $is_active ); ?>" <?php checked( 1, $this->get_popup_metabox_value( $is_active ) ); ?> />
             </div>
             
-            <div class="pc_form_group">
+            <div class="apc_form_group">
                 <label for="pc_auto_hide_pu">
                     <?php _e( 'Auto Hide', 'popup-creator' ); ?>
                 </label>
                 <input type="checkbox" name="pc_auto_hide_pu" id="pc_auto_hide_pu" value="1" <?php checked( 1, $this->get_popup_metabox_value( $auto_hide2 ) );?> /> <?php echo esc_attr( $auto_hide2 ); ?>
             </div>
             
-            <div class="pc_form_group">
+            <div class="apc_form_group">
                 <label for="pc_show_in_delay">
                     <?php _e( 'Show in Delay', 'popup-creator' ); ?>
                 </label>
                 <input class="regular-text" type="text" id="pc_show_in_delay" name="pc_show_in_delay" placeholder="5000" value="<?php echo esc_attr( $delay ); ?>" size="25" />
             </div>
             
-            <div class="pc_form_group">
+            <div class="apc_form_group">
                 <label for="pc_show_on_exit">
                     <?php _e( 'Show when', 'popup-creator' ); ?>
                 </label>
-                <div class="pc_form_group_inner">
+                <div class="apc_form_group_inner">
                     <label><input type="radio" name="pc_show_on_exit" id="pc_show_on_exit" value="0"  <?php checked( $show_on_exit, 0 );?> /> <?php _e('On Page Exit', 'popup-creator' ); ?></label>
                     <label><input type="radio" name="pc_show_on_exit" id="pc_show_on_exit" value="1"  <?php checked( $show_on_exit, 1 );?>/> <?php _e('On Page Load', 'popup-creator' ); ?></label>
                 </div>
             </div>
             
-            <div class="pc_form_group">
+            <div class="apc_form_group">
                 <label for="pc_url">
                     <?php _e( 'Enter popup URL', 'popup-creator' ); ?>
                 </label>
                 <input class="regular-text" type="url" id="pc_url" name="pc_url" value="<?php echo esc_attr( $url ); ?>" size="25" />
             </div>
             
-            <div class="pc_form_group">
+            <div class="apc_form_group">
                 <label for="pc_image_size">
                     <?php _e( 'Select Image Size', 'popup-creator' ); ?>
                 </label>
@@ -128,7 +128,7 @@ class Metabox {
                 </select>
             </div>
             
-            <div class="pc_form_group">
+            <div class="apc_form_group">
                 <label for="pc_ww_show">
                     <?php _e( 'Where to show', 'popup-creator' ); ?>
                 </label>
