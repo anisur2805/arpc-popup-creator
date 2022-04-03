@@ -14,6 +14,7 @@
 use APC\Popup\Admin;
 use APC\Popup\Assets;
 use APC\Popup\Frontend;
+use APC\Popup\Installer;
 
 if ( !defined( 'ABSPATH' ) ) {
       exit;
@@ -64,6 +65,10 @@ require_once __DIR__ . "/vendor/autoload.php";
              * Do stuff upon plugin installation
              */
             public function activate() {
+                  
+                  $installer = new Installer();
+                  $installer->run();
+                  
                   $installed = get_option( 'puc_installed' );
                   
                   if( ! $installed ) {

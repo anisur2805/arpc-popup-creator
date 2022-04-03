@@ -67,7 +67,7 @@ class Metabox {
 
         // Use get_post_meta to retrieve an existing value from the database.
         $delay = get_post_meta( $post->ID, 'pc_show_in_delay', true );
-        $auto_hide2 = get_post_meta( $post->ID, 'pc_auto_hide_pu', true );
+        $auto_hide = get_post_meta( $post->ID, 'pc_auto_hide_pu', true );
         $image_size = get_post_meta( $post->ID, 'pc_image_size', true );
         $show_on_exit = get_post_meta( $post->ID, 'pc_show_on_exit', true );
         $url = get_post_meta( $post->ID, 'pc_url', true );
@@ -89,7 +89,7 @@ class Metabox {
                 <label for="pc_auto_hide_pu">
                     <?php _e( 'Auto Hide', 'popup-creator' ); ?>
                 </label>
-                <input type="checkbox" name="pc_auto_hide_pu" id="pc_auto_hide_pu" value="1" <?php checked( 1, $this->get_popup_metabox_value( $auto_hide2 ) );?> /> <?php echo esc_attr( $auto_hide2 ); ?>
+                <input type="checkbox" name="pc_auto_hide_pu" id="pc_auto_hide_pu" value="<?php echo esc_attr( $auto_hide ); ?>" <?php checked( 1, $this->get_popup_metabox_value( $auto_hide ) );?> />
             </div>
             
             <div class="apc_form_group">
@@ -167,10 +167,6 @@ class Metabox {
             update_post_meta($post_id, 'pc_url', sanitize_text_field( $_POST['pc_url'] ) );
         }
         
-        if( isset( $_POST['pc_auto_hide_pu'] ) ) {
-            update_post_meta($post_id, 'pc_auto_hide_pu', sanitize_text_field( $_POST['pc_auto_hide_pu'] ) );
-        }
-        
         if( isset( $_POST['pc_image_size'] ) ) {
             update_post_meta($post_id, 'pc_image_size', sanitize_text_field( $_POST['pc_image_size'] ) );
         }
@@ -191,6 +187,12 @@ class Metabox {
             update_post_meta($post_id, 'pc_active', true );
         } else {
             update_post_meta($post_id, 'pc_active', false );
+        }
+        
+        if( isset( $_POST['pc_auto_hide_pu'] ) ) {
+            update_post_meta($post_id, 'pc_auto_hide_pu', true );
+        } else {
+            update_post_meta($post_id, 'pc_auto_hide_pu', false );
         }
              
     }
