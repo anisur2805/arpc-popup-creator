@@ -19,14 +19,19 @@ class Admin {
             // Add Menu page 
             new Menu();
             
+            // Instantiate Front End Popup
+            new Post_Type();            
+            
             if( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
                   new Ajax();
             }
             
+            add_action( 'admin_head', array( $this, 'load_assets' ) );
+      }
+      
+      public function load_assets() {
             wp_enqueue_style( 'puc-metabox' );
             wp_enqueue_script( 'puc-main-ajax' );
-
-            // Instantiate Front End Popup
-            new Post_Type();
       }
+      
 }
