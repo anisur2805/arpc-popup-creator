@@ -100,6 +100,20 @@ class Metabox {
             </div>
             
             <div class="apc_form_group">
+                <label for="pc_title">
+                    <?php _e( 'Show in Delay', 'popup-creator' ); ?>
+                </label>
+                <input class="regular-text" type="text" id="pc_title" name="pc_title" placeholder="5000" value="<?php echo esc_attr( $delay ); ?>" size="25" />
+            </div>
+            
+            <div class="apc_form_group">
+                <label for="pc_show_in_delay">
+                    <?php _e( 'Show in Delay', 'popup-creator' ); ?>
+                </label>
+                <input class="regular-text" type="text" id="pc_show_in_delay" name="pc_show_in_delay" placeholder="5000" value="<?php echo esc_attr( $delay ); ?>" size="25" />
+            </div>
+            
+            <div class="apc_form_group">
                 <label for="pc_show_on_exit">
                     <?php _e( 'Show when', 'popup-creator' ); ?>
                 </label>

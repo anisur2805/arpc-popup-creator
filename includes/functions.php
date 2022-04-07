@@ -189,3 +189,17 @@ function input_field( $type = "text", $id='', $name='', $placeholder='', $value=
                   $class 
       );
 }
+
+
+// Change Add title to 
+function apc_title_text( $title ){
+      $screen = get_current_screen();
+    
+      if  ( 'popup' == $screen->post_type ) {
+           $title = __( 'Add popup title', 'popup-creator' );
+      }
+    
+      return $title;
+ }
+    
+ add_filter( 'enter_title_here', 'apc_title_text' );
