@@ -74,7 +74,7 @@ function apc_insert_popup( $args = [] ) {
  *
  * @return array
  */
-function opp_ac_get_addresses( $args = [] ) {
+function apc_get_addresses( $args = [] ) {
  global $wpdb;
 
  $defaults = [
@@ -104,7 +104,7 @@ function opp_ac_get_addresses( $args = [] ) {
  *
  * @return int
  */
-function oop_ac_addresses_count() {
+function apc_addresses_count() {
  global $wpdb;
 
  return (int) $wpdb->get_var( "SELECT count(id) FROM {$wpdb->prefix}ac_addresses " );
@@ -117,7 +117,7 @@ function oop_ac_addresses_count() {
  *
  * @return object
  */
-function oop_ac_get_address( $id ) {
+function apc_get_address( $id ) {
  global $wpdb; // Global WPDB class object
 
  $address = wp_cache_get( 'book-' . $id, 'address' );
@@ -142,7 +142,7 @@ function oop_ac_get_address( $id ) {
  *
  * @return int|boolean
  */
-function oop_ac_delete_address( $id ) {
+function apc_delete_address( $id ) {
  global $wpdb;
 
  return $wpdb->delete(
@@ -164,3 +164,28 @@ function register_image_size() {
 
 register_image_size();
 
+// Form input field and label 
+function inputLabel( $for, $name ) {
+      echo '<label for="' . $for . '">' . __( $name, 'popup-creator' ) . '</label>';
+}
+
+function input_field( $type = "text", $id='', $name='', $placeholder='', $value='', $class = "regular-text apc_input" ) {
+      printf(
+            '<input 
+                  type="%s" 
+                  id="%s" 
+                  name="%s" 
+                  placeholder="%s" 
+                  value="%s" 
+                  class="%s" 
+                  require
+            />',
+                  
+                  $type, 
+                  $id, 
+                  $name, 
+                  $placeholder, 
+                  $value, 
+                  $class 
+      );
+}

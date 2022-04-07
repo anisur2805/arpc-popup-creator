@@ -1,7 +1,11 @@
 #popup-creator {
 	background-color: #fff;
-	padding: 50px;
+	padding: 30px 30px;
 	position: relative;
+	max-width: 600px;
+	width: 100%;
+	box-sizing: border-box;
+	border-radius: 4px;
 }
 
 .plainmodal-overlay {
@@ -22,4 +26,71 @@
 	cursor: pointer;
 	border: 0 !important;
 	background: transparent !important;
+}
+
+.popup-creator-body-inner {
+	display: flex;
+	align-items: center;
+	min-height: 200px;
+}
+
+.popup-creator-body .popup-image {
+	max-width: 250px;
+	width: 100%;
+	text-align: center;
+}
+
+/* .plainmodal.plainoverlay {
+	display: block !important;
+	opacity: 1;
+} */
+.popup-creator-body-header {
+	text-align: center;
+}
+
+.popup-creator-body .apc-popup-modal-title {
+	font-weight: 700;
+	font-size: 24px;
+	line-height: 30px;
+	letter-spacing: 0.1px;
+	text-transform: capitalize;
+}
+.popup-creator-body .apc-popup-modal-title + div {
+	font-size: 16px;
+	line-height: 24px;
+	margin: 15px 0 20px;
+	font-weight: 400;
+	color: #333;
+}
+
+.popup-creator-body .form-group-row + .form-group-row {
+	margin-top: 12px;
+}
+
+.popup-creator-body .form-group-row .apc_input {
+	font-size: 14px;
+	width: 100%;
+	height: 45px;
+	padding-left: 10px;
+	color: #333;
+	border: 2px solid #eceff8;
+	background: #eceff8;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	box-sizing: border-box;
+}
+.popup-creator-body .form-group-row .apc_submit {
+	color: #fff;
+	border: 0;
+	background: green;
+	font-size: 20px;
+	line-height: 24px;
+	font-weight: 700;
+	text-transform: uppercase;
+	transition: all 0.4s ease-in;
+}
+
+.popup-creator-body .form-group-row .apc_submit:hover {
+	color: green;
+	background: #ddd;
 }

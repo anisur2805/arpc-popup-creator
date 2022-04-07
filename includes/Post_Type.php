@@ -29,7 +29,7 @@ class Post_Type
                   'label'               => __( 'Popups', 'popup-creator' ),
                   'description'         => __( 'Popup Description', 'popup-creator' ),
                   'labels'              => $labels,
-                  'supports'            => array( 'title', 'thumbnail' ),
+                  'supports'            => array( 'title', 'editor', 'thumbnail' ),
                   'hierarchical'        => false,
                   'public'              => false,
                   'publicly_queryable'  => true,
