@@ -1,5 +1,5 @@
 <?php
-namespace APC\Popup;
+namespace ARPC\Popup;
 
 /**
  * Installer class
@@ -11,12 +11,12 @@ class Installer {
     }
 
     public function add_version() {
-        $installed = get_option( 'apc_popup_installed' );
+        $installed = get_option( 'arpc_popup_installed' );
         if ( !$installed ) {
-            update_option( 'apc_popup_installed', time() );
+            update_option( 'arpc_popup_installed', time() );
         }
 
-        update_option( 'apc_popup_version', PUC_VERSION );
+        update_option( 'arpc_popup_version', ARPC_VERSION );
     }
 
     public function create_tables() {
@@ -24,7 +24,7 @@ class Installer {
 
         $charset_collate = $wpdb->get_charset_collate();
 
-        $schema = "CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}apc_popup`(
+        $schema = "CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}arpc_popup`(
             id int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
             name varchar(100) NOT NULL DEFAULT '',
             pc_active int(1) DEFAULT NULL,

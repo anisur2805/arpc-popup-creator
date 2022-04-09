@@ -1,5 +1,5 @@
 <?php 
-namespace APC\Popup;
+namespace ARPC\Popup;
 /**
  * Popup creator post type main class file
  */
@@ -14,7 +14,7 @@ class Post_Type
                   'name'               => __( 'Popups Creator', 'popup-creator' ),
                   'singular_name'      => __( 'Popup Creator', 'popup-creator' ),
                   'featured_image'     => __( 'Popup Image', 'popup-creator' ),
-                  'set_featured_image' => __( 'Set Popup Image', 'popup-creator' ),
+                  'set_featured_image' => __( 'Set Popup Image as Background', 'popup-creator' ),
                   'search_items'       => __('Search Popup', 'popup-creator' ),
                   'all_items'          => __('All Popups', 'popup-creator'),
                   'add_new_item'       => __('Add New Popup', 'popup-creator'),
@@ -45,6 +45,6 @@ class Post_Type
                   'rewrite'             => array( 'slug' => 'popup', 'with_front' => true ),
                   'menu_icon'           => 'dashicons-screenoptions',
             );
-            register_post_type( 'popup', $args );
+            register_post_type( 'arpc_popup', $args );
       }
 }

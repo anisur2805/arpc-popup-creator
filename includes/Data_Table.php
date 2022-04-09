@@ -1,14 +1,14 @@
 <?php
 
-namespace APC\Popup;
+namespace ARPC\Popup;
 
 class Data_Table {
 
       public function __construct() {
-            add_action( 'manage_popup_posts_columns', array( $this, 'add_columns' ) );
-            add_filter( 'manage_edit-popup_sortable_columns', array( $this, 'columns_sortable' ) );
+            add_action( 'manage_arpc_popup_posts_columns', array( $this, 'add_columns' ) );
+            add_filter( 'manage_edit-arpc_popup_sortable_columns', array( $this, 'columns_sortable' ) );
             add_action( 'pre_get_posts', array( $this, 'columns_sorting_logic' ) );
-            add_filter( 'manage_popup_posts_custom_column', array( $this, 'column_content' ), 10, 2 );
+            add_filter( 'manage_arpc_popup_posts_custom_column', array( $this, 'column_content' ), 10, 2 );
       }
 
       /**
@@ -17,12 +17,12 @@ class Data_Table {
       public function add_columns( $columns ) {
             unset( $columns['date'] );
             unset( $columns['title'] );
-            $columns['title']     = __( 'Popup Title', 'popup-creator' );
-            $columns['active']    = __( 'Is Active', 'popup-creator' );
-            $columns['show_on']   = __( 'Display On Page', 'popup-creator' );
-            $columns['show_time'] = __( 'Display Time', 'popup-creator' );
-            $columns['image']     = __( 'Thumbnail', 'popup-creator' );
-            $columns['date']      = __( 'Date', 'popup-creator' );
+            $columns['title']     = __( 'Popup Name','arpc-popup-creator' );
+            $columns['active']    = __( 'Is Active','arpc-popup-creator' );
+            $columns['show_on']   = __( 'Display On Page','arpc-popup-creator' );
+            $columns['show_time'] = __( 'Display Time','arpc-popup-creator' );
+            $columns['image']     = __( 'Thumbnail','arpc-popup-creator' );
+            $columns['date']      = __( 'Date','arpc-popup-creator' );
             
             return $columns;
       }
@@ -36,16 +36,16 @@ class Data_Table {
                         echo get_the_post_thumbnail( $post_id, 'popup-creator-thumbnail' );
                         break;
                   case 'show_on':
-                        $page_id = get_post_meta( $post_id, 'pc_ww_show', true );
+                        $page_id = get_post_meta( $post_id, 'arpc_ww_show', true );
                         echo get_the_title( $page_id );
                         break;
                   case 'show_time':
-                        $show_time = get_post_meta( $post_id, 'pc_show_on_exit', true );
+                        $show_time = get_post_meta( $post_id, 'arpc_show_on_exit', true );
                         echo ( $show_time == 1 ? 'On Page Exit' : 'On Page Reload' );
                         break;
                   case 'active':
-                        $is_active = get_post_meta( $post_id, 'pc_active', true );
-                        echo $is_active ? __( 'Yes', 'popup-creator' ) : __( 'No', 'popup-creator' );
+                        $is_active = get_post_meta( $post_id, 'arpc_active', true );
+                        echo $is_active ? __( 'Yes','arpc-popup-creator' ) : __( 'No','arpc-popup-creator' );
                         break;
 
                   default:
@@ -74,17 +74,17 @@ class Data_Table {
 
             if ( 'show_on' === $query->get( 'orderby' ) ) {
                   $query->set( 'orderby', 'meta_value' );
-                  $query->set( 'meta_key', 'pc_ww_show' );
+                  $query->set( 'meta_key', 'arpc_ww_show' );
             }
 
             if ( 'active' === $query->get( 'orderby' ) ) {
                   $query->set( 'orderby', 'meta_value' );
-                  $query->set( 'meta_key', 'pc_active' );
+                  $query->set( 'meta_key', 'arpc_active' );
             }
 
             if ( 'show_time' === $query->get( 'orderby' ) ) {
                   $query->set( 'orderby', 'meta_value' );
-                  $query->set( 'meta_key', 'pc_show_on_exit' );
+                  $query->set( 'meta_key', 'arpc_show_on_exit' );
             }
       }
 }

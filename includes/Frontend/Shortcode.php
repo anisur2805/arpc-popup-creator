@@ -1,12 +1,15 @@
 <?php
 
-namespace APC\Popup\Frontend;
+namespace ARPC\Popup\Frontend;
 
 class Shortcode {
       public function __construct() {
-            add_shortcode('newsletter', array($this, 'render_shortcode'));
+            
+            add_shortcode('arpc_newsletter', array($this, 'render_shortcode'));
       }
 
+     
+      
       public function render_shortcode($atts, $content) {
             $atts = shortcode_atts(array(
                   'title'           => __('Sign up for Snappy News!', 'popup-creator'),

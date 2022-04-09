@@ -1,11 +1,11 @@
 <?php
 
-namespace APC\Popup;
+namespace ARPC\Popup;
 
-use APC\Popup\Admin\Menu;
-use APC\Popup\Data_Table;
-use APC\Popup\Metabox;
-use APC\Popup\Post_Type;
+use ARPC\Popup\Admin\Menu;
+use ARPC\Popup\Data_Table;
+use ARPC\Popup\Metabox;
+use ARPC\Popup\Post_Type;
 
 class Admin {
       public function __construct() {
@@ -30,8 +30,8 @@ class Admin {
       }
       
       public function load_assets() {
-            wp_enqueue_style( 'puc-metabox' );
-            wp_enqueue_script( 'puc-main-ajax' );
+            wp_enqueue_style( 'arpc-metabox' );
+            wp_enqueue_script( 'arpc-main-ajax' );
       }
       
 }

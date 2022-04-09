@@ -1,8 +1,8 @@
 <?php 
-namespace APC\Popup;
+namespace ARPC\Popup;
 
-use APC\Popup\Frontend\Modal;
-use APC\Popup\Frontend\Shortcode;
+use ARPC\Popup\Frontend\Modal;
+use ARPC\Popup\Frontend\Shortcode;
 
 class Frontend {
       public function __construct() {

@@ -1,6 +1,6 @@
 <?php
 
-namespace APC\Popup;
+namespace ARPC\Popup;
 
 class Assets {
   public function __construct() {
@@ -11,20 +11,20 @@ class Assets {
   public function get_scripts() {
     return [
       'plain-modal' => [
-        'src'     => PUC_ASSETS . '/js/jquery.plainmodal.min.js',
-        'version' => filemtime(PUC_PATH . '/assets/js/jquery.plainmodal.min.js'),
+        'src'     => ARPC_ASSETS . '/js/jquery.plainmodal.min.js',
+        'version' => filemtime(ARPC_PATH . '/assets/js/jquery.plainmodal.min.js'),
         'deps'    => ['jquery'],
       ],
 
-      'puc-main'    => [
-        'src'     => PUC_ASSETS . '/js/popup-main.js',
-        'version' => filemtime(PUC_PATH . '/assets/js/popup-main.js'),
+      'arpc-main'    => [
+        'src'     => ARPC_ASSETS . '/js/popup-main.js',
+        'version' => filemtime(ARPC_PATH . '/assets/js/popup-main.js'),
         'deps'    => ['jquery'],
       ],
       
-      'puc-main-ajax'    => [
-        'src'     => PUC_ASSETS . '/js/main-ajax.js',
-        'version' => filemtime(PUC_PATH . '/assets/js/main-ajax.js'),
+      'arpc-main-ajax'    => [
+        'src'     => ARPC_ASSETS . '/js/main-ajax.js',
+        'version' => filemtime(ARPC_PATH . '/assets/js/main-ajax.js'),
         'deps'    => ['jquery'],
       ],
     ];
@@ -32,14 +32,14 @@ class Assets {
 
   public function get_styles() {
     return [
-      'puc-metabox' => [
-        'src'     => PUC_ASSETS . '/css/metabox.css',
-        'version' => filemtime(PUC_PATH . '/assets/css/metabox.css'),
+      'arpc-metabox' => [
+        'src'     => ARPC_ASSETS . '/css/metabox.css',
+        'version' => filemtime(ARPC_PATH . '/assets/css/metabox.css'),
       ],
 
-      'puc-style'   => [
-        'src'     => PUC_ASSETS . '/css/puc-style.css',
-        'version' => filemtime(PUC_PATH . '/assets/css/puc-style.css'),
+      'arpc-style'   => [
+        'src'     => ARPC_ASSETS . '/css/puc-style.css',
+        'version' => filemtime(ARPC_PATH . '/assets/css/puc-style.css'),
       ],
     ];
   }
@@ -59,8 +59,8 @@ class Assets {
       wp_register_style($handle, $style['src'], $deps, $style['version']);
     }
 
-    wp_localize_script( 'main-ajax', 'pucPopup', [
-      'nonce'   => wp_create_nonce( 'puc-ajax-nonce' ),
+    wp_localize_script( 'arpc-main-ajax', 'arpcPopup', [
+      'nonce'   => wp_create_nonce( 'arpc-ajax-nonce' ),
       'ajaxUrl' => admin_url( 'admin-ajax.php' ),
       'confirm' => __( 'Are you sure?', 'oop-academy' ),
       'error'   => __( 'Something went wrong', 'oop-academy' ),

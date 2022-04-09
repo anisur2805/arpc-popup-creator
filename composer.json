@@ -1,22 +1,22 @@
 {
-    "name": "anisur2805/pc-popup-creator",
-    "description": "A plugin for Popup Modal",
+	"name": "anisur2805/arpc-popup-creator",
+	"description": "A plugin for Popup Modal",
 	"type": "wordpress-plugin",
 	"license": "GPLv2",
-    "autoload": {
-        "psr-4": {
-            "APC\\Popup\\": "includes/"
-        },
-        "files": [
+	"autoload": {
+		"psr-4": {
+			"ARPC\\Popup\\": "includes/"
+		},
+		"files": [
 			"includes/functions.php"
 		]
-    },
-    "authors": [
-        {
-            "name": "Anisur Rahman",
+	},
+	"authors": [
+		{
+			"name": "Anisur Rahman",
 			"email": "anisur2805@gmail.com"
-        }
-    ],
-    "minimum-stability": "dev",
-    "require": {}
+		}
+	],
+	"minimum-stability": "dev",
+	"require": {}
 }

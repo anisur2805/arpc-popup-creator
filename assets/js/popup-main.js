@@ -7,12 +7,12 @@
 		PlainModal.closeByEscKey = false;
 		PlainModal.closeByOverlay = false;
 
-		var modalsElms = document.querySelectorAll(".popup-creator");
+		var modalsElms = document.querySelectorAll(".arpc-popup-creator");
 
 		for (var i = 0; i < modalsElms.length; i++) {
 			var modalContent = modalsElms[i];
 			var modal = new PlainModal(modalContent);
-			modal.closeButton = modalContent.querySelector(".close-button");
+			modal.closeButton = modalContent.querySelector(".arpc-close-button");
 
 			var delay = modalsElms[i].getAttribute("data-delay");
 			var isExit = modalsElms[i].getAttribute("data-exit");

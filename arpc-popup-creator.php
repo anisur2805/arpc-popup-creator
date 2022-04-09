@@ -1,20 +1,20 @@
 <?php
  /**
-  * Plugin Name: PC Popup Creator
+  * Plugin Name: Popup Creator
   * Description: Awesome Popup Creator
-  * Plugin URI:  http://github.com/anisur2805/pc-popup-creator
+  * Plugin URI:  http://github.com/anisur2805/arpc-popup-creator
   * Version:     1.0
   * Author:      Anisur Rahman
   * Author URI:  http://github.com/anisur2805
-  * Text Domain: popup-creator
+  * Text Domain: arpc-popup-creator
   * License:     GPL v2 or later
   * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
   */
 
-use APC\Popup\Admin;
-use APC\Popup\Assets;
-use APC\Popup\Frontend;
-use APC\Popup\Installer;
+use ARPC\Popup\Admin;
+use ARPC\Popup\Assets;
+use ARPC\Popup\Frontend;
+use ARPC\Popup\Installer;
 
 if ( !defined( 'ABSPATH' ) ) {
       exit;
@@ -22,7 +22,7 @@ if ( !defined( 'ABSPATH' ) ) {
 
 require_once __DIR__ . "/vendor/autoload.php";
 
-      final class Popup_Creator {
+      final class ARPC_Popup_Creator {
             const version = '1.0';
             
             private function __construct() {
@@ -53,12 +53,12 @@ require_once __DIR__ . "/vendor/autoload.php";
              * @return void
              */
             public function define_constants() {
-                  define( 'PUC_VERSION', self::version );
-                  define( 'PUC_FILE', __FILE__ );
-                  define( "PUC_PATH", __DIR__ );
-                  define( "PUC_URL", plugins_url( '', __FILE__ ) );
-                  define( "PUC_ASSETS", PUC_URL . '/assets' );
-                  define( "PUC_INCLUDES", PUC_URL . "/includes" ); 
+                  define( 'ARPC_VERSION', self::version );
+                  define( 'ARPC_FILE', __FILE__ );
+                  define( "ARPC_PATH", __DIR__ );
+                  define( "ARPC_URL", plugins_url( '', __FILE__ ) );
+                  define( "ARPC_ASSETS", ARPC_URL . '/assets' );
+                  define( "ARPC_INCLUDES", ARPC_URL . "/includes" ); 
             }
             
             /**
@@ -69,13 +69,13 @@ require_once __DIR__ . "/vendor/autoload.php";
                   $installer = new Installer();
                   $installer->run();
                   
-                  $installed = get_option( 'puc_installed' );
+                  $installed = get_option( 'arpc_installed' );
                   
                   if( ! $installed ) {
-                        update_option( 'puc_installed', time() );
+                        update_option( 'arpc_installed', time() );
                   }
                   
-                  update_option( 'puc_version', PUC_VERSION );
+                  update_option( 'arpc_version', ARPC_VERSION );
             }
             
 
@@ -83,7 +83,7 @@ require_once __DIR__ . "/vendor/autoload.php";
              * Load plugin text domain 
              */
             public function init_plugin() {
-                  load_plugin_textdomain( 'popup-creator', false, plugin_dir_path( __FILE__ ) . 'languages' );
+                  load_plugin_textdomain( 'arpc-popup-creator', false, plugin_dir_path( __FILE__ ) . 'languages' );
                   
                   if( is_admin() ) {
                         // Instantiate Meta box
@@ -101,11 +101,11 @@ require_once __DIR__ . "/vendor/autoload.php";
 /**
  * Initialize the main plugin
  *
- * @return Popup_Creator
+ * @return ARPC_Popup_Creator
  */
-function puc_popup_creator() {
-      return Popup_Creator::init();
+function arpc_popup_creator() {
+      return ARPC_Popup_Creator::init();
 }
 
 // kick-off the plugin
-puc_popup_creator();
+arpc_popup_creator();
