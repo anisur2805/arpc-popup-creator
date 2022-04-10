@@ -27,6 +27,12 @@ class Assets {
         'version' => filemtime(ARPC_PATH . '/assets/js/main-ajax.js'),
         'deps'    => ['jquery'],
       ],
+      
+      'arpc-metabox-script'    => [
+        'src'     => ARPC_ASSETS . '/js/metabox.js',
+        'version' => filemtime(ARPC_PATH . '/assets/js/metabox.js'),
+        'deps'    => ['jquery'],
+      ],
     ];
   }
 
