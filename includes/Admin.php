@@ -12,6 +12,9 @@ class Admin {
 
             // Instantiate Data Table
             new Data_Table();
+            
+            // Instantiate Subscriber Data Table
+            // new Subscriber_Data_Table();
 
             //Instantiate Meta box
             new Metabox();

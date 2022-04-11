@@ -39,6 +39,12 @@ class Assets {
         'version' => filemtime(ARPC_PATH . '/assets/js/popup-form.js'),
         'deps'    => ['jquery'],
       ],
+      
+      'arpc-tabbed'    => [
+        'src'     => ARPC_ASSETS . '/js/tabbed.js',
+        'version' => filemtime(ARPC_PATH . '/assets/js/tabbed.js'),
+        'deps'    => [],
+      ],
     ];
   }
 
@@ -47,6 +53,11 @@ class Assets {
       'arpc-metabox' => [
         'src'     => ARPC_ASSETS . '/css/metabox.css',
         'version' => filemtime(ARPC_PATH . '/assets/css/metabox.css'),
+      ],
+      
+      'arpc-tabbed' => [
+        'src'     => ARPC_ASSETS . '/css/tabbed.css',
+        'version' => filemtime(ARPC_PATH . '/assets/css/tabbed.css'),
       ],
 
       'arpc-style'   => [

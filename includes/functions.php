@@ -16,8 +16,7 @@ function arpc_insert_popup( $args = [] ) {
 
  $defaults = [
   "name"       => '',
-  "address"    => '',
-  "phone"      => '',
+  "email"    => '',
   "created_by" => get_current_user_id(),
   "created_at" => current_time( 'mysql' ),
  ];
@@ -30,11 +29,10 @@ function arpc_insert_popup( $args = [] ) {
   unset( $data['id'] );
 
   $updated = $wpdb->update(
-   "{$wpdb->prefix}ac_addresses",
+   "{$wpdb->prefix}arpc_subscriber",
    $data,
    ['id' => $id],
    [
-    '%s',
     '%s',
     '%s',
     '%d',
@@ -47,12 +45,11 @@ function arpc_insert_popup( $args = [] ) {
  } else {
 
   $inserted = $wpdb->insert(
-   "{$wpdb->prefix}ac_addresses",
+   "{$wpdb->prefix}arpc_subscriber",
    $data,
    [
     '%s',
-    '%s',
-    '%s',
+    '%s', 
     '%d',
     '%s',
    ]
