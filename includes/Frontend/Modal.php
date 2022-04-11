@@ -13,6 +13,7 @@ class Modal {
             wp_enqueue_style('arpc-style');
             wp_enqueue_script('plain-modal');
             wp_enqueue_script('arpc-main');
+            wp_enqueue_script('arpc-modal-form');
 
             $args = array(
                   'post_type'   => 'arpc_popup',

@@ -36,3 +36,10 @@
 .arpc_form_group div span + span {
 	margin-top: 10px;
 }
+
+
+#arpc_image_container img {
+	max-width: 100px;
+	height: auto;
+	margin-top: 12px;
+  }

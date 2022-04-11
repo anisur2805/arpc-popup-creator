@@ -83,8 +83,8 @@ class Metabox {
         $is_active = get_post_meta( $post->ID, 'arpc_active', true );
         $selected_page = get_post_meta( $post->ID, 'arpc_ww_show', true );
         
-        $image_id  = get_post_meta($post->ID, 'obm_image_id', true);
-    $image_url = get_post_meta($post->ID, 'obm_image_url', true);
+        $image_id  = get_post_meta($post->ID, 'arpc_image_id', true);
+        $image_url = get_post_meta($post->ID, 'arpc_image_url', true);
 
         // Display the form, using the current value.
         ?>
@@ -164,13 +164,13 @@ class Metabox {
             </div>
             
             <div class="arpc_form_group">
-                <label><?php _e('Upload Image for Background', 'arpc-popup-creator') ?></label>
+                <label><?php _e('Upload Image for Feature', 'arpc-popup-creator') ?></label>
                 <div id="myImageMetaBox">
-                    <button class="button" id="upload_image"><?php _e('Upload Image', 'arpc-popup-creator') ?></button>
-                    <button class="hidden button" name="obm_image_remove" id="delete_custom_img">Remove Image</button>
-                    <input type="hidden" name="obm_image_id" id="obm_image_id" value={$image_id} />
-                    <input type="hidden" name="obm_image_url" id="obm_image_url" value={$image_url} />
-                    <div id="image_container"></div>
+                    <button class="button" id="arpc_upload_image"><?php _e('Upload Image', 'arpc-popup-creator') ?></button>
+                    <button class="hidden button" name="arpc_image_remove" id="arpc_delete_custom_img">Remove Image</button>
+                    <input type="hidden" name="arpc_image_id" id="arpc_image_id" value="<?php echo $image_id; ?>" />
+                    <input type="hidden" name="arpc_image_url" id="arpc_image_url" value="<?php echo $image_url; ?>" />
+                    <div id="arpc_image_container"></div>
                 </div>
             </div>
             
@@ -251,6 +251,14 @@ class Metabox {
             update_post_meta($post_id, 'arpc_auto_hide_pu', true );
         } else {
             update_post_meta($post_id, 'arpc_auto_hide_pu', false );
+        }
+        
+        if( isset( $_POST['arpc_image_id'] ) ) {
+            update_post_meta($post_id, 'arpc_image_id', sanitize_text_field( $_POST['arpc_image_id'] ) );
+        }
+        
+        if( isset( $_POST['arpc_image_url'] ) ) {
+            update_post_meta($post_id, 'arpc_image_url', sanitize_text_field( $_POST['arpc_image_url'] ) );
         }
              
     }

@@ -33,6 +33,12 @@ class Assets {
         'version' => filemtime(ARPC_PATH . '/assets/js/metabox.js'),
         'deps'    => ['jquery'],
       ],
+      
+      'arpc-modal-form'    => [
+        'src'     => ARPC_ASSETS . '/js/popup-form.js',
+        'version' => filemtime(ARPC_PATH . '/assets/js/popup-form.js'),
+        'deps'    => ['jquery'],
+      ],
     ];
   }
 
@@ -68,8 +74,15 @@ class Assets {
     wp_localize_script( 'arpc-main-ajax', 'arpcPopup', [
       'nonce'   => wp_create_nonce( 'arpc-ajax-nonce' ),
       'ajaxUrl' => admin_url( 'admin-ajax.php' ),
-      'confirm' => __( 'Are you sure?', 'oop-academy' ),
-      'error'   => __( 'Something went wrong', 'oop-academy' ),
+      'confirm' => __( 'Are you sure?', 'arpc-popup-creator' ),
+      'error'   => __( 'Something went wrong', 'arpc-popup-creator' ),
+    ] );
+    
+     wp_localize_script( 'arpc-modal-form', 'arpcModalForm', [
+      // 'nonce'   => wp_create_nonce( 'arpc_modal_form' ),
+      'ajaxUrl' => admin_url( 'admin-ajax.php' ),
+      'success' => __( 'Thanks for subscribe', 'arpc-popup-creator' ),
+      'error'   => __( 'Something went wrong', 'arpc-popup-creator' ),
     ] );
 
   }

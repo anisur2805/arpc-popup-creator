@@ -1,18 +1,18 @@
 var frame;
-(function ($) { 
+;(function ($) { 
 	// Set all variables to be used in scope
 	var frame,
 		metaBox = $("#myImageMetaBox"), // Your meta box id here
-		addImgLink = metaBox.find("#upload_image"),
-		delImgLink = metaBox.find("#delete_custom_img"),
-		imgContainer = metaBox.find("#image_container"),
-		imgIdInput = metaBox.find("#obm_image_id"),
-		imgURLInput = metaBox.find("#obm_image_url")
+		addImgLink = metaBox.find("#arpc_upload_image"),
+		delImgLink = metaBox.find("#arpc_delete_custom_img"),
+		imgContainer = metaBox.find("#arpc_image_container"),
+		imgIdInput = metaBox.find("#arpc_image_id"),
+		imgURLInput = metaBox.find("#arpc_image_url")
 
 	$(document).ready(function () {
 
 		// for image upload
-		let image_url = $("#obm_image_url").val();
+		let image_url = $("#arpc_image_url").val();
 		if (image_url.length > 1) {
 			imgContainer.html(`<img src='${image_url}' />`);
 		}
