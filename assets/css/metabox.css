@@ -1,3 +1,5 @@
+.arpc_settings__form label,
+.arpc_settings__form2 label,
 .arpc_metabox_wrapper label {
 	min-width: 240px;
 	font-weight: 600;
@@ -8,6 +10,8 @@
 	margin-top: 24px;
 }
 
+.arpc_settings__form2,
+.arpc_settings__form,
 .arpc_metabox_wrapper {
 	padding-top: 8px;
 }
@@ -42,4 +46,14 @@
 	max-width: 100px;
 	height: auto;
 	margin-top: 12px;
+  }
+
+  .arpc_settings__form2,
+  .arpc_settings__form {
+	  margin-bottom: 40px;
+  }
+
+  .arpc_settings__form .arpc_submit_address_form2,
+  .arpc_settings__form .arpc_submit_address_form {
+	  margin-top: 25px;
   }

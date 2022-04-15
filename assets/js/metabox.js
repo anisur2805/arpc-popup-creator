@@ -1,5 +1,5 @@
 var frame;
-;(function ($) { 
+; (function ($) {
 	// Set all variables to be used in scope
 	var frame,
 		metaBox = $("#myImageMetaBox"), // Your meta box id here
@@ -12,8 +12,8 @@ var frame;
 	$(document).ready(function () {
 
 		// for image upload
-		let image_url = $("#arpc_image_url").val();
-		if (image_url.length > 1) {
+		var image_url = $("#arpc_image_url").val();
+		if ( image_url.length ) {
 			imgContainer.html(`<img src='${image_url}' />`);
 		}
 
@@ -58,6 +58,19 @@ var frame;
 			frame.open();
 			return false;
 		});
+
+		// Toggle auto hide based on checkbox
+		var auto_hide_input = document.querySelector(".auto_hide_gp input");
+		var auto_hide_in_gp = document.querySelector(".auto_hide_in_gp");
+		auto_hide_in_gp.style.display = 'none';
+
+		auto_hide_input.addEventListener("change", function () {
+			if (this.checked) {
+				auto_hide_in_gp.style.display = 'flex';
+			} else {
+				auto_hide_in_gp.style.display = 'none';
+			}
+		});
 	});
-	
+
 })(jQuery);

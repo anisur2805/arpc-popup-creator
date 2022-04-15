@@ -45,6 +45,14 @@ class Assets {
         'version' => filemtime(ARPC_PATH . '/assets/js/tabbed.js'),
         'deps'    => [],
       ],
+
+      'arpc-form'         => [
+        'src'     => ARPC_ASSETS . '/js/form.js',
+        'version' => filemtime(ARPC_PATH . '/assets/js/form.js'),
+        'deps'    => [],
+      ],
+
+
     ];
   }
 
@@ -86,14 +94,23 @@ class Assets {
       'nonce'   => wp_create_nonce('arpc-ajax-nonce'),
       'ajaxUrl' => admin_url('admin-ajax.php'),
       'confirm' => __('Are you sure?', 'arpc-popup-creator'),
-      'error'   => __('Something went wrong', 'arpc-popup-creator'),
+      'error'   => __('Something went wrong in Admin area', 'arpc-popup-creator'),
+      'success'   => __('Submitted successfully', 'arpc-popup-creator'),
     ]);
 
     wp_localize_script('arpc-modal-form', 'arpcModalForm', [
-      // 'nonce'   => wp_create_nonce( 'arpc_modal_form' ),
+      'nonce'   => wp_create_nonce( 'arpc_modal_form' ),
       'ajaxUrl' => admin_url('admin-ajax.php'),
       'success' => __('Thanks for subscribe', 'arpc-popup-creator'),
-      'error'   => __('Something went wrong', 'arpc-popup-creator'),
+      'error'   => __('Something went wrong in Front area', 'arpc-popup-creator'),
     ]);
+
+    wp_localize_script('arpc-form', 'arpcForm', [
+      'nonce'   => wp_create_nonce( 'arpc_modal_form' ),
+      'ajaxUrl' => admin_url('admin-ajax.php'),
+      'success' => __('Thanks for subscribe', 'arpc-popup-creator'),
+      'error'   => __('Something went wrong in Front area', 'arpc-popup-creator'),
+    ]);
+
   }
 }

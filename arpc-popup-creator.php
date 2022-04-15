@@ -12,6 +12,7 @@
   */
 
 use ARPC\Popup\Admin;
+use ARPC\Popup\Ajax;
 use ARPC\Popup\Assets;
 use ARPC\Popup\Frontend;
 use ARPC\Popup\Installer;
@@ -84,6 +85,10 @@ require_once __DIR__ . "/vendor/autoload.php";
              */
             public function init_plugin() {
                   load_plugin_textdomain( 'arpc-popup-creator', false, plugin_dir_path( __FILE__ ) . 'languages' );
+                  
+                  if( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
+                        new Ajax();
+                  }
                   
                   if( is_admin() ) {
                         // Instantiate Meta box

@@ -1,0 +1,4 @@
+wp_nonce_field();
+wp_create_nonce();
+wp_nonce_url();
+
