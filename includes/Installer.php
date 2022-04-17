@@ -77,9 +77,9 @@ class Installer {
         $schema = "CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}arpc_users`(
             id int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
             name varchar(100) NOT NULL DEFAULT '', 
-            email varchar(10) DEFAULT NULL,
-            phone varchar(10) DEFAULT NULL,
-            address varchar(10) DEFAULT NULL,
+            email varchar(100) DEFAULT NULL,
+            phone varchar(100) DEFAULT NULL,
+            address varchar(100) DEFAULT NULL,
             created_at DATETIME NOT NULL,
             created_by BIGINT(20) UNSIGNED NOT NULL,
             PRIMARY KEY (`id`)

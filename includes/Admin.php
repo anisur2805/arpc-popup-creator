@@ -6,13 +6,18 @@ use ARPC\Popup\Admin\Menu;
 use ARPC\Popup\Data_Table;
 use ARPC\Popup\Metabox;
 use ARPC\Popup\Post_Type;
+use ARPC\Popup\Addresses;
+use ARPC\Popup\Traits\Form_Error;
 
 class Admin {
-    public $errors = [];
+
+    use Form_Error;
 
     public function __construct() {
+        // Instantiate Address
+        $address = new Addresses();
 
-        $this->dispatch_actions();
+        $this->dispatch_actions( $address );
 
         // Instantiate Data Table
         new Data_Table();
@@ -24,78 +29,31 @@ class Admin {
         new Metabox();
 
         // Add Menu page
-        new Menu();
+        new Menu( $address );
 
         // Instantiate Front End Popup
         new Post_Type();
 
-        add_action( 'admin_head', array( $this, 'load_assets' ) );
+        add_action('admin_head', array($this, 'load_assets'));
+
+        // add_action('admin_menu', [$this, 'admin_form_menu']);
     }
 
-    public function dispatch_actions() {
-        add_action( 'admin_init', array( $this, 'form_handler' ) );
+    public function admin_form_menu() {
+        $capability = 'manage_options';
+        $parent_slug = 'edit.php?post_type=arpc_popup';
+        add_submenu_page($parent_slug, __('Addresses', 'arpc-popup-creator'), __('Addresses', 'arpc-popup-creator'), $capability, 'arpc-address-form', [$this, 'Admin_Form_page']);
+    }
+
+    public function Admin_Form_page() {
+        include __DIR__ . '/Admin/Addresses/AddressList.php';
+    }
+    public function dispatch_actions( $address ) {
+        add_action('admin_init', array( $address, 'form_handler'));
     }
 
     public function load_assets() {
-        wp_enqueue_style( 'arpc-metabox' );
-        wp_enqueue_script( 'arpc-main-ajax' );
-    }
-
-    public function form_handler() {
-
-        if ( !isset( $_POST['submit_new_form'] ) ) {
-            return;
-        }
-
-        if ( !current_user_can( 'manage_options' ) ) {
-            return;
-        }
-
-        if ( !wp_verify_nonce( $_REQUEST['_wpnonce'], 'new-form' ) ) {
-            wp_die( 'Are you cheating?' );
-        }
-
-        $name  = isset( $_POST['name'] ) ? sanitize_text_field( $_POST['name'] ) : '';
-        $email = isset( $_POST['email'] ) ? sanitize_email( $_POST['email'] ) : '';
-        $phone = isset( $_POST['phone'] ) ? sanitize_text_field( $_POST['phone'] ) : '';
-        $address  = isset( $_POST['address'] ) ? wc_sanitize_textarea( $_POST['address'] ) : '';
-
-        if ( empty( $name ) ) {
-            $this->errors['name'] = __( 'Must provide name', 'arpc-popup-creator' );
-        }
-
-        if ( empty( $email ) ) {
-            $this->errors['email'] = __( 'Must provide email', 'arpc-popup-creator' );
-        }
-
-        if ( empty( $phone ) ) {
-            $this->errors['phone'] = __( 'Must provide phone number', 'arpc-popup-creator' );
-        }
-
-        if ( empty( $address ) ) {
-            $this->errors['address'] = __( 'Must provide address', 'arpc-popup-creator' );
-        }
-
-        if ( ! empty( $this->errors ) ) {
-            return;
-        }
-        
-        $inserted_id = arpc_insert_users( [
-            'name'    => $name,
-            'email'   => $email,
-            'phone'   => $phone,
-            'address' => $address,
-        ] );
-
-        var_dump( $inserted_id );
-
-        if ( is_wp_error( $inserted_id ) ) {
-            echo "did not inserted";
-            wp_die( $inserted_id->get_error_message() );
-        }
-
-        $redirected_to = admin_url('wp-admin/edit.php?post_type=arpc_popup&page=arpc-popup-form&success=true');
-        wp_redirect( $redirected_to );
-        exit;
+        wp_enqueue_style('arpc-metabox');
+        wp_enqueue_script('arpc-main-ajax');
     }
 }

@@ -79,7 +79,6 @@ require_once __DIR__ . "/vendor/autoload.php";
                   update_option( 'arpc_version', ARPC_VERSION );
             }
             
-
             /**
              * Load plugin text domain 
              */

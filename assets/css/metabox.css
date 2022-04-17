@@ -6,7 +6,7 @@
 	display: inline-block;
 }
 
-.arpc_form_group + .arpc_form_group {
+.arpc_form_group+.arpc_form_group {
 	margin-top: 24px;
 }
 
@@ -16,9 +16,10 @@
 	padding-top: 8px;
 }
 
-.arpc_form_group div {
-	max-width: 120px;
-	display: inline-block;
+.arpc_form_group .arpc_form_group_inner {
+	display: flex;
+	flex-direction: column;
+
 }
 
 .arpc_form_group {
@@ -29,7 +30,8 @@
 .arpc_form_group .arpc_form_group_inner label {
 	font-weight: 400;
 }
-.arpc_form_group .arpc_form_group_inner label + label {
+
+.arpc_form_group .arpc_form_group_inner label+label {
 	margin-top: 10px;
 }
 
@@ -37,7 +39,7 @@
 	display: inline-block;
 }
 
-.arpc_form_group div span + span {
+.arpc_form_group div span+span {
 	margin-top: 10px;
 }
 
@@ -46,14 +48,22 @@
 	max-width: 100px;
 	height: auto;
 	margin-top: 12px;
-  }
+}
 
-  .arpc_settings__form2,
-  .arpc_settings__form {
-	  margin-bottom: 40px;
-  }
+.arpc_settings__form2,
+.arpc_settings__form {
+	margin-bottom: 40px;
+}
 
-  .arpc_settings__form .arpc_submit_address_form2,
-  .arpc_settings__form .arpc_submit_address_form {
-	  margin-top: 25px;
-  }
+.arpc_settings__form .arpc_submit_address_form2,
+.arpc_settings__form .arpc_submit_address_form {
+	margin-top: 25px;
+}
+
+.form-invalid input {
+	border-color: #f00 !important;
+}
+
+.form-invalid p.error {
+	color: #f00 !important;
+}

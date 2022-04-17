@@ -2,10 +2,7 @@
 
 namespace ARPC\Popup;
 
-use ARPC\Popup\Traits\Form_Error;
-
 class Ajax {
-    use Form_Error;
     function __construct() {
         // $this->arpc_dispatch();
 

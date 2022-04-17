@@ -205,11 +205,18 @@ add_filter('enter_title_here', 'arpc_title_text');
  * @param array $args
  * @return int|WP_Error
  */
-function arpc_insert_users($args = []) {
+function arpc_insert_users( $args = [] ) {
       global $wpdb;
 
       if ( empty( $args['name'] ) ) {
             return new \WP_Error('no-name', __('You must provide a name', 'arpc-popup-creator') );
+      }
+
+      if ( empty( $args['email'] ) ) {
+            return new \WP_Error('no-email', __('You must provide a email address', 'arpc-popup-creator') );
+      }
+      if ( empty( $args['phone'] ) ) {
+            return new \WP_Error('no-phone', __('You must provide a phone number', 'arpc-popup-creator') );
       }
 
       $defaults = [
@@ -221,7 +228,8 @@ function arpc_insert_users($args = []) {
             'created_at'      => current_time('mysql'),
       ];
 
-      $data = wp_parse_args($args, $defaults);
+      $data = wp_parse_args( $args, $defaults );
+
 
       $inserted = $wpdb->insert(
             "{$wpdb->prefix}arpc_users",
@@ -232,7 +240,7 @@ function arpc_insert_users($args = []) {
                   '%s',
                   '%s',
                   '%d',
-                  '%s'
+                  '%s',
             ]
       );
 

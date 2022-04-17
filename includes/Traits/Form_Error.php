@@ -8,7 +8,7 @@ trait Form_Error {
 
     public $errors = [];
     
-    function has_error( $key ) {
+    function has_errors( $key ) {
         return isset( $this->errors[ $key ] ) ? true : false;
     }
 
