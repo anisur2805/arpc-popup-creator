@@ -1,0 +1,9 @@
+// The lovely and terrible nonce
+wp_nonce_field();
+wp_create_nonce();
+wp_nonce_url();
+
+// Will help to point the database related issues
+$wpdb->print_error();
+$wpdb->show_errors();
+$wpdb->last_query;

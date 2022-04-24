@@ -52,6 +52,12 @@ class Assets {
         'deps'    => [],
       ],
 
+      'arpc-first-react'         => [
+        'src'     => ARPC_ASSETS . '/js/first-react.js',
+        'version' => filemtime(ARPC_PATH . '/assets/js/first-react.js'),
+        'deps'    => [],
+      ],
+
 
     ];
   }
