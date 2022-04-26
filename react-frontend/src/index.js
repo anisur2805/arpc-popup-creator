@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-const root = ReactDOM.createRoot(document.getElementById('arpc-popup-creator-wrapper'));
+const root = ReactDOM.createRoot(document.getElementById('react-frontend'));
 root.render(
   <React.StrictMode>
     <App />
