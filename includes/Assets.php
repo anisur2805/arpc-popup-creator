@@ -69,9 +69,9 @@ class Assets {
         'version' => filemtime(ARPC_PATH . '/assets/css/metabox.css'),
       ],
 
-      'arpc-tabbed'  => [
-        'src'     => ARPC_ASSETS . '/css/tabbed.css',
-        'version' => filemtime(ARPC_PATH . '/assets/css/tabbed.css'),
+      'arpc-admin-style'  => [
+        'src'     => ARPC_ASSETS . '/css/admin-style.css',
+        'version' => filemtime(ARPC_PATH . '/assets/css/admin-style.css'),
       ],
 
       'arpc-style'   => [
@@ -82,6 +82,7 @@ class Assets {
   }
 
   public function enqueue_assets() {
+    wp_enqueue_style('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600&display=swap');
     $scripts = $this->get_scripts();
 
     foreach ($scripts as $handle => $script) {

@@ -7,6 +7,7 @@ class Ajax {
         // $this->arpc_dispatch();
 
         add_action('wp_ajax_arpc_add_contact', array($this, 'arpc_add_contact'));
+        add_action('wp_ajax_nopriv_arpc_add_contact', array($this, 'arpc_add_contact'));
         add_action('wp_ajax_arpc_modal_form', array($this, 'arpc_modal_form'));
     }
 

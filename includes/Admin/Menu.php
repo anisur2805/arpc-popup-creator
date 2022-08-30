@@ -26,7 +26,7 @@ class Menu {
 
             add_submenu_page($parent_slug, __('Addresses', 'arpc-popup-creator'), __('Addresses', 'arpc-popup-creator'), $capability, 'arpc-popup-form', [$this->address, 'address_page']);
             
-            wp_enqueue_style('arpc-tabbed');
+            wp_enqueue_style('arpc-admin-style');
             wp_enqueue_script('arpc-tabbed');
             
       }

@@ -46,43 +46,17 @@ class Modal {
 
                   if (is_page($showIn_id)) {
 ?>
-                        <div class="arpc-popup-creator" id="arpc-popup-creator" data-auto-hide="<?php echo ($auto_hide == 1) ? 'yes' : 'no'; ?>" data-id="popup-<?php echo get_the_ID(); ?>" data-popup-image-size="<?php echo esc_attr($image_size); ?>" data-exit="<?php echo esc_attr($exit); ?>" data-delay="<?php echo $delay ?>" data-show="<?php echo $showIn_id; ?>">
+                        <div class="arpc-popup-creator arpc-template arpc-template1 arpc-template 2" id="arpc-popup-creator" data-auto-hide="<?php echo ($auto_hide == 1) ? 'yes' : 'no'; ?>" data-id="popup-<?php echo get_the_ID(); ?>" data-popup-image-size="<?php echo esc_attr($image_size); ?>" data-exit="<?php echo esc_attr($exit); ?>" data-delay="<?php echo $delay ?>" data-show="<?php echo $showIn_id; ?>">
                               <div class="arpc-popup-creator-body">
-                                    <div class="arpc-popup-creator-body-header">
-                                          <?php
-                                          $content = wp_trim_words(get_the_content(), 5, '');
-                                          if( $title ):
-                                                printf('<h3 class="apc-popup-modal-title">%s</h3>', $title );
-                                          endif;
-                                          if( $subtitle ):
-                                                printf('<h4 class="apc-popup-modal-title">%s</h4>', $subtitle );
-                                          endif;
-                                          printf('<div>%s</div>', $content);
-                                          ?>
-                                    </div>
-                                    <div class="arpc-popup-creator-body-inner">
-                                          <?php if ($feature_image) : ?>
-                                                <div class="arpc-popup-image">
-                                                      <?php if ($popup_url) { ?>
-                                                            <a target="_blank" href="<?php echo esc_url($popup_url); ?>">
-                                                                  <img src="<?php echo esc_url($feature_image); ?>" alt="<?php _e('Popup', 'popup-creator') ?>" />
-                                                            </a>
-                                                      <?php } else { ?>
-                                                            <img src="<?php echo esc_url($feature_image); ?>" alt="<?php _e('Popup', 'popup-creator') ?>" />
-                                                      <?php } ?>
-                                                </div>
-                                          <?php endif; ?>
-
-                                          <div class="arpc-popup-form">
-                                                <?php echo do_shortcode('[arpc_newsletter]'); ?>
-                                          </div>
-                                    </div>
-
+                                    <?php
+                                          include __DIR__ . "/views/template1.php";
+                                          // include __DIR__ . "/views/template2.php";
+                                    ?>
                               </div>
 
-                              <button class="arpc-close-button">
-                                    <img src="<?php echo esc_url(ARPC_ASSETS . '/images/close.svg') ?>" alt="Close" />
-                              </button>
+                              <!-- <button class="arpc-close-button">
+                                    <img src="<?php // echo esc_url(ARPC_ASSETS . '/images/close.svg') ?>" alt="Close" />
+                              </button> -->
 
                         </div>
 <?php

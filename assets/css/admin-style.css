@@ -51,3 +51,27 @@
 .arpc_tabbed_wrapper .tab-content .tab-pane.active {
       display: block;
 }
+
+
+.d-none {
+      display: none;
+}
+
+/* Choose template admin */
+.choose-template-wrapper label {
+      border: 1px solid #ddd;
+      display: inline-block;
+      padding: 10px;
+      border-radius: 5px;
+      margin: 0 15px 10px 0;
+  }
+  
+  .choose-template-wrapper label img {
+      width: 100%;
+      height: 100px;
+      object-fit: cover;
+  }
+  
+  .choose-template-wrapper label > div {
+      margin-bottom: 10px;
+  }
