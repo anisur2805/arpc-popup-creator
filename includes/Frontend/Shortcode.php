@@ -6,7 +6,7 @@ class Shortcode {
       public function __construct() {
             
             add_shortcode('arpc_newsletter', array($this, 'render_shortcode'));
-            add_shortcode('arpc_frontend', array($this, 'render_arpc_frontend'));
+            // add_shortcode('arpc_frontend', array($this, 'render_arpc_frontend'));
 
       }
 

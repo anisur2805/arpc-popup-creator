@@ -1,13 +1,11 @@
 <?php
-
-namespace ARPC\Popup;
-
+namespace ARPC\Popup\Data_Table;
 
 if (!class_exists('WP_List_Table')) {
       require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
 }
 
-class Subscriber_Data_Table extends \WP_List_Table {
+class Subscribers extends \WP_List_Table {
       private $_items;
       private $users_data;
       

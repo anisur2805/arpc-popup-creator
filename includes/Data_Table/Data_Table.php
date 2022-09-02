@@ -1,6 +1,6 @@
 <?php
 
-namespace ARPC\Popup;
+namespace ARPC\Popup\Data_Table;
 
 class Data_Table {
 
@@ -41,7 +41,7 @@ class Data_Table {
                         break;
                   case 'show_time':
                         $show_time = get_post_meta( $post_id, 'arpc_show_on_exit', true );
-                        echo ( $show_time == 1 ? 'On Page Exit' : 'On Page Reload' );
+                        echo ( $show_time == 0 ? 'On Page Exit' : 'On Page Reload' );
                         break;
                   case 'active':
                         $is_active = get_post_meta( $post_id, 'arpc_active', true );
