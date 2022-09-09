@@ -7,13 +7,15 @@ var frame;
 		delImgLink = metaBox.find("#arpc_delete_custom_img"),
 		imgContainer = metaBox.find("#arpc_image_container"),
 		imgIdInput = metaBox.find("#arpc_image_id"),
-		imgURLInput = metaBox.find("#arpc_image_url")
+		imgURLInput = metaBox.find("#arpc_image_url");
 
 	$(document).ready(function () {
 
 		// for image upload
 		var image_url = $("#arpc_image_url").val();
-		if ( image_url.length ) {
+		console.log("imgurl ", typeof image_url);
+		if (image_url && image_url !== undefined) {
+			alert("hey");
 			imgContainer.html(`<img src='${image_url}' />`);
 		}
 
@@ -62,15 +64,17 @@ var frame;
 		// Toggle auto hide based on checkbox
 		var auto_hide_input = document.querySelector(".auto_hide_gp input");
 		var auto_hide_in_gp = document.querySelector(".auto_hide_in_gp");
-		auto_hide_in_gp.style.display = 'none';
+		auto_hide_in_gp ? auto_hide_in_gp.style.display = 'none' : '';
 
-		auto_hide_input.addEventListener("change", function () {
-			if (this.checked) {
-				auto_hide_in_gp.style.display = 'flex';
-			} else {
-				auto_hide_in_gp.style.display = 'none';
-			}
-		});
+		auto_hide_input && (
+			auto_hide_input.addEventListener("change", function () {
+				if (this.checked) {
+					auto_hide_in_gp.style.display = 'flex';
+				} else {
+					auto_hide_in_gp.style.display = 'none';
+				}
+			})
+		);
 	});
 
 })(jQuery);
