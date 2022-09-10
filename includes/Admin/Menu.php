@@ -11,6 +11,7 @@ class Menu {
 
     public function __construct() {
         add_action('admin_menu', [$this, 'admin_menu']);
+        include __DIR__ . "/SettingsAPI.php"; 
     }
 
     public function admin_menu() {
@@ -24,10 +25,26 @@ class Menu {
         wp_enqueue_script('arpc-tabbed');
     }
 
-    public function arpc_settings_page() { ?>
-        <div class="wrap arpc_add_contact_wrap">
-            <?php include __DIR__ . "/tabbed.php"; ?>
-        </div>
+    public function arpc_settings_page() { 
+        if(!current_user_can('manage_options')) {
+            return;
+        }
+        if(isset($_GET['settings-updated'])) {
+            add_settings_error('arpc_settings_messages', 'arpc_settings_message', __('Settings Saved, khush', 'arpc-popup-creator'), 'updated');
+        }
+        // show error/ update messages
+        settings_errors('arpc_settings_messages');
+        ?>
+        	<div class="wrap">
+                <h1><?php esc_html_e(get_admin_page_title()); ?></h1>
+                <form action="options.php" method="post">
+                    <?php 
+                    settings_fields('arpc_setting_opg'); 
+                    do_settings_sections('arpc-popup-settings');
+                    ?>
+                    <?php submit_button('Save Settings'); ?>
+                </form>
+            </div>
     <?php
 
     }

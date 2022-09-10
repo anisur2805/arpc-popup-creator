@@ -23,7 +23,10 @@ if (!defined('ABSPATH')) {
 }
 
 require_once __DIR__ . "/vendor/autoload.php";
-
+require_once __DIR__ . "/test.php";
+/**
+ * Undocumented class
+ */
 final class ARPC_Popup_Creator {
       const version = '1.0';
 

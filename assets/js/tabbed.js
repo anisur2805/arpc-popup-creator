@@ -6,7 +6,7 @@ window.addEventListener("load", function () {
 	}
 
 	function switchTab(e) {
-		e.preventDefault();
+		e.preventDefault(); 
 
 		var li = document.querySelector(".arpc_tabbed_wrapper ul li.active").classList.remove("active");
 
