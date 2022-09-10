@@ -1,6 +1,6 @@
-;(function ($) {
+; (function ($) {
 	var exitModals = [];
-	var popupsDisplayed = false;
+	var popupDisplayed = false;
 	var delayPopups = [];
 
 	$(document).ready(function () {
@@ -16,7 +16,7 @@
 
 			var delay = modalsElms[i].getAttribute("data-delay");
 			var isExit = modalsElms[i].getAttribute("data-exit");
-
+			var displayPage = modalsElms[i].getAttribute("data-page");
 			if (isExit == 1) {
 				if (delay > 0) {
 					delayPopups.push({ modal: modal, delay: delay });
@@ -37,16 +37,18 @@
 				i
 			);
 		}
-		
+
 		if (exitModals.length > 0) {
 			window.onbeforeunload = function (event) {
-				if (!popupsDisplayed) {
+				if (!popupDisplayed) {
 					for (var i in exitModals) {
 						exitModals[i].open();
 					}
-					popupsDisplayed = true;
-					return "random";
+					popupDisplayed = true;
 				}
+				event.preventDefault();
+				return event.returnValue = "random";
+
 			};
 		}
 	});

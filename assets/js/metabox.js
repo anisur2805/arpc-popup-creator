@@ -14,7 +14,6 @@ var frame;
 		// for image upload
 		var image_url = $("#arpc_image_url").val();
 		if (image_url && image_url !== undefined) {
-			alert("hey");
 			imgContainer.html(`<img src='${image_url}' />`);
 		}
 
