@@ -1,6 +1,16 @@
 ; (function ($) {
-
 	$(document).ready(function () {
+		var allInputs = document.querySelectorAll("#arpc-popup-creator-wrapper form .regular-text");
+		document.querySelector("#arpc_submit").disabled = true;
+
+		allInputs.forEach((input, i) => {
+			input.addEventListener('input', function (e) {
+				if (e.target.value) {
+					document.querySelector("#arpc_submit").disabled = false;
+				}
+			});
+		});
+
 		$("#arpc-popup-creator-wrapper form").on("submit", function (e) {
 			var $this = $(this);
 			e.preventDefault();
