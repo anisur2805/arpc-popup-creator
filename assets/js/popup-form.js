@@ -3,7 +3,7 @@
 		var allInputs = document.querySelectorAll("#arpc-popup-creator-wrapper form .regular-text");
 		var submitBtn = document.querySelector("#arpc_submit");
 		
-		submitBtn && submitBtn.disabled;
+		submitBtn.disabled = true;
 
 		allInputs.forEach((input, i) => {
 			input.addEventListener('input', function (e) {

@@ -47,7 +47,7 @@ class Modal {
                   $post   = get_post($show_in_obj);
                   $slug = $post->post_name;
                   $showIn_id = $show_in->ID;
-                  $template = $options['arpc_choose_temp'];
+                  $template = isset( $options['arpc_choose_temp'])? $options['arpc_choose_temp'] : 'template1';
 
                   if (is_page($showIn_id)) { ?>
                         <div class="arpc-popup-creator arpc-template arpc-<?php echo esc_attr($template); ?>" id="arpc-popup-creator" data-auto-hide="<?php echo ($auto_hide == 1) ? 'yes' : 'no'; ?>" data-id="popup-<?php echo get_the_ID(); ?>" data-popup-image-size="<?php echo esc_attr($image_size); ?>" data-exit="<?php echo esc_attr($exit); ?>" data-delay="<?php echo $delay ?>" data-show="<?php echo $showIn_id; ?>" data-page="<?php echo $slug; ?>">

@@ -22,6 +22,7 @@
 					delayPopups.push({ modal: modal, delay: delay });
 				} else {
 					modal.open();
+					modal.overlayBlur = 3;
 				}
 			} else {
 				exitModals.push(modal);
