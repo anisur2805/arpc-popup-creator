@@ -1,7 +1,7 @@
 ; (function ($) {
 	$(document).ready(function () {
 		var allInputs = document.querySelectorAll("#arpc-popup-creator-wrapper form .regular-text");
-		var submitBtn = document.querySelector("#arpc_submit");
+		var submitBtn = document.querySelector(".arpc_submit");
 		
 		submitBtn.disabled = true;
 
