@@ -112,16 +112,7 @@
 	padding: 11px 11px 10px;
     width: 100%;
 	cursor: pointer;
-}
-.arpc-popup-creator-body .arpc-form-group-row .arpc_submit:disabled {
-	border: 0;
-	background: #eb1000;
-	color: #fff;
-	cursor: not-allowed;
-}
-.arpc-popup-creator-body .arpc-form-group-row .arpc_submit:not(:disabled):hover {
-	color: green;
-	background: #ddd;
+	text-decoration: none;
 }
 
 .arpc-form-group-row p.success {
@@ -185,6 +176,18 @@
 	padding: 11px 15px;
 	height: auto;
 }
+.arpc-popup-creator-body .arpc__template_style_2 .arpc-form-group-row .arpc_submit::disabled,
+.arpc-popup-creator-body .arpc-form-group-row .arpc_submit:disabled {
+	border: 0;
+	background: #eb1000;
+	color: #fff;
+	cursor: not-allowed;
+}
+.arpc-popup-creator-body .arpc-form-group-row .arpc_submit:not(:disabled):hover {
+	color: green;
+	background: #ddd;
+}
+
 .arpc-popup-creator-body .arpc__template_style_2 .arpc-popup-modal-title {
 	font-size: 26px;
 	font-weight: 600;
