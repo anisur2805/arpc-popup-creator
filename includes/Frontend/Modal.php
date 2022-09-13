@@ -10,6 +10,8 @@ class Modal {
 
       public function load_modal_on_footer() {
 
+            $options = get_option('arpc_setting_opn');
+
             wp_enqueue_style('arpc-style');
             wp_enqueue_script('plain-modal');
             wp_enqueue_script('arpc-main');
@@ -42,24 +44,20 @@ class Modal {
                   }
 
                   $show_in   = get_post($show_in_obj);
+                  $post   = get_post($show_in_obj);
+                  $slug = $post->post_name;
                   $showIn_id = $show_in->ID;
+                  $template = isset( $options['arpc_choose_temp'])? $options['arpc_choose_temp'] : 'template1';
 
-                  if (is_page($showIn_id)) {
-?>
-                        <div class="arpc-popup-creator arpc-template arpc-template1 arpc-template 2" id="arpc-popup-creator" data-auto-hide="<?php echo ($auto_hide == 1) ? 'yes' : 'no'; ?>" data-id="popup-<?php echo get_the_ID(); ?>" data-popup-image-size="<?php echo esc_attr($image_size); ?>" data-exit="<?php echo esc_attr($exit); ?>" data-delay="<?php echo $delay ?>" data-show="<?php echo $showIn_id; ?>">
+                  if (is_page($showIn_id)) { ?>
+                        <div class="arpc-popup-creator arpc-template arpc-<?php echo esc_attr($template); ?>" id="arpc-popup-creator" data-auto-hide="<?php echo ($auto_hide == 1) ? 'yes' : 'no'; ?>" data-id="popup-<?php echo get_the_ID(); ?>" data-popup-image-size="<?php echo esc_attr($image_size); ?>" data-exit="<?php echo esc_attr($exit); ?>" data-delay="<?php echo $delay ?>" data-show="<?php echo $showIn_id; ?>" data-page="<?php echo $slug; ?>">
                               <div class="arpc-popup-creator-body">
                                     <?php
-                                          include __DIR__ . "/views/template1.php";
-                                          // include __DIR__ . "/views/template2.php";
+                                          include __DIR__ . "/views/$template.php";
                                     ?>
                               </div>
-
-                              <!-- <button class="arpc-close-button">
-                                    <img src="<?php // echo esc_url(ARPC_ASSETS . '/images/close.svg') ?>" alt="Close" />
-                              </button> -->
-
                         </div>
-<?php
+                        <?php
                   }
             }
 

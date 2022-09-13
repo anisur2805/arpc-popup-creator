@@ -6,7 +6,6 @@ use ARPC\Popup\Frontend\Shortcode;
 
 class Frontend {
       public function __construct() {
-            
             new Modal();
             new Shortcode();
       } 

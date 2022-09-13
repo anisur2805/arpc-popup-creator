@@ -55,11 +55,6 @@
 	margin-bottom: 40px;
 }
 
-.arpc_settings__form .arpc_submit_address_form2,
-.arpc_settings__form .arpc_submit_address_form {
-	margin-top: 25px;
-}
-
 .form-invalid input {
 	border-color: #f00 !important;
 }

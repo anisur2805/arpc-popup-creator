@@ -19,10 +19,10 @@
 
 			$content = wp_trim_words(get_the_content(), 5, '');
 			if ($title) :
-				printf('<h3 class="apc-popup-modal-title">%s</h3>', $title);
+				printf('<h3 class="arpc-popup-modal-title">%s</h3>', $title);
 			endif;
 			// if ($subtitle) :
-			// 	printf('<h4 class="apc-popup-modal-title">%s</h4>', $subtitle);
+			// 	printf('<h4 class="arpc-popup-modal-title">%s</h4>', $subtitle);
 			// endif;
 			// printf('<div>%s</div>', $content);
 		?>

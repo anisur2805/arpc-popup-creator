@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Insert a new address
+ * Insert a new popup
  *
  * @param array $args
  *
@@ -64,91 +64,6 @@ function arpc_insert_popup($args = []) {
 }
 
 /**
- * Fetch address
- *
- * @param array
- *
- * @return array
- */
-function arpc_get_addresses($args = []) {
-      global $wpdb;
-
-      $defaults = [
-            "offset"  => 0,
-            "number"  => 20,
-            "orderby" => "id",
-            "order"   => "ASC",
-      ];
-
-      $args = wp_parse_args($args, $defaults);
-
-      $items = $wpdb->get_results(
-            $wpdb->prepare(
-                  "SELECT * FROM {$wpdb->prefix}ac_addresses
-            ORDER BY {$args["orderby"]} {$args["order"]}
-            LIMIT %d OFFSET %d",
-                  $args["number"],
-                  $args["offset"],
-            )
-      );
-
-      return $items;
-}
-
-/**
- * Get the count
- *
- * @return int
- */
-function arpc_addresses_count() {
-      global $wpdb;
-
-      return (int) $wpdb->get_var("SELECT count(id) FROM {$wpdb->prefix}ac_addresses ");
-}
-
-/**
- * Fetch a single contact form DB
- *
- * @param int $id
- *
- * @return object
- */
-function arpc_get_address($id) {
-      global $wpdb; // Global WPDB class object
-
-      $address = wp_cache_get('book-' . $id, 'address');
-      if (false === $address) {
-            $address = $wpdb->get_row(
-                  $wpdb->prepare(  // use prepare for avoid sql injection
-                        "SELECT  * FROM {$wpdb->prefix}ac_addresses WHERE id = %d",
-                        $id // select by id
-                  )
-            );
-
-            wp_cache_set('book-' . $id, $address, 'address');
-      }
-      return $address;
-}
-
-/**
- * Delete an address
- *
- * @param int $id
- *
- * @return int|boolean
- */
-function arpc_delete_address($id) {
-      global $wpdb;
-
-      return $wpdb->delete(
-            $wpdb->prefix . 'ac_addresses',
-            ['id' => $id],
-            ['%d'],
-      );
-}
-
-
-/**
  * Register popup creator image sizes
  */
 function register_image_size() {
@@ -190,8 +105,8 @@ function arpc_input_field($type = "text", $id = '', $name = '', $placeholder = '
 function arpc_title_text($title) {
       $screen = get_current_screen();
 
-      if ('popup' == $screen->post_type) {
-            $title = __('Add popup title', 'popup-creator');
+      if ('arpc_popup' == $screen->post_type) {
+            $title = __('Add Popup title', 'popup-creator');
       }
 
       return $title;
