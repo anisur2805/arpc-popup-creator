@@ -175,8 +175,7 @@
 	font-weight: 400;
 	padding: 11px 15px;
 	height: auto;
-}
-.arpc-popup-creator-body .arpc__template_style_2 .arpc-form-group-row .arpc_submit::disabled,
+} 
 .arpc-popup-creator-body .arpc-form-group-row .arpc_submit:disabled {
 	border: 0;
 	background: #eb1000;
