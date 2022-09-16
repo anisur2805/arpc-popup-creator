@@ -9,7 +9,9 @@
 .arpc_form_group+.arpc_form_group {
 	margin-top: 24px;
 }
-
+.arpc-coming-soon * {
+    opacity: 0.5;
+}
 .arpc_settings__form2,
 .arpc_settings__form,
 .arpc_metabox_wrapper {
