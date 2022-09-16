@@ -19,7 +19,7 @@ class Assets {
       'arpc-main'           => [
         'src'     => ARPC_ASSETS . '/js/popup-main.js',
         'version' => filemtime(ARPC_PATH . '/assets/js/popup-main.js'),
-        'deps'    => ['jquery', 'plain-modal'],
+        'deps'    => ['jquery'],
       ],
 
       // 'arpc-main-ajax'      => [
