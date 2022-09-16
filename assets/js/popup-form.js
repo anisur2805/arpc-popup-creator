@@ -42,10 +42,6 @@
 					console.log('form submitted');
 				});
 			}
-
 		});
-
-		
-
 	});
 })(jQuery);
