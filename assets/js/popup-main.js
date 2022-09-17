@@ -66,7 +66,7 @@
             ) {
                 loadModal.open()
                 loadModal.overlayBlur = 3
-                arpcCookie(displayPage, "once")
+                // arpcCookie(displayPage, "once")
             }
         }
 

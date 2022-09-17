@@ -1,53 +1,50 @@
 ;(function ($) {
     $(document).ready(function () {
-        var allInputs = document.querySelectorAll(
-            "#arpc-popup-creator-wrapper form .regular-text"
-        )
+        var allInputs = document.querySelectorAll( "#arpc-popup-creator-wrapper form .regular-text" )
         var submitBtn = document.querySelector(".arpc_submit")
 
-        if (submitBtn) {
-            submitBtn.setAttribute("disabled", "disabled")
-        }
+        // if (submitBtn) {
+        //     submitBtn.disabled = true
+        // }
 
-        console.log(submitBtn)
-
-        allInputs.forEach((input, i) => {
-            input.addEventListener("input", function (e) {
-                if (e.target.value) {
-                    submitBtn.setAttribute("disabled", "")
-                }
-            })
-        })
+        // allInputs.forEach((input, i) => {
+        //     input.addEventListener("input", function (e) {
+        //         if (e.target.value) {
+        //             submitBtn.disabled = false
+        //         }
+        //     })
+        // })
 
         $("#arpc-popup-creator-wrapper form").on("submit", function (e) {
+            e.preventDefault();
             var $this = $(this)
-            e.preventDefault()
 
-            var values = $(this).serialize()
+            var values = $this.serialize()
 
-            if (values) {
+            // if (values) {
                 const data = {
                     action: "arpc_modal_form",
                     status: "enabled",
                     nonce: arpcModalForm.nonce,
                     modalEntries: values,
+                    testData: 'testData'
                 }
 
                 $.post(arpcModalForm.ajaxUrl, data, function (response) {
                     if (response) {
-                        if (response.success) {
+                        if (response?.success) {
                             $this.find("p.hide").addClass("success")
                             $this[0].reset()
                         }
                     }
                 })
-                    .fail(function () {
-                        console.log(arpcModalForm.error)
+                    .fail(function (e) {
+                        console.log(arpcModalForm.error, e)
                     })
                     .always(function () {
                         console.log("form submitted")
                     })
-            }
+            // }
         })
     })
 })(jQuery)
