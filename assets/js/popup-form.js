@@ -9,7 +9,7 @@
             submitBtn.setAttribute("disabled", "disabled")
         }
 
-		console.log( submitBtn )
+        console.log(submitBtn)
 
         allInputs.forEach((input, i) => {
             input.addEventListener("input", function (e) {

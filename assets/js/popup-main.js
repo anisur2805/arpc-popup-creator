@@ -5,12 +5,12 @@
 
     $(document).ready(function () {
         var modalsElms = document.querySelectorAll(".arpc-popup-creator")
+        PlainModal.closeByEscKey = false
+        PlainModal.closeByOverlay = false
 
         for (var i = 0; i < modalsElms.length; i++) {
-            var modalContent = modalsElms[i];
+            var modalContent = modalsElms[i]
             var modal = new PlainModal(modalContent)
-            modal.closeByEscKey = false
-            modal.closeByOverlay = false
             modal.closeButton = modalContent.querySelector(".arpc-close-button")
             var displayPage = modalsElms[i].getAttribute("data-page")
             var delay = modalsElms[i].getAttribute("data-delay")
@@ -48,13 +48,13 @@
                     checkCookie_loadModal(displayPage, exitModals[i])
                 }
 
-                const confirmationMessage = "\\o/";
+                const confirmationMessage = "\\o/"
                 // Gecko + IE
-                (e || window.event).returnValue = confirmationMessage;
-                
+                ;(e || window.event).returnValue = confirmationMessage
+
                 // Safari, Chrome, and other WebKit-derived browsers
-                return confirmationMessage;
-            });
+                return confirmationMessage
+            })
         }
 
         // check current page cookie
@@ -76,4 +76,4 @@
                 cName + "=" + escape(cVal) + "; path=" + displayPage
         }
     })
-} ) ( jQuery );
+})(jQuery)
