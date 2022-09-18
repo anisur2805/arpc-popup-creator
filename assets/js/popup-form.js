@@ -19,16 +19,17 @@
             e.preventDefault();
             var $this = $(this)
 
-            var values = $this.serialize()
+            // var values = $this.serialize()
+            var data = $this.serialize()
 
             // if (values) {
-                const data = {
-                    action: "arpc_modal_form",
-                    status: "enabled",
-                    nonce: arpcModalForm.nonce,
-                    modalEntries: values,
-                    testData: 'testData'
-                }
+                // const data = {
+                //     action: "arpc_modal_form",
+                //     status: "enabled",
+                //     nonce: arpcModalForm.nonce,
+                //     modalEntries: values,
+                //     testData: 'testData'
+                // }
 
                 $.post(arpcModalForm.ajaxUrl, data, function (response) {
                     if (response) {
