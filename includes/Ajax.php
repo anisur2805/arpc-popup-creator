@@ -9,7 +9,7 @@ class Ajax {
     }
 
     public function arpc_modal_form() {
-        if (!wp_verify_nonce($_REQUEST['_wpnonce'], 'arpc_modal_form_action')) {
+        if (!wp_verify_nonce($_REQUEST['_wpnonce'], 'arpc-modal-form')) {
             wp_send_json_error([
                 'message' => 'Nonce verify failed!',
             ]);

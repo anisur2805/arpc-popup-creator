@@ -1,7 +1,9 @@
 <?php
 
 namespace ARPC\Popup;
-
+/**
+ * 
+ */
 class Assets {
   public function __construct() {
     add_action( 'wp_enqueue_scripts', [$this, 'enqueue_assets'] );
@@ -12,7 +14,7 @@ class Assets {
     return [
       'plain-modal'         => [
         'src'     => ARPC_ASSETS . '/js/jquery.plainmodal.min.js',
-        'version' => filemtime( ARPC_PATH . '/assets/js/jquery.plainmodal.min.js' ),
+        'version' => filemtime(ARPC_PATH . '/assets/js/jquery.plainmodal.min.js'),
         'deps'    => ['jquery'],
       ],
 
