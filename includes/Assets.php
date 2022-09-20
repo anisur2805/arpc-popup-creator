@@ -82,7 +82,7 @@ class Assets {
 
     wp_localize_script( 'arpc-modal-form', 'arpcModalForm', [
       // 'nonce'   => wp_create_nonce( 'arpc-popup-form-nonce' ),
-      'nonce'   => wp_create_nonce( 'arpc-modal-form' ),
+      'nonce'   => wp_create_nonce( 'arpc-admin-modal-form-nonce' ),
       'ajaxUrl' => admin_url( 'admin-ajax.php' ),
       'success' => __( 'Thanks for subscribe', 'arpc-popup-creator' ),
       'error'   => __( 'Something went wrong in Front area', 'arpc-popup-creator' ),
