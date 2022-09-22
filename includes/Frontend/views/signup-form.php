@@ -1,11 +1,11 @@
 <div class="arpc-popup-creator-wrapper" id="arpc-popup-creator-wrapper">
       <form action="" method="post">
             <div class="arpc-form-group-row">
-                  <input class="regular-text arpc_input" type="text" name="name" value="" placeholder="Enter your name" />
+                  <input class="regular-text arpc_input" type="text" name="arpc-name" value="" placeholder="Enter your name" />
             </div>
 
             <div class="arpc-form-group-row">
-                  <input class="regular-text arpc_input" type="email" name="name" value="" placeholder="Enter your email" required/>
+                  <input class="regular-text arpc_input" type="email" name="arpc-email" value="" placeholder="Enter your email" required/>
             </div>
 
             <div class="arpc-form-group-row">
