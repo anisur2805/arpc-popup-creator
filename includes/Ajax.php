@@ -10,18 +10,45 @@ class Ajax {
 
     public function arpc_modal_form() {
         if ( !wp_verify_nonce( $_REQUEST['_wpnonce'], 'arpc-modal-form' ) ) {
+
             wp_send_json_error( [
                 'message' => 'Nonce verify failed!',
             ] );
+
         } else {
+
+            $id      = isset( $_POST['id'] ) ? intval( $_POST['id'] ) : 0;
             $arpc_name  = isset( $_POST['arpc-name'] ) ? sanitize_text_field( $_POST['arpc-name'] ) : '';
             $arpc_email = isset( $_POST['arpc-email'] ) ? sanitize_text_field( $_POST['arpc-email'] ) : '';
-            wp_send_json_success( [
+            
+            // if ( empty( $arpc_name ) ) {
+            //     $this->errors['arpc-name'] = __( "Please provide a name.", "arpc-popup-creator" );
+            // }
+            
+            // if ( empty( $arpc_email ) ) {
+            //     $this->errors['arpc-email'] = __( "Please provide email.", "arpc-popup-creator" );
+            // }
+            
+            $args = [
                 'name'    => $arpc_name,
                 'email'   => $arpc_email,
-                'message' => 'Nonce verify successful!',
-            ] );
+            ];
+            
+            if ( $id ) {
+                $args['id'] = $id;
+            }
+            
+            arpc_insert_popup( $args );
+
+            // var_dump($insert_id);
+    
+            // if ( is_wp_error( $insert_id ) ) {
+            //     wp_die( $insert_id->get_error_message() );
+            // }
+
+            wp_send_json_success();
+            // exit();
+
         }
-        exit();
     }
 }
