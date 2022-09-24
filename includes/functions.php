@@ -52,3 +52,20 @@ function arpc_title_text( $title ) {
 }
 
 add_filter( 'enter_title_here', 'arpc_title_text' );
+
+/**
+ * Delete a subscriber
+ *
+ * @param int $id
+ *
+ * @return int|boolean
+ */
+function arpc_delete_subscriber( $id ) {
+      global $wpdb;
+  
+      return $wpdb->delete(
+          $wpdb->prefix . 'arpc_subscriber',
+          ['id' => $id],
+          ['%d'],
+      );
+  }

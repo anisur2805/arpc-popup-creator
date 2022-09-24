@@ -23,6 +23,7 @@ class Menu {
 
         wp_enqueue_style('arpc-admin-style');
         wp_enqueue_script('arpc-tabbed');
+        wp_enqueue_script('admin-subscriber');
     }
 
     public function arpc_settings_page() { 

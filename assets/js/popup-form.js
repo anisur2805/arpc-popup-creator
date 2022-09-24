@@ -1,14 +1,14 @@
 ; ( function ( $ ) {
     $( document ).ready( function () {
-        var allInputs = document.querySelectorAll(
-            "#arpc-popup-creator-wrapper form .regular-text"
-        );
+
+        var allInputs = document.querySelectorAll( "#arpc-popup-creator-wrapper form .regular-text" );
         var submitBtn = document.querySelector( ".arpc_submit" );
 
         if ( submitBtn ) {
             submitBtn.disabled = true;
         }
 
+        // disable if input/s empty
         allInputs.forEach( ( input, i ) => {
             input.addEventListener( "input", function ( e ) {
                 if ( e.target.value ) {
@@ -17,6 +17,7 @@
             } );
         } );
 
+        // submit data to PHP end
         $( "#arpc-popup-creator-wrapper form" ).on( "submit", function ( e ) {
             e.preventDefault();
             var self = $( this ),
