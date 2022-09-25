@@ -24,7 +24,6 @@
                 data = self.serialize();
 
             $.post( arpcModalForm.ajaxUrl, data, function ( response ) {
-                console.log( response );
 
                 if ( response.success ) {
                     if ( response.success ) {
@@ -32,6 +31,7 @@
                         self[0].reset();
                     }
                 }
+                
             } ).fail( function ( e ) {
                 console.log( arpcModalForm.error, e );
             } );

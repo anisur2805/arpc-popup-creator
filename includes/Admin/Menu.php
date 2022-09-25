@@ -3,6 +3,7 @@
 namespace ARPC\Popup\Admin;
 
 use ARPC\Popup\Data_Table\Subscribers;
+use ARPC\Popup\Settings\SettingsAPI_Wrapper;
 
 /**
  * Menu class
@@ -11,7 +12,8 @@ class Menu {
 
     public function __construct() {
         add_action('admin_menu', [$this, 'admin_menu']);
-        include __DIR__ . "/SettingsAPI.php"; 
+        // include __DIR__ . "./Settings/SettingsAPI.php";
+        new SettingsAPI_Wrapper();
     }
 
     public function admin_menu() {

@@ -35,7 +35,7 @@ class Subscribers extends \WP_List_Table {
 
         usort( $this->users_data, [$this, 'sort_data'] );
 
-        $perPage     = 20;
+        $perPage     = 10;
         $currentPage = $this->get_pagenum();
         // $totalItems  = count($this->_items);
         $totalItems = count( $this->users_data );
@@ -43,6 +43,7 @@ class Subscribers extends \WP_List_Table {
         $this->set_pagination_args( array(
             'total_items' => $totalItems,
             'per_page'    => $perPage,
+            'total_pages' => ceil( $totalItems / $perPage ),
         ) );
 
         // $data = array_slice($this->_items, ($currentPage - 1) * $perPage, $perPage);
