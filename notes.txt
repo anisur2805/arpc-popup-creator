@@ -8,7 +8,8 @@ $wpdb->print_error();
 $wpdb->show_errors();
 $wpdb->last_query;
 
-http://i.imgur.com/XfoUlGU.png 
+http://i.imgur.com/XfoUlGU.png
+http://i.imgur.com/Yjr7uSE.png
 
 /**
  * TODO:

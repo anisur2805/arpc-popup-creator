@@ -2,7 +2,7 @@
     $( document ).ready( function () {
 
         // submit data to PHP end
-        $( "table.wp-list-table" ).on( "click", "a.arpc-subscriber-delete", function ( e ) {
+        $( "table.wp-list-table.subscribers" ).on( "click", "a.arpc-subscriber-delete", function ( e ) {
 
             e.preventDefault();
             if( !confirm( arpcAdminSub.confirm ) ) return;
