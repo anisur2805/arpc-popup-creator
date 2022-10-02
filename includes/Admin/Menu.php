@@ -13,6 +13,7 @@ class Menu {
     public function __construct() {
 
         add_action('admin_menu', [$this, 'admin_menu']);
+        add_filter( 'set-screen-option', [ __CLASS__, 'set_screen' ], 10, 3 );
                 
         // include __DIR__ . "./Settings/SettingsAPI.php";
         new SettingsAPI_Wrapper();
@@ -51,6 +52,10 @@ class Menu {
          */	 
         $this->subscriber_table = new Subscribers_List_Table();	
 
+    }
+
+    public static function set_screen( $status, $option, $value ) {
+        return $value;
     }
 
     public function arpc_settings_page() { 
