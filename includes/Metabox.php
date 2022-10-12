@@ -72,19 +72,19 @@ class Metabox {
         wp_nonce_field( 'popup_creator', 'popup_creator_nonce' );
 
         // Use get_post_meta to retrieve an existing value from the database.
-        $delay = get_post_meta( $post->ID, 'arpc_show_in_delay', true );
-        $title = get_post_meta( $post->ID, 'arpc_title', true );
-        $subtitle = get_post_meta( $post->ID, 'arpc_subtitle', true );
+        $delay              = get_post_meta( $post->ID, 'arpc_show_in_delay', true );
+        $title              = get_post_meta( $post->ID, 'arpc_title', true );
+        $subtitle           = get_post_meta( $post->ID, 'arpc_subtitle', true );
         $auto_hide_delay_in = get_post_meta( $post->ID, 'arpc_auto_hide_in', true );
-        $auto_hide = get_post_meta( $post->ID, 'arpc_auto_hide_pu', true );
-        $image_size = get_post_meta( $post->ID, 'arpc_image_size', true );
-        $show_on_exit = get_post_meta( $post->ID, 'arpc_show_on_exit', true );
-        $popup_url = get_post_meta( $post->ID, 'arpc_popup_url', true );
-        $is_active = get_post_meta( $post->ID, 'arpc_active', true );
-        $selected_page = get_post_meta( $post->ID, 'arpc_ww_show', true );
-        
-        $image_id  = get_post_meta($post->ID, 'arpc_image_id', true);
-        $image_url = get_post_meta($post->ID, 'arpc_image_url', true);
+        $auto_hide          = get_post_meta( $post->ID, 'arpc_auto_hide_pu', true );
+        $image_size         = get_post_meta( $post->ID, 'arpc_image_size', true );
+        $show_on_exit       = get_post_meta( $post->ID, 'arpc_show_on_exit', true );
+        $show_on_exit       = isset( $show_on_exit ) ? $show_on_exit : 1;
+        $popup_url          = get_post_meta( $post->ID, 'arpc_popup_url', true );
+        $is_active          = get_post_meta( $post->ID, 'arpc_active', true );
+        $selected_page      = get_post_meta( $post->ID, 'arpc_ww_show', true );
+        $image_id           = get_post_meta($post->ID, 'arpc_image_id', true);
+        $image_url          = get_post_meta($post->ID, 'arpc_image_url', true);
 
         // Display the form, using the current value.
         ?>
@@ -198,7 +198,20 @@ class Metabox {
         </div>
         <?php
     }
-    
+
+    /**
+     * Update post meta
+     *
+     * @param [type] $key
+     * @param [type] $post_id
+     * @return void
+     */
+    protected function update_post_meta_render( $key, $post_id ) {
+        if( isset( $_POST[ $key ] ) ) {
+            update_post_meta( $post_id, $key, sanitize_text_field( $_POST[ $key ] ) );
+        }
+    }
+
     /**
      * Save the meta when the post is saved.
      *
@@ -257,9 +270,11 @@ class Metabox {
             update_post_meta($post_id, 'arpc_image_id', sanitize_text_field( $_POST['arpc_image_id'] ) );
         }
         
-        if( isset( $_POST['arpc_image_url'] ) ) {
-            update_post_meta($post_id, 'arpc_image_url', sanitize_text_field( $_POST['arpc_image_url'] ) );
-        }
+        // if( isset( $_POST['arpc_image_url'] ) ) {
+        //     update_post_meta($post_id, 'arpc_image_url', sanitize_text_field( $_POST['arpc_image_url'] ) );
+        // }
+
+        $this->update_post_meta_render( 'arpc_image_url', $post_id );
              
     }
     
