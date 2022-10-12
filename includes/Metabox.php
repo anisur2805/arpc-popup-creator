@@ -79,13 +79,16 @@ class Metabox {
         $auto_hide          = get_post_meta( $post->ID, 'arpc_auto_hide_pu', true );
         $image_size         = get_post_meta( $post->ID, 'arpc_image_size', true );
         $show_on_exit       = get_post_meta( $post->ID, 'arpc_show_on_exit', true );
-        $show_on_exit       = isset( $show_on_exit ) ? $show_on_exit : 1;
         $popup_url          = get_post_meta( $post->ID, 'arpc_popup_url', true );
         $is_active          = get_post_meta( $post->ID, 'arpc_active', true );
         $selected_page      = get_post_meta( $post->ID, 'arpc_ww_show', true );
         $image_id           = get_post_meta($post->ID, 'arpc_image_id', true);
         $image_url          = get_post_meta($post->ID, 'arpc_image_url', true);
-
+        
+        // var_dump($delay, $show_on_exit);
+        if ( ! get_post_meta( $post->ID, 'arpc_show_in_delay', true ) ) { $delay = 1000; };
+        if ( ! get_post_meta( $post->ID, 'arpc_show_on_exit', true ) ) { $show_on_exit = 0; };
+        
         // Display the form, using the current value.
         ?>
         <div class="arpc_metabox_wrapper">
@@ -163,7 +166,7 @@ class Metabox {
                 </select>
             </div>
             
-            <div class="arpc_form_group">
+            <div class="arpc_form_group hide-elem">
                 <label><?php _e('Upload Image for Feature', 'arpc-popup-creator') ?></label>
                 <div id="myImageMetaBox">
                     <button class="button" id="arpc_upload_image"><?php _e('Upload Image', 'arpc-popup-creator') ?></button>

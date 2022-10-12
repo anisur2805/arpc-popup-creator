@@ -106,7 +106,7 @@ function arpc_title_text($title) {
       $screen = get_current_screen();
 
       if ('arpc_popup' == $screen->post_type) {
-            $title = __('Add Popup title', 'popup-creator');
+            $title = __('My Popup Name', 'popup-creator');
       }
 
       return $title;

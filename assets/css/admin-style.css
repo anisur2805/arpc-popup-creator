@@ -53,8 +53,8 @@
 }
 
 
-.d-none {
-      display: none;
+.hide-elem {
+      display: none !important;
 }
 
 /* Choose template admin */

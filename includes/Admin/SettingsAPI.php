@@ -63,6 +63,10 @@ function arpc_choose_temp_render($args) {
 								<input type="radio" name="arpc_setting_opn[<?php echo esc_attr($args['label_for']); ?>]" id="<?php echo esc_attr($args['label_for']) ?>" value="template2" <?php echo isset($options[$args['label_for']]) ? (checked($options[$args['label_for']], 'template2')) : ('') ?>> <?php esc_html_e('Template2'); ?>
 								<img src="<?php echo esc_url(ARPC_ASSETS . '/images/template2.png') ?>" alt="Template 2" />
 							</label>
+							<label>
+								<input type="radio" name="arpc_setting_opn[<?php echo esc_attr($args['label_for']); ?>]" id="<?php echo esc_attr($args['label_for']) ?>" value="template3" <?php echo isset($options[$args['label_for']]) ? (checked($options[$args['label_for']], 'template3')) : ('') ?>> <?php esc_html_e('Template3'); ?>
+								<img src="<?php echo esc_url(ARPC_ASSETS . '/images/template3.png') ?>" alt="Template 3" />
+							</label>
 						</fieldset>
 					</div>
 				</div>
