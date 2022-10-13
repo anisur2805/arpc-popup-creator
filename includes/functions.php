@@ -40,18 +40,18 @@ function register_image_size() {
 
 register_image_size();
 
-// Change Add title to
-function arpc_title_text( $title ) {
-    $screen = get_current_screen();
+// Change Add title to 
+function arpc_title_text($title) {
+      $screen = get_current_screen();
 
-    if ( 'arpc_popup' == $screen->post_type ) {
-        $title = __( 'Add Popup title', 'popup-creator' );
-    }
+      if ('arpc_popup' == $screen->post_type) {
+            $title = __('My Popup Name', 'popup-creator');
+      }
 
-    return $title;
+      return $title;
 }
 
-add_filter( 'enter_title_here', 'arpc_title_text' );
+add_filter('enter_title_here', 'arpc_title_text');
 
 /**
  * Delete a subscriber

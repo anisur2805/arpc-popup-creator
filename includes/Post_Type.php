@@ -13,7 +13,7 @@ class Post_Type {
                   'name'               => __('Popups Creator', 'popup-creator'),
                   'singular_name'      => __('Popup Creator', 'popup-creator'),
                   'featured_image'     => __('Popup Image', 'popup-creator'),
-                  'set_featured_image' => __('Set Popup Image as Background', 'popup-creator'),
+                  'set_featured_image' => __('Set Popup Image', 'popup-creator'),
                   'search_items'       => __('Search Popup', 'popup-creator'),
                   'all_items'          => __('All Popups', 'popup-creator'),
                   'add_new_item'       => __('Add New', 'popup-creator'),
