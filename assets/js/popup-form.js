@@ -1,51 +1,41 @@
-; (function ($) {
-	$(document).ready(function () {
-		var allInputs = document.querySelectorAll("#arpc-popup-creator-wrapper form .regular-text");
-		var submitBtn = document.querySelector(".arpc_submit");
-		
-		if(submitBtn) {
-			submitBtn.disabled = true;
-		}
+; ( function ( $ ) {
+    $( document ).ready( function () {
 
-		allInputs.forEach((input, i) => {
-			input.addEventListener('input', function (e) {
-				if (e.target.value) {
-					submitBtn.disabled = false;
-				}
-			});
-		});
+        var allInputs = document.querySelectorAll( "#arpc-popup-creator-wrapper form .regular-text" );
+        var submitBtn = document.querySelector( ".arpc_submit" );
 
-		$("#arpc-popup-creator-wrapper form").on("submit", function (e) {
-			var $this = $(this);
-			e.preventDefault();
+        if ( submitBtn ) {
+            submitBtn.disabled = true;
+        }
 
-			var values = $(this).serialize();
+        // disable if input/s empty
+        allInputs.forEach( ( input, i ) => {
+            input.addEventListener( "input", function ( e ) {
+                if ( e.target.value ) {
+                    submitBtn.disabled = false;
+                }
+            } );
+        } );
 
-			if (values) {
-				const data = {
-					action: 'arpc_modal_form',
-					status: 'enabled',
-					nonce: arpcModalForm.nonce,
-					modalEntries: values
-				};
+        // submit data to PHP end
+        $( "#arpc-popup-creator-wrapper form" ).on( "submit", function ( e ) {
+            e.preventDefault();
+            var self = $( this ),
+                data = self.serialize();
 
-				$.post(arpcModalForm.ajaxUrl, data, function (response) {
-					if (response) {
-						if (response.success) {
-							$this.find('p.hide').removeClass('hide');
-							$this[0].reset();
-						}
-					}
-				}).fail(function () {
-					console.log(arpcModalForm.error);
-				}).always(function () {
-					console.log('form submitted');
-				});
-			}
+            $.post( arpcModalForm.ajaxUrl, data, function ( response ) {
 
-		});
-
-		
-
-	});
-})(jQuery);
+                if ( response.success ) {
+                    if ( response.success ) {
+                        self.find( "p.hide" ).addClass( "success" );
+                        self[0].reset();
+                    }
+                }
+                
+            } ).fail( function ( e ) {
+                console.log( arpcModalForm.error, e );
+            } );
+        } );
+        
+    } );
+} )( jQuery );

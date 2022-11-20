@@ -92,7 +92,6 @@ class Metabox {
         // Display the form, using the current value.
         ?>
         <div class="arpc_metabox_wrapper">
-            
             <div class="arpc_form_group">
                 <label for="arpc_active">
                     <?php _e( 'Is Active?' ,'arpc-popup-creator' ); ?>
@@ -100,7 +99,7 @@ class Metabox {
                 <input type="checkbox" name="arpc_active" id="arpc_active" value="<?php echo esc_attr( $is_active ); ?>" <?php checked( 1, $this->get_popup_metabox_value( $is_active ) ); ?> />
             </div>
             
-            <div class="arpc_form_group auto_hide_gp">
+            <div class="arpc_form_group auto_hide_gp arpc-coming-soon">
                 <label for="arpc_auto_hide_pu">
                     <?php _e( 'Auto Hide' ,'arpc-popup-creator' ); ?>
                 </label>
@@ -141,9 +140,9 @@ class Metabox {
                     <?php _e( 'Show when' ,'arpc-popup-creator' ); ?>
                 </label>
                 <div class="arpc_form_group_inner">
-                    <label><input type="radio" name="arpc_show_on_exit" id="arpc_show_on_exit" value="0"  <?php checked( $show_on_exit, 0 );?> /> <?php _e('On Page Exit' ,'arpc-popup-creator' ); ?></label>
-                    <label><input type="radio" name="arpc_show_on_exit" id="arpc_show_on_exit" value="1"  <?php checked( $show_on_exit, 1 );?>/> <?php _e('On Page Load' ,'arpc-popup-creator' ); ?></label>
-                    <label><input type="radio" name="arpc_show_on_exit" id="arpc_show_on_exit" value="2"  <?php checked( $show_on_exit, 2 );?>/> <?php _e('On Page Scroll Bottom (up coming...)' ,'arpc-popup-creator' ); ?></label>
+                    <label><input type="radio" name="arpc_show_on_exit" id="arpc_show_on_exit" value="0" <?php checked($show_on_exit, 0); ?> /> <?php _e('On Page Exit', 'arpc-popup-creator'); ?></label>
+                    <label><input type="radio" name="arpc_show_on_exit" id="arpc_show_on_exit" value="1" <?php checked($show_on_exit, 1); ?> /> <?php _e('On Page Load', 'arpc-popup-creator'); ?></label>
+                    <label><input type="radio" name="arpc_show_on_exit" id="arpc_show_on_exit" value="2" <?php checked($show_on_exit, 2); ?> /> <?php _e('On Page Scroll Bottom (up coming...)', 'arpc-popup-creator'); ?></label>
                 </div>
             </div>
             

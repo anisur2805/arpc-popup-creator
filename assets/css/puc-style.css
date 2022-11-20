@@ -43,6 +43,7 @@
 	left: 0 !important;
 	top: 0 !important;
 	padding: 0 !important;
+	z-index: 9999999;
 }
 
 .arpc-popup-creator-body-inner {
@@ -113,18 +114,22 @@
     width: 100%;
 	cursor: pointer;
 	text-decoration: none;
+	box-sizing: border-box;
+}
+
+.arpc-form-group-row p.hide {
+	opacity: 0;
+	visibility: hidden;
+	transition: all 0.4s ease-in;
 }
 
 .arpc-form-group-row p.success {
 	color: green;
 	margin: 10px auto;
 	text-align: center;
+	opacity: 1;
+	visibility: visible;
 }
-.arpc-form-group-row p.hide {
-	opacity: 0;
-	visibility: hidden;
-}
-
 
 /* Template Style Two */
 #arpc-popup-creator .arpc__template_style_2 {

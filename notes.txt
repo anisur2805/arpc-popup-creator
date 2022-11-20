@@ -8,4 +8,14 @@ $wpdb->print_error();
 $wpdb->show_errors();
 $wpdb->last_query;
 
-http://i.imgur.com/XfoUlGU.png 
+http://i.imgur.com/XfoUlGU.png
+http://i.imgur.com/Yjr7uSE.png
+
+/**
+ * TODO:
+ * 1. page refresh e autoload once 
+ * 1.1) false flag first then true, 
+ * 1.2) check true hole cancel - DONE:
+ * 2. Data submit - collect data and store in admin panel
+ * 3. exit modal load once localStorage
+ */
