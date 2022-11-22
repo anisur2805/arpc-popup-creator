@@ -86,7 +86,7 @@ class Metabox {
         $image_url          = get_post_meta($post->ID, 'arpc_image_url', true);
         
         // var_dump($delay, $show_on_exit);
-        if ( ! get_post_meta( $post->ID, 'arpc_show_in_delay', true ) ) { $delay = 1000; };
+        if ( ! get_post_meta( $post->ID, 'arpc_show_in_delay', true ) ) { $delay = 1; };
         if ( ! get_post_meta( $post->ID, 'arpc_show_on_exit', true ) ) { $show_on_exit = 0; };
         
         // Display the form, using the current value.
@@ -103,7 +103,7 @@ class Metabox {
                 <label for="arpc_auto_hide_pu">
                     <?php _e( 'Auto Hide' ,'arpc-popup-creator' ); ?>
                 </label>
-                <input type="checkbox" name="arpc_auto_hide_pu" id="arpc_auto_hide_pu" value="<?php echo esc_attr( $auto_hide ); ?>" <?php checked( 1, $this->get_popup_metabox_value( $auto_hide ) );?> />
+                <input disabled type="checkbox" name="arpc_auto_hide_pu" id="arpc_auto_hide_pu" value="<?php echo esc_attr( $auto_hide ); ?>" <?php checked( 1, $this->get_popup_metabox_value( $auto_hide ) );?> />
                 <small><?php _e('Default 30ms', '') ?></small>
             </div>
             
@@ -118,7 +118,10 @@ class Metabox {
                 <label for="arpc_show_in_delay">
                     <?php _e( 'Show in Delay' ,'arpc-popup-creator' ); ?>
                 </label>
-                <input class="regular-text" type="text" id="arpc_show_in_delay" name="arpc_show_in_delay" placeholder="5000" value="<?php echo esc_attr( $delay ); ?>" />
+                <div>
+                <input class="regular-text" type="number" id="arpc_show_in_delay" min="1" max="15" name="arpc_show_in_delay" placeholder="5000" value="<?php echo esc_attr( $delay ); ?>" />
+                <small>Insert time in seconds (1 - 15s)</small>
+                </div>
             </div>
             
             <div class="arpc_form_group">
@@ -142,7 +145,7 @@ class Metabox {
                 <div class="arpc_form_group_inner">
                     <label><input type="radio" name="arpc_show_on_exit" id="arpc_show_on_exit" value="0" <?php checked($show_on_exit, 0); ?> /> <?php _e('On Page Exit', 'arpc-popup-creator'); ?></label>
                     <label><input type="radio" name="arpc_show_on_exit" id="arpc_show_on_exit" value="1" <?php checked($show_on_exit, 1); ?> /> <?php _e('On Page Load', 'arpc-popup-creator'); ?></label>
-                    <label><input type="radio" name="arpc_show_on_exit" id="arpc_show_on_exit" value="2" <?php checked($show_on_exit, 2); ?> /> <?php _e('On Page Scroll Bottom (up coming...)', 'arpc-popup-creator'); ?></label>
+                    <label><input disabled type="radio" name="arpc_show_on_exit" id="arpc_show_on_exit" value="2" <?php checked($show_on_exit, 2); ?> /> <?php _e('On Page Scroll Bottom (up coming...)', 'arpc-popup-creator'); ?></label>
                 </div>
             </div>
             

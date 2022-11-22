@@ -38,12 +38,12 @@ class Menu {
             'arpc-popup-adv-settings'
         );
     
-        add_settings_field(
-            'arpc_general_settings_logo',
-            'Upload Logo', [ $this, 'arpc_logo_callback' ],
-            'arpc-popup-general-settings',
-            'arpc_general_settings_section'
-        );
+        // add_settings_field(
+        //     'arpc_general_settings_logo',
+        //     'Upload Logo', [ $this, 'arpc_logo_callback' ],
+        //     'arpc-popup-general-settings',
+        //     'arpc_general_settings_section'
+        // );
 
         add_settings_field(
             'arpc_general_settings_template',
@@ -52,12 +52,12 @@ class Menu {
             'arpc_general_settings_section'
         );
 
-        add_settings_field(
-            'arpc_adv_settings_name',
-            'Name', [ $this, 'arpc_name_callback' ],
-            'arpc-popup-adv-settings',
-            'arpc_adv_settings_section'
-        );
+        // add_settings_field(
+        //     'arpc_adv_settings_name',
+        //     'Name', [ $this, 'arpc_name_callback' ],
+        //     'arpc-popup-adv-settings',
+        //     'arpc_adv_settings_section'
+        // );
     }
 
     /**
@@ -70,7 +70,7 @@ class Menu {
         }
 
         function arpc_adv_settings_section_callback() {
-            echo '<p>General Section Introduction.</p>';
+            echo '<p>Advanced Section Introduction. <small>More features coming soon.</small></p>';
         }
         
         // Logo field content cb

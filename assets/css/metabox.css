@@ -64,3 +64,7 @@
 .form-invalid p.error {
 	color: #f00 !important;
 }
+
+.arpc_form_group input:not([type="radio"]):not([type="checkbox"]):not([type="submit"]):not([type="button"]) {
+	width: 100%;
+}
