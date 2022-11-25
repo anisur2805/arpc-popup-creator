@@ -69,3 +69,37 @@ function arpc_delete_subscriber( $id ) {
           ['%d'],
       );
   }
+
+/**
+ * REST API init 
+ */  
+add_action( 'rest_api_init', 'arpc_rest_api_init');
+function arpc_rest_api_init(){
+
+    register_rest_route( 'abcde/v1', '/popup', array(
+        'methods' => 'GET',
+        'callback' => 'arpc_set_item',
+        'permission_callback' => 'set_item_permissions_check',
+    ) );
+
+    // register_rest_route( 'arpc_popup/v2', '/popup-creator', 
+    // array(
+    //     'methods' => 'PATCH',
+    //     'callback' => 'arpc_item_update',
+    //     // 'permission_callback' => 'set_item_permissions_check',
+    // )
+    // );
+}
+
+function arpc_set_item( ) {
+    $response = array("abced efg yes");
+    return rest_ensure_response( $response );
+}
+
+function arpc_item_update( $response ) {
+    return rest_ensure_response( $response );
+}
+
+function set_item_permissions_check(){
+    return true;
+}

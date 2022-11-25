@@ -75,3 +75,27 @@
   .choose-template-wrapper label > div {
       margin-bottom: 10px;
   }
+
+  /* Nav Settings */
+  .arpc-popup-settings-wrapper {
+      background: #fff;
+      padding: 20px;
+      border-radius: 5px;
+  }
+  
+  .arpc-popup-settings-wrapper .nav-tab-wrapper a {
+      border-top-left-radius: 12px;
+      border-top-right-radius: 12px;
+      background: #fff;
+      padding: 8px 24px;
+      font-size: 16px;
+      margin-left: 0;
+      margin-right: 12px;
+      box-shadow: unset;
+  }
+  
+  .arpc-popup-settings-wrapper .nav-tab-wrapper a.nav-tab.nav-tab-active {
+      background: #1a73e8;
+      color: #fff;
+      border-color: #1a73e8;
+  }

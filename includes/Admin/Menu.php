@@ -185,7 +185,7 @@ class Menu {
         // show error/ update messages
         settings_errors('arpc_settings_messages');
         ?>
-        	<div class="wrap">
+        	<div class="wrap arpc-popup-settings-wrapper">
                 <h1><?php esc_html_e(get_admin_page_title()); ?></h1>
 
                 <?php 
