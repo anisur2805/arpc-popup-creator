@@ -5,27 +5,27 @@ namespace ARPC\Popup;
  * Installer class
  */
 class Installer {
-    public function run() {
-        $this->add_version();
-        $this->create_tables();
-        $this->create_subscriber_tables();
-    }
+	public function run() {
+		$this->add_version();
+		$this->create_tables();
+		$this->create_subscriber_tables();
+	}
 
-    public function add_version() {
-        $installed = get_option( 'arpc_popup_installed' );
-        if ( !$installed ) {
-            update_option( 'arpc_popup_installed', time() );
-        }
+	public function add_version() {
+		$installed = get_option( 'arpc_popup_installed' );
+		if ( ! $installed ) {
+			update_option( 'arpc_popup_installed', time() );
+		}
 
-        update_option( 'arpc_popup_version', ARPC_VERSION );
-    }
+		update_option( 'arpc_popup_version', ARPC_VERSION );
+	}
 
-    public function create_tables() {
-        global $wpdb;
+	public function create_tables() {
+		global $wpdb;
 
-        $charset_collate = $wpdb->get_charset_collate();
+		$charset_collate = $wpdb->get_charset_collate();
 
-        $schema = "CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}arpc_popup`(
+		$schema = "CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}arpc_popup`(
             id int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
             name varchar(100) NOT NULL DEFAULT '',
             pc_active int(1) DEFAULT NULL,
@@ -40,19 +40,19 @@ class Installer {
             PRIMARY KEY (`id`)
         ) $charset_collate";
 
-        if ( !function_exists( 'dbDelta' ) ) {
-            require_once ABSPATH . 'wp-admin/includes/upgrade.php';
-        }
+		if ( ! function_exists( 'dbDelta' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+		}
 
-        dbDelta( $schema );
-    } 
-    
-    public function create_subscriber_tables() {
-        global $wpdb;
+		dbDelta( $schema );
+	}
 
-        $charset_collate = $wpdb->get_charset_collate();
+	public function create_subscriber_tables() {
+		global $wpdb;
 
-        $schema = "CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}arpc_subscriber`(
+		$charset_collate = $wpdb->get_charset_collate();
+
+		$schema = "CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}arpc_subscriber`(
             id int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
             name varchar(100) NOT NULL DEFAULT '', 
             email varchar(100) DEFAULT NULL,
@@ -61,11 +61,10 @@ class Installer {
             PRIMARY KEY (`id`)
         ) $charset_collate";
 
-        if ( !function_exists( 'dbDelta' ) ) {
-            require_once ABSPATH . 'wp-admin/includes/upgrade.php';
-        }
+		if ( ! function_exists( 'dbDelta' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+		}
 
-        dbDelta( $schema );
-    }
-
+		dbDelta( $schema );
+	}
 }

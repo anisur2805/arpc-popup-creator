@@ -3,20 +3,20 @@ namespace ARPC\Popup\Traits;
 
 /**
  * Form error handler trait
- */ 
+ */
 trait Form_Error {
 
-    public $errors = [];
-    
-    function has_errors( $key ) {
-        return isset( $this->errors[ $key ] ) ? true : false;
-    }
+	public $errors = array();
 
-    function get_error( $key ) {
-        if( isset( $this->errors[ $key ] ) ) {
-            return $this->errors[ $key ];
-        }
+	public function has_errors( $key ) {
+		return isset( $this->errors[ $key ] ) ? true : false;
+	}
 
-        return false;
-    }
+	public function get_error( $key ) {
+		if ( isset( $this->errors[ $key ] ) ) {
+			return $this->errors[ $key ];
+		}
+
+		return false;
+	}
 }
