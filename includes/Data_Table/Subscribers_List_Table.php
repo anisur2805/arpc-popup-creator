@@ -147,7 +147,6 @@ class Subscribers_List_Table extends \WP_List_Table {
 
 		} else {
 			return $wpdb->get_results( "SELECT id, name, email, created_at from {$wpdb->prefix}arpc_subscriber", ARRAY_A );
-
 		}
 	}
 
@@ -181,7 +180,7 @@ class Subscribers_List_Table extends \WP_List_Table {
 
 		$per_page = $this->get_items_per_page( 'arpc_subscribers_per_page' );
 
-		$$current_page = $this->get_pagenum();
+		$current_page = $this->get_pagenum();
 		$total_items   = count( $this->users_data );
 
 		$this->set_pagination_args(
@@ -192,23 +191,10 @@ class Subscribers_List_Table extends \WP_List_Table {
 			)
 		);
 
-		$this->users_data      = array_slice( $this->users_data, ( $$current_page - 1 ) * $per_page, $per_page );
+		// $data = array_slice($this->_items, ($current_page - 1) * $per_page, $per_page);
+		$this->users_data      = array_slice( $this->users_data, ( $current_page - 1 ) * $per_page, $per_page );
 		$this->_column_headers = array( $columns, $hidden, $sortable );
 		$this->items           = $this->users_data;
-	}
-
-	public function column_cb( $item ) {
-		return "<input type='checkbox' name='bulk-delete[]' value='{$item["id"]}'/>";
-	}
-
-	public function arpc_user_search( $item ) {
-		$name        = strtolower( $item['name'] );
-		$search_name = sanitize_text_field( $_REQUEST['s'] );
-		if ( strpos( $name, $search_name ) !== false ) {
-			return true;
-			wp_die( 'You gonna die' );
-		}
-		return false;
 	}
 
 	public function get_columns() {
@@ -224,9 +210,12 @@ class Subscribers_List_Table extends \WP_List_Table {
 		return $columns;
 	}
 
+	public function column_cb( $item ) {
+		return "<input type='checkbox' name='bulk-delete[]' value='{$item["id"]}'/>";
+	}
+
 	public function column_popup( $item ) {
-		error_log( 'log: ' . print_r( $item, true ) );
-		return $item['popup'];
+		return 'Hello World';
 	}
 
 	public function column_created_at( $item ) {
@@ -274,6 +263,16 @@ class Subscribers_List_Table extends \WP_List_Table {
 		return $sortable_columns;
 	}
 
+	public function arpc_user_search( $item ) {
+		$name        = strtolower( $item['name'] );
+		$search_name = sanitize_text_field( $_REQUEST['s'] );
+		if ( strpos( $name, $search_name ) !== false ) {
+			return true;
+			wp_die( 'You gonna die' );
+		}
+		return false;
+	}
+
 	public function filter_callback( $item ) {
 		$director = $_REQUEST['filter_s'] ? $_REQUEST['filter_s'] : 'all';
 		$director = strtolower( $director );
@@ -294,10 +293,10 @@ class Subscribers_List_Table extends \WP_List_Table {
 		$data = $wpdb->get_results( $wpdb->prepare( "SELECT name FROM {$wpdb->prefix}persons" ), ARRAY_A );
 
 		if ( isset( $_REQUEST['s'] ) ) {
-			$data2 = array_filter( $data, array( $this, 'arpc_user_search' ) );
+			$data = array_filter( $data, array( $this, 'arpc_user_search' ) );
 		}
 
-		return $data2;
+		return $data;
 	}
 
 	public function column_default( $item, $column_name ) {
@@ -328,52 +327,11 @@ class Subscribers_List_Table extends \WP_List_Table {
 	}
 
 	private function sort_data( $a, $b ) {
-
 		$orderby = ( ! empty( $_GET['orderby'] ) ) ? $_GET['orderby'] : 'name';
 		$order   = ( ! empty( $_GET['order'] ) ) ? $_GET['order'] : 'asc';
 		$result  = strcmp( $a[ $orderby ], $b[ $orderby ] );
 
-		if ( ( isset( $_REQUEST['action'] ) && 'bulk-delete' === $_REQUEST['action'] )
-		|| ( isset( $_REQUEST['action2'] ) && 'bulk-delete' === $_REQUEST['action2'] ) ) {
+		return 'asc' === $order ? $result : - $result;
 
-			echo 'hey';
-			die( 'die' );
-			$nonce = wp_unslash( $_REQUEST['_wpnonce'] );
-
-			// if ( ! wp_verify_nonce( $nonce, 'bulk-delete' ) ) {
-			//  $this->invalid_nonce_redirect();
-			// }
-			// else {
-			//  $this->subscriber_bulk_delete( $_REQUEST['users']);
-			//  $this->graceful_exit();
-			// }
-
-		} else {
-			// die("again");
-		}
-
-		$columns  = $this->get_columns();
-		$hidden   = $this->get_hidden_columns();
-		$sortable = $this->get_sortable_columns();
-
-		usort( $this->users_data, array( $this, 'sort_data' ) );
-
-		$per_page = $this->get_items_per_page( 'arpc_subscribers_per_page' );
-
-		$current_page = $this->get_pagenum();
-		$total_items  = count( $this->users_data );
-
-		$this->set_pagination_args(
-			array(
-				'total_items' => $total_items,
-				'per_page'    => $per_page,
-				'total_pages' => ceil( $total_items / $per_page ),
-			)
-		);
-
-		// $data = array_slice($this->_items, ($current_page - 1) * $per_page, $per_page);
-		$this->users_data      = array_slice( $this->users_data, ( $current_page - 1 ) * $per_page, $per_page );
-		$this->_column_headers = array( $columns, $hidden, $sortable );
-		$this->items           = $this->users_data;
 	}
 }

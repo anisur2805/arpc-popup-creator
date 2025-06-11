@@ -147,8 +147,8 @@ class Metabox {
 				</label>
 				<div class="arpc_form_group_inner">
 					<label><input type="radio" name="arpc_show_on_exit" id="arpc_show_on_exit" value="0" <?php checked( $show_on_exit, 0 ); ?> /> <?php _e( 'On Page Exit', 'arpc-popup-creator' ); ?></label>
-					<label><input type="radio" name="arpc_show_on_exit" id="arpc_show_on_exit" value="1" <?php checked( $show_on_exit, 1 ); ?> /> <?php _e( 'On Page Load', 'arpc-popup-creator' ); ?></label>
-					<label><input disabled type="radio" name="arpc_show_on_exit" id="arpc_show_on_exit" value="2" <?php checked( $show_on_exit, 2 ); ?> /> <?php _e( 'On Page Scroll Bottom (up coming...)', 'arpc-popup-creator' ); ?></label>
+					<label><input type="radio" name="arpc_show_on_exit" id="arpc_show_on_load" value="1" <?php checked( $show_on_exit, 1 ); ?> /> <?php _e( 'On Page Load', 'arpc-popup-creator' ); ?></label>
+					<label><input disabled type="radio" name="arpc_show_on_exit" id="arpc_show_on_scroll" value="2" <?php checked( $show_on_exit, 2 ); ?> /> <?php _e( 'On Page Scroll Bottom (up coming...)', 'arpc-popup-creator' ); ?></label>
 				</div>
 			</div>
 			

@@ -31,7 +31,7 @@ class Menu {
 		add_action( 'admin_init', array( $this, 'settings_init' ) );
 
 		// include __DIR__ . "./Settings/SettingsAPI.php";
-		new Settings_API_Wrapper();
+		// new Settings_API_Wrapper();
 	}
 
 	public function settings_init() {
@@ -226,20 +226,9 @@ class Menu {
 
 	public function subscribers_page() {
 		?>
-		<h2><?php esc_html_e( 'Subscriber Lists' ); ?></h2>
-		<?php $subscriber_table = new Subscribers_List_Table(); ?>
 		<div class="wrap">
-			<form id="art-search-form" method="GET">
-				<?php
-				printf(
-					'<input type="hidden" name="page" value="%s">',
-					esc_attr( $_REQUEST['page'] )
-				);
-
-		?>
-		<h2><?php _e( 'Subscriber Lists' ); ?></h2>
-		<?php $subscriber_table = new Subscribers_List_Table(); ?>
-		<div class="wrap">
+			<h1><?php esc_html_e( 'Subscriber Lists' ); ?></h1>
+			<?php $subscriber_table = new Subscribers_List_Table(); ?>
 			<form id="art-search-form" method="GET">
 				<input type="hidden" name="page" value="<?php echo $_REQUEST['page']; ?>" />
 				<?php
