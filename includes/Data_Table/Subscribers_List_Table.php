@@ -138,7 +138,6 @@ class Subscribers_List_Table extends \WP_List_Table {
 			return $wpdb->get_results( $query, ARRAY_A ); // phpcs:ignore
 
 		} else {
-
 			return $wpdb->get_results( "SELECT id, name, email, created_at from {$wpdb->prefix}arpc_subscriber", ARRAY_A );
 
 		}
@@ -207,9 +206,10 @@ class Subscribers_List_Table extends \WP_List_Table {
 
 		$columns = array(
 			'cb'         => '<input type="checkbox" />',
-			'name'       => __( 'Name', 'arpc-popup-creator' ),
+			'name'       => __( 'Full Name', 'arpc-popup-creator' ),
+			'popup'      => __( 'Popup', 'arpc-popup-creator' ),
 			'email'      => __( 'Email', 'arpc-popup-creator' ),
-			'created_at' => __( 'Date', 'arpc-popup-creator' ),
+			'created_at' => __( 'Subscribed On', 'arpc-popup-creator' ),
 		);
 
 		return $columns;
@@ -219,8 +219,12 @@ class Subscribers_List_Table extends \WP_List_Table {
 		return "<input type='checkbox' name='bulk-delete[]' value='{$item["id"]}'/>";
 	}
 
+	public function column_popup( $item ) {
+		error_log( 'log: ' . print_r( $item, true ) );
+		return $item['popup'];
+	}
+
 	public function column_created_at( $item ) {
-		// print_r($item);
 		return $item['created_at'];
 	}
 
@@ -258,6 +262,7 @@ class Subscribers_List_Table extends \WP_List_Table {
 			'id'         => array( 'id', true ),
 			'name'       => array( 'name', true ),
 			'email'      => array( 'email', true ),
+			'popup'      => array( 'popup', true ),
 			'created_at' => array( 'created_at', true ),
 		);
 
