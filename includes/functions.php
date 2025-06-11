@@ -1,4 +1,7 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly (not within WP)
+}
 
 /**
  * Insert a new popup to DB `arpc_subscriber` table
