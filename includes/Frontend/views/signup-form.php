@@ -9,7 +9,7 @@
 		</div>
 
 		<div class="arpc-form-group-row">
-			<?php wp_nonce_field( 'arpc-modal-form' ); ?>
+			<?php wp_nonce_field( 'arpc_modal_form', 'security' ); ?>
 			<input type="hidden" name="action" value="arpc_modal_form_action">
 			<input type="hidden" name="arpc-popup-id" value="<?php echo esc_attr( get_the_ID() ); ?>" />
 			<button type="submit" class="arpc_submit" name="arpc_submit" id="arpc_submit"><?php esc_attr_e( 'Subscribe Now', 'arpc-popup-creator' ); ?></button>

@@ -105,6 +105,8 @@ final class ARPC_Popup_Creator {
 			// Instantiate Front End Popup.
 			new Frontend();
 		}
+
+		new Assets();
 	}
 }
 

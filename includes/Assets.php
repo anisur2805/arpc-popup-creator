@@ -90,9 +90,10 @@ class Assets {
 			'arpc-modal-form',
 			'arpcModalForm',
 			array(
-				'ajaxUrl' => admin_url( 'admin-ajax.php' ),
-				'success' => __( 'Thanks for subscribe', 'arpc-popup-creator' ),
-				'error'   => __( 'Something went wrong in Front area', 'arpc-popup-creator' ),
+				'ajaxUrl'  => admin_url( 'admin-ajax.php' ),
+				'security' => wp_create_nonce( 'arpc_modal_form' ),
+				'success'  => __( 'Thanks for subscribe', 'arpc-popup-creator' ),
+				'error'    => __( 'Something went wrong in Front area', 'arpc-popup-creator' ),
 			)
 		);
 

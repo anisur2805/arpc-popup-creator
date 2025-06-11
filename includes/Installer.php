@@ -53,12 +53,13 @@ class Installer {
 		$charset_collate = $wpdb->get_charset_collate();
 
 		$schema = "CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}arpc_subscriber`(
-            id int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-            name varchar(100) NOT NULL DEFAULT '',
-            email varchar(100) DEFAULT NULL,
-            created_at DATETIME NOT NULL,
-            created_by BIGINT(20) UNSIGNED NOT NULL,
-            PRIMARY KEY (`id`)
+			id int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+			name varchar(100) NOT NULL DEFAULT '',
+			email varchar(100) DEFAULT NULL,
+			popup varchar(100) DEFAULT NULL,
+			created_at DATETIME NOT NULL,
+			created_by BIGINT(20) UNSIGNED NOT NULL,
+			PRIMARY KEY (`id`)
         ) $charset_collate";
 
 		if ( ! function_exists( 'dbDelta' ) ) {

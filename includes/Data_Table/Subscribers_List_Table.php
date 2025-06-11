@@ -146,7 +146,12 @@ class Subscribers_List_Table extends \WP_List_Table {
 			return $wpdb->get_results( $query, ARRAY_A ); // phpcs:ignore
 
 		} else {
-			return $wpdb->get_results( "SELECT id, name, email, created_at from {$wpdb->prefix}arpc_subscriber", ARRAY_A );
+			return $wpdb->get_results(
+				$wpdb->prepare(
+					"SELECT id, name, popup, email, created_at FROM {$wpdb->prefix}arpc_subscriber",
+				),
+				ARRAY_A
+			);
 		}
 	}
 
@@ -215,7 +220,7 @@ class Subscribers_List_Table extends \WP_List_Table {
 	}
 
 	public function column_popup( $item ) {
-		return 'Hello World';
+		return arpc_get_popup_name( $item['popup'] );
 	}
 
 	public function column_created_at( $item ) {

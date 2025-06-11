@@ -11,17 +11,17 @@ class Ajax {
 	}
 
 	public function arpc_modal_form() {
-		if ( ! wp_verify_nonce( $_REQUEST['_wpnonce'], 'arpc-modal-form' ) ) {
+		if ( ! wp_verify_nonce( $_POST['security'], 'arpc_modal_form' ) ) {
 			wp_send_json_error(
 				array(
 					'message' => 'Nonce verify failed!',
 				)
 			);
 		} else {
-			$id            = ! empty( $_POST['id'] ) ? intval( $_POST['id'] ) : 0;
-			$arpc_name     = ! empty( $_POST['arpc-name'] ) ? sanitize_text_field( $_POST['arpc-name'] ) : '';
-			$arpc_email    = ! empty( $_POST['arpc-email'] ) ? sanitize_text_field( $_POST['arpc-email'] ) : '';
-			$arpc_popup_id = ! empty( $_POST['arpc-popup-id'] ) ? intval( $_POST['arpc-popup-id'] ) : 0;
+			$id            = isset( $_POST['id'] ) ? intval( $_POST['id'] ) : 0;
+			$arpc_name     = isset( $_POST['arpc-name'] ) ? sanitize_text_field( wp_unslash( $_POST['arpc-name'] ) ) : '';
+			$arpc_email    = isset( $_POST['arpc-email'] ) ? sanitize_email( wp_unslash( $_POST['arpc-email'] ) ) : '';
+			$arpc_popup_id = isset( $_POST['arpc-popup-id'] ) ? intval( $_POST['arpc-popup-id'] ) : 0;
 
 			$args = array(
 				'name'  => $arpc_name,
@@ -34,7 +34,11 @@ class Ajax {
 			}
 
 			arpc_insert_popup( $args );
-			wp_send_json_success();
+			wp_send_json_success(
+				array(
+					'message' => 'Thanks for subscribe',
+				)
+			);
 		}
 	}
 

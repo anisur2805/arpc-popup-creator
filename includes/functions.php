@@ -73,3 +73,14 @@ function arpc_delete_subscriber( $id ) {
 			array( '%d' ),
 		);
 }
+
+/**
+ * Get Popup Name by ID
+ *
+ * @param int $id
+ *
+ * @return string
+ */
+function arpc_get_popup_name( $id ) {
+	return get_the_title( $id );
+}
