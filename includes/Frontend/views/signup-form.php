@@ -11,8 +11,9 @@
 		<div class="arpc-form-group-row">
 			<?php wp_nonce_field( 'arpc-modal-form' ); ?>
 			<input type="hidden" name="action" value="arpc_modal_form_action">
+			<input type="hidden" name="arpc-popup-id" value="<?php echo esc_attr( get_the_ID() ); ?>" />
 			<button type="submit" class="arpc_submit" name="arpc_submit" id="arpc_submit"><?php esc_attr_e( 'Subscribe Now', 'arpc-popup-creator' ); ?></button>
-			<p class="arpc-response hide"><?php echo esc_attr( 'Thanks for subscribe', 'arpc-popup-creator' ); ?></p>
+			<p class="hide"><?php echo esc_attr( 'Thanks for subscribe', 'arpc-popup-creator' ); ?></p>
 		</div>
 	</form>
 </div>

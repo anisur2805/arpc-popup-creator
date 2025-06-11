@@ -11,6 +11,10 @@
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
  */
 
+if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
+	require_once __DIR__ . '/vendor/autoload.php';
+}
+
 use ARPC\Popup\Admin;
 use ARPC\Popup\Ajax;
 use ARPC\Popup\Assets;
@@ -20,8 +24,6 @@ use ARPC\Popup\Installer;
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-
-require_once __DIR__ . '/vendor/autoload.php';
 
 /**
  * Class ARPC_Popup_Creator
@@ -33,19 +35,19 @@ require_once __DIR__ . '/vendor/autoload.php';
  * @return mixed
  */
 final class ARPC_Popup_Creator {
-	const version = '1.0';
+	const VERSION = '1.0';
 
-	private function __construct() {
+	public function __construct() {
 		$this->define_constants();
 		add_action( 'plugins_loaded', array( $this, 'init_plugin' ) );
 		register_activation_hook( __FILE__, array( $this, 'activate' ) );
 	}
 
 	/**
-	 * Initialize a singleton instance
-	 *
-	 * @return Popup_Creator
-	 */
+	* Initialize a singleton instance
+	*
+	* @return Popup_Creator
+	*/
 	public static function init() {
 		static $instance = false;
 
@@ -57,12 +59,12 @@ final class ARPC_Popup_Creator {
 	}
 
 	/**
-	 * Define plugin require constants
-	 *
-	 * @return void
-	 */
+	* define plugin require constants
+	*
+	* @return void
+	*/
 	public function define_constants() {
-		define( 'ARPC_VERSION', self::version );
+		define( 'ARPC_VERSION', self::VERSION );
 		define( 'ARPC_FILE', __FILE__ );
 		define( 'ARPC_PATH', __DIR__ );
 		define( 'ARPC_URL', plugins_url( '', __FILE__ ) );
@@ -103,8 +105,6 @@ final class ARPC_Popup_Creator {
 			// Instantiate Front End Popup.
 			new Frontend();
 		}
-
-		new Assets();
 	}
 }
 

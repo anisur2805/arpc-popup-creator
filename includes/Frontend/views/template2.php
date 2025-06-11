@@ -16,7 +16,6 @@
 	<div class="arpc-popup-creator-body-inner">
 		<p><strong>Subscribe Now</strong></p>
 		<?php
-
 		$content = wp_trim_words( get_the_content(), 5, '' );
 		if ( $title ) :
 			printf( '<h3 class="arpc-popup-modal-title">%s</h3>', $title );

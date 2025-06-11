@@ -15,7 +15,9 @@ class Data_Table {
 		add_filter( 'manage_arpc_popup_posts_custom_column', array( $this, 'column_content' ), 10, 2 );
 	}
 
-	// Manage Popup creator columns.
+	/**
+	* Manage Popup creator columns
+	*/
 	public function add_columns( $columns ) {
 		unset( $columns['date'] );
 		unset( $columns['title'] );
@@ -29,23 +31,25 @@ class Data_Table {
 		return $columns;
 	}
 
-	// Output table column values.
+	/**
+	* Output table column values
+	*/
 	public function column_content( $column, $post_id ) {
 		switch ( $column ) {
 			case 'image':
 				echo get_the_post_thumbnail( $post_id, 'popup-creator-thumbnail' );
 				break;
 			case 'show_on':
-				$page_id = get_post_meta( $post_id, 'arpc_ww_show', true );
-				echo get_the_title( $page_id );
+					$page_id = get_post_meta( $post_id, 'arpc_ww_show', true );
+					echo get_the_title( $page_id );
 				break;
 			case 'show_time':
-				$show_time = get_post_meta( $post_id, 'arpc_show_on_exit', true );
-				echo ( $show_time == 0 ? 'On Page Exit' : 'On Page Reload' );
+					$show_time = get_post_meta( $post_id, 'arpc_show_on_exit', true );
+					echo ( $show_time == 0 ? 'On Page Exit' : 'On Page Reload' );
 				break;
 			case 'active':
-				$is_active = get_post_meta( $post_id, 'arpc_active', true );
-				echo $is_active ? __( 'Yes', 'arpc-popup-creator' ) : __( 'No', 'arpc-popup-creator' );
+					$is_active = get_post_meta( $post_id, 'arpc_active', true );
+					echo $is_active ? __( 'Yes', 'arpc-popup-creator' ) : __( 'No', 'arpc-popup-creator' );
 				break;
 
 			default:
@@ -53,7 +57,9 @@ class Data_Table {
 		}
 	}
 
-	// Making columns sortable.
+	/**
+	* Making columns sortable
+	*/
 	public function columns_sortable( $columns ) {
 		$columns['show_on']   = 'show_on';
 		$columns['active']    = 'active';
@@ -62,25 +68,27 @@ class Data_Table {
 		return $columns;
 	}
 
-	// Columns sorting logic.
+	/**
+	* Columns sorting logic
+	*/
 	public function columns_sorting_logic( $query ) {
 		if ( ! is_admin() || ! $query->is_main_query() ) {
-			return;
+				return;
 		}
 
 		if ( 'show_on' === $query->get( 'orderby' ) ) {
-			$query->set( 'orderby', 'meta_value' );
-			$query->set( 'meta_key', 'arpc_ww_show' );
+				$query->set( 'orderby', 'meta_value' );
+				$query->set( 'meta_key', 'arpc_ww_show' );
 		}
 
 		if ( 'active' === $query->get( 'orderby' ) ) {
-			$query->set( 'orderby', 'meta_value' );
-			$query->set( 'meta_key', 'arpc_active' );
+				$query->set( 'orderby', 'meta_value' );
+				$query->set( 'meta_key', 'arpc_active' );
 		}
 
 		if ( 'show_time' === $query->get( 'orderby' ) ) {
-			$query->set( 'orderby', 'meta_value' );
-			$query->set( 'meta_key', 'arpc_show_on_exit' );
+				$query->set( 'orderby', 'meta_value' );
+				$query->set( 'meta_key', 'arpc_show_on_exit' );
 		}
 	}
 }

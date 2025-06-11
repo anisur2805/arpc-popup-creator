@@ -11,6 +11,10 @@ if ( ! class_exists( 'WP_List_Table' ) ) {
  * @package ARPC\Popup\Data_Table
  */
 class Subscribers_List_Table extends \WP_List_Table {
+
+	private $_items;
+	private $users_data;
+
 	/**
 	 * Subscribers_List_Table constructor.
 	 *
@@ -116,6 +120,7 @@ class Subscribers_List_Table extends \WP_List_Table {
 	}
 
 	private function fetch_subscribers_data( $search = '' ) {
+
 		global $wpdb;
 
 		if ( ! empty( $search ) ) {
@@ -123,13 +128,24 @@ class Subscribers_List_Table extends \WP_List_Table {
 			$order   = ( isset( $_GET['order'] ) ) ? esc_sql( $_GET['order'] ) : 'ASC';
 
 			//  ORDER BY $orderby $order
-			return $wpdb->get_results(
-				"SELECT id, name, email, created_at from {$wpdb->prefix}arpc_subscriber WHERE id LIKE '%{$search}%' OR name Like '%{$search}%' OR email Like '%{$search}%' OR created_at Like '%{$search}%'",
-				ARRAY_A
+			$like = '%' . $wpdb->esc_like( $search ) . '%';
+
+			$query = $wpdb->prepare(
+				"SELECT id, name, email, created_at
+				FROM {$wpdb->prefix}arpc_subscriber
+				WHERE id LIKE %s
+				OR name LIKE %s
+				OR email LIKE %s
+				OR created_at LIKE %s",
+				$like,
+				$like,
+				$like,
+				$like
 			);
 
-		} else {
+			return $wpdb->get_results( $query, ARRAY_A ); // phpcs:ignore
 
+		} else {
 			return $wpdb->get_results( "SELECT id, name, email, created_at from {$wpdb->prefix}arpc_subscriber", ARRAY_A );
 
 		}
@@ -181,23 +197,39 @@ class Subscribers_List_Table extends \WP_List_Table {
 		$this->items           = $this->users_data;
 	}
 
+	public function column_cb( $item ) {
+		return "<input type='checkbox' name='bulk-delete[]' value='{$item["id"]}'/>";
+	}
+
+	public function arpc_user_search( $item ) {
+		$name        = strtolower( $item['name'] );
+		$search_name = sanitize_text_field( $_REQUEST['s'] );
+		if ( strpos( $name, $search_name ) !== false ) {
+			return true;
+			wp_die( 'You gonna die' );
+		}
+		return false;
+	}
+
 	public function get_columns() {
+
 		$columns = array(
 			'cb'         => '<input type="checkbox" />',
-			'name'       => __( 'Name', 'arpc-popup-creator' ),
+			'name'       => __( 'Full Name', 'arpc-popup-creator' ),
+			'popup'      => __( 'Popup', 'arpc-popup-creator' ),
 			'email'      => __( 'Email', 'arpc-popup-creator' ),
-			'created_at' => __( 'Date', 'arpc-popup-creator' ),
+			'created_at' => __( 'Subscribed On', 'arpc-popup-creator' ),
 		);
 
 		return $columns;
 	}
 
-	public function column_cb( $item ) {
-		return "<input type='checkbox' name='bulk-delete[]' value='{$item["id"]}'/>";
+	public function column_popup( $item ) {
+		error_log( 'log: ' . print_r( $item, true ) );
+		return $item['popup'];
 	}
 
 	public function column_created_at( $item ) {
-		// print_r($item);
 		return $item['created_at'];
 	}
 
@@ -235,30 +267,21 @@ class Subscribers_List_Table extends \WP_List_Table {
 			'id'         => array( 'id', true ),
 			'name'       => array( 'name', true ),
 			'email'      => array( 'email', true ),
+			'popup'      => array( 'popup', true ),
 			'created_at' => array( 'created_at', true ),
 		);
 
 		return $sortable_columns;
 	}
 
-	public function arpc_user_search( $item ) {
-		$name        = strtolower( $item['name'] );
-		$search_name = sanitize_text_field( $_REQUEST['s'] );
-		if ( strpos( $name, $search_name ) !== false ) {
-			return true;
-			wp_die( 'You gonna die' );
-		}
-		return false;
-	}
-
 	public function filter_callback( $item ) {
-		$director = isset( $_REQUEST['filter_s'] ) ? $_REQUEST['filter_s'] : 'all';
+		$director = $_REQUEST['filter_s'] ? $_REQUEST['filter_s'] : 'all';
 		$director = strtolower( $director );
 
-		if ( 'all' == $director ) {
+		if ( 'all' === $director ) {
 			return true;
 		} else {
-			if ( $director == $item['director'] ) {
+			if ( $director === $item['director'] ) {
 				return true;
 			}
 		}
@@ -285,12 +308,14 @@ class Subscribers_List_Table extends \WP_List_Table {
 			default:
 				return isset( $item[ $column_name ] ) ? $item[ $column_name ] : '';
 		}
+
+		// return $item[$column_name];
 	}
 
 	/**
-	* Delete a subscriber record.
-	*
-	* @param int $id subscriber ID
+		* Delete a subscriber record.
+		*
+		* @param int $id subscriber ID
 	*/
 	public static function delete_subscriber( $id ) {
 		global $wpdb;
@@ -308,6 +333,47 @@ class Subscribers_List_Table extends \WP_List_Table {
 		$order   = ( ! empty( $_GET['order'] ) ) ? $_GET['order'] : 'asc';
 		$result  = strcmp( $a[ $orderby ], $b[ $orderby ] );
 
-		return 'asc' === $order ? $result : - $result;
+		if ( ( isset( $_REQUEST['action'] ) && 'bulk-delete' === $_REQUEST['action'] )
+		|| ( isset( $_REQUEST['action2'] ) && 'bulk-delete' === $_REQUEST['action2'] ) ) {
+
+			echo 'hey';
+			die( 'die' );
+			$nonce = wp_unslash( $_REQUEST['_wpnonce'] );
+
+			// if ( ! wp_verify_nonce( $nonce, 'bulk-delete' ) ) {
+			//  $this->invalid_nonce_redirect();
+			// }
+			// else {
+			//  $this->subscriber_bulk_delete( $_REQUEST['users']);
+			//  $this->graceful_exit();
+			// }
+
+		} else {
+			// die("again");
+		}
+
+		$columns  = $this->get_columns();
+		$hidden   = $this->get_hidden_columns();
+		$sortable = $this->get_sortable_columns();
+
+		usort( $this->users_data, array( $this, 'sort_data' ) );
+
+		$per_page = $this->get_items_per_page( 'arpc_subscribers_per_page' );
+
+		$current_page = $this->get_pagenum();
+		$total_items  = count( $this->users_data );
+
+		$this->set_pagination_args(
+			array(
+				'total_items' => $total_items,
+				'per_page'    => $per_page,
+				'total_pages' => ceil( $total_items / $per_page ),
+			)
+		);
+
+		// $data = array_slice($this->_items, ($current_page - 1) * $per_page, $per_page);
+		$this->users_data      = array_slice( $this->users_data, ( $current_page - 1 ) * $per_page, $per_page );
+		$this->_column_headers = array( $columns, $hidden, $sortable );
+		$this->items           = $this->users_data;
 	}
 }

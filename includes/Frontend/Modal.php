@@ -57,17 +57,17 @@ class Modal {
 			$get_uri    = isset( $_SERVER['REQUEST_URI'] ) ? $_SERVER['REQUEST_URI'] : '';
 			$filter_uri = str_replace( '/', '', $_SERVER['REQUEST_URI'] );
 
-			if ( ! ( isset( $_COOKIE[ $filter_uri ] ) && $_COOKIE[ $filter_uri ] != 1 ) ) {
+			// if ( ! ( isset( $_COOKIE[ $filter_uri ] ) && $_COOKIE[ $filter_uri ] != 1 ) ) {
 				if ( is_page( $show_in_id ) ) { // TODO: Remove is_page check
 					?>
 				<div class="arpc-popup-creator arpc-template arpc-<?php echo esc_attr( $value ); ?>" id="arpc-popup-creator" data-auto-hide="<?php echo ( $auto_hide == 1 ) ? 'yes' : 'no'; ?>" data-id="popup-<?php echo get_the_ID(); ?>" data-popup-image-size="<?php echo esc_attr( $image_size ); ?>" data-exit="<?php echo esc_attr( $exit ); ?>" data-delay="<?php echo $delay; ?>" data-show="<?php echo $show_in_id; ?>" data-page="<?php echo $slug; ?>">
 					<div class="arpc-popup-creator-body">
-						<?php include __DIR__ . "/views/$value.php"; ?>
+						<?php include __DIR__ . "/views/$template.php"; ?>
 					</div>
 				</div>
 					<?php
 				}
-			}
+			// }
 		}
 
 		wp_reset_query();

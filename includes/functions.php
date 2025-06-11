@@ -16,12 +16,13 @@ function arpc_insert_popup( $args = array() ) {
 	$defaults = array(
 		'name'       => '',
 		'email'      => '',
+		'popup'      => 0,
 		'created_by' => get_current_user_id(),
 		'created_at' => current_time( 'mysql' ),
 	);
 
 	$data   = wp_parse_args( $args, $defaults );
-	$format = array( '%s', '%s', '%d', '%s' );
+	$format = array( '%s', '%s', '%d', '%d', '%s' );
 
 	$inserted = $wpdb->insert( "{$wpdb->prefix}arpc_subscriber", $data, $format );
 
@@ -45,13 +46,13 @@ add_action( 'after_setup_theme', 'arpc_popup_register_image_size' );
 
 // Change Add title to
 function arpc_title_text( $title ) {
-		$screen = get_current_screen();
+	$screen = get_current_screen();
 
 	if ( 'arpc_popup' == $screen->post_type ) {
-			$title = __( 'My Popup Name', 'popup-creator' );
+		$title = __( 'Add Popup title', 'popup-creator' );
 	}
 
-		return $title;
+	return $title;
 }
 
 add_filter( 'enter_title_here', 'arpc_title_text' );
