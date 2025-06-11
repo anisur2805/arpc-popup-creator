@@ -1,0 +1,24 @@
+{
+	"name": "arpc-popup-creator-features",
+	"version": "1.0.0",
+	"description": "ARPC Popup Creator features plugin packages",
+	"main": "main.js",
+	"scripts": {
+		"lint:php": "vendor/bin/phpcs",
+		"lint:php:fix": "vendor/bin/phpcbf"
+	},
+	"keywords": [
+		"wordpress",
+		"plugins"
+	],
+	"author": "Anisur Rahman",
+	"license": "MIT",
+	"private": true,
+	"devDependencies": {
+		"@babel/core": "^7.17.8"
+	},
+	"browserslist": [
+		"defaults"
+	],
+	"dependencies": {}
+}
