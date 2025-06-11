@@ -2,7 +2,7 @@ name: Test WordPress Coding Standard
 
 on:
   push:
-    branches: [ master, develop ]
+    branches: [ master, develop, test ]
 
 jobs:
   test-wpcs:
