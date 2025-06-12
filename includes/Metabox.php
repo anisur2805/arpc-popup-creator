@@ -1,32 +1,38 @@
 <?php
 namespace ARPC\Popup;
 
+defined( 'ABSPATH' ) || exit;
+
 class Metabox {
 	/**
-	 * Hook into the appropriate actions when the class is constructed.
+	 * Initialize hooks.
 	 */
 	public function __construct() {
-		add_action( 'add_meta_boxes', array( $this, 'add_meta_box' ) );
-		add_action( 'save_post', array( $this, 'save' ) );
-		add_action( 'admin_head', array( $this, 'metabox_enqueue' ) );
+		add_action( 'add_meta_boxes', [ $this, 'add_meta_box' ] );
+		add_action( 'save_post', [ $this, 'save' ] );
+		add_action( 'admin_head', [ $this, 'metabox_enqueue' ] );
 	}
 
+	/**
+	 * Enqueue scripts for the metabox.
+	 */
 	public function metabox_enqueue() {
 		wp_enqueue_script( 'arpc-metabox-script' );
 	}
 
 	/**
-	 * Adds the meta box container.
+	 * Register the meta box for supported post types.
+	 *
+	 * @param string $post_type Post type.
 	 */
 	public function add_meta_box( $post_type ) {
-		// Limit meta box to certain post types.
 		$post_types = array( 'arpc_popup' );
 
 		if ( in_array( $post_type, $post_types, true ) ) {
 			add_meta_box(
 				'arpc_popup_metabox',
-				__( 'Popup Creator', 'arpc-popup-creator' ),
-				array( $this, 'render_meta_box_content' ),
+				esc_html__( 'Popup Creator', 'arpc-popup-creator' ),
+				[ $this, 'render_meta_box_content' ],
 				$post_type,
 				'advanced',
 				'high'
@@ -34,10 +40,18 @@ class Metabox {
 		}
 	}
 
+	/**
+	 * Security checks for saving meta.
+	 *
+	 * @param string $nonce_field Nonce field key.
+	 * @param string $action      Nonce action.
+	 * @param int    $post_id     Post ID.
+	 * @return bool
+	 */
 	private function is_secured( $nonce_field, $action, $post_id ) {
-		$nonce = isset( $_POST[ $nonce_field ] ) ? $_POST[ $nonce_field ] : '';
+		$nonce = isset( $_POST[ $nonce_field ] ) ? sanitize_text_field( wp_unslash( $_POST[ $nonce_field ] ) ) : '';
 
-		if ( $nonce == '' ) {
+		if ( empty( $nonce ) ) {
 			return false;
 		}
 
@@ -49,11 +63,7 @@ class Metabox {
 			return false;
 		}
 
-		if ( wp_is_post_autosave( $post_id ) ) {
-			return false;
-		}
-
-		if ( wp_is_post_revision( $post_id ) ) {
+		if ( wp_is_post_autosave( $post_id ) || wp_is_post_revision( $post_id ) ) {
 			return false;
 		}
 
@@ -63,160 +73,166 @@ class Metabox {
 	/**
 	 * Render Meta Box content.
 	 *
-	 * @param WP_Post $post The post object.
+	 * @param \WP_Post $post The post object.
 	 */
 	public function render_meta_box_content( $post ) {
-
-		// Add an nonce field so we can check for it later.
 		wp_nonce_field( 'popup_creator', 'popup_creator_nonce' );
 
-		// Use get_post_meta to retrieve an existing value from the database.
-		$delay              = get_post_meta( $post->ID, 'arpc_show_in_delay', true );
-		$title              = get_post_meta( $post->ID, 'arpc_title', true );
-		$subtitle           = get_post_meta( $post->ID, 'arpc_subtitle', true );
-		$auto_hide_delay_in = get_post_meta( $post->ID, 'arpc_auto_hide_in', true );
-		$auto_hide          = get_post_meta( $post->ID, 'arpc_auto_hide_pu', true );
-		$image_size         = get_post_meta( $post->ID, 'arpc_image_size', true );
-		$show_on_exit       = get_post_meta( $post->ID, 'arpc_show_on_exit', true );
-		$popup_url          = get_post_meta( $post->ID, 'arpc_popup_url', true );
-		$is_active          = get_post_meta( $post->ID, 'arpc_active', true );
-		$selected_page      = get_post_meta( $post->ID, 'arpc_ww_show', true );
-		$image_id           = get_post_meta( $post->ID, 'arpc_image_id', true );
-		$image_url          = get_post_meta( $post->ID, 'arpc_image_url', true );
+		$fields = array(
+			'delay'              => 'arpc_show_in_delay',
+			'title'              => 'arpc_title',
+			'subtitle'           => 'arpc_subtitle',
+			'auto_hide_delay_in' => 'arpc_auto_hide_in',
+			'auto_hide'          => 'arpc_auto_hide_pu',
+			'image_size'         => 'arpc_image_size',
+			'show_on_exit'       => 'arpc_show_on_exit',
+			'popup_url'          => 'arpc_popup_url',
+			'is_active'          => 'arpc_active',
+			'selected_page'      => 'arpc_ww_show',
+			'image_id'           => 'arpc_image_id',
+			'image_url'          => 'arpc_image_url',
+		);
 
-		// var_dump($delay, $show_on_exit);
-		if ( ! get_post_meta( $post->ID, 'arpc_show_in_delay', true ) ) {
+		foreach ( $fields as $var => $meta_key ) {
+			$$var = get_post_meta( $post->ID, $meta_key, true );
+		}
+
+		if ( '' === $delay ) {
 			$delay = 1;
 		}
-		if ( ! get_post_meta( $post->ID, 'arpc_show_on_exit', true ) ) {
+		if ( '' === $show_on_exit ) {
 			$show_on_exit = 0;
 		}
-
-		// Display the form, using the current value.
 		?>
 		<div class="arpc_metabox_wrapper">
 			<div class="arpc_form_group">
 				<label for="arpc_active">
-					<?php _e( 'Is Active?', 'arpc-popup-creator' ); ?>
+					<?php esc_html_e( 'Is Active?', 'arpc-popup-creator' ); ?>
 				</label>
-				<input type="checkbox" name="arpc_active" id="arpc_active" value="<?php echo esc_attr( $is_active ); ?>" <?php checked( 1, $this->get_popup_metabox_value( $is_active ) ); ?> />
+				<input type="checkbox" name="arpc_active" id="arpc_active" value="1" <?php checked( 1, intval( $is_active ) ); ?> />
 			</div>
-			
+
 			<div class="arpc_form_group auto_hide_gp arpc-coming-soon">
 				<label for="arpc_auto_hide_pu">
-					<?php _e( 'Auto Hide', 'arpc-popup-creator' ); ?>
+					<?php esc_html_e( 'Auto Hide', 'arpc-popup-creator' ); ?>
 				</label>
-				<input disabled type="checkbox" name="arpc_auto_hide_pu" id="arpc_auto_hide_pu" value="<?php echo esc_attr( $auto_hide ); ?>" <?php checked( 1, $this->get_popup_metabox_value( $auto_hide ) ); ?> />
+				<input disabled type="checkbox" name="arpc_auto_hide_pu" id="arpc_auto_hide_pu" value="1" <?php checked( 1, intval( $auto_hide ) ); ?> />
 				<small><?php esc_html_e( 'Default 30ms', 'arpc-popup-creator' ); ?></small>
 			</div>
-			
+
 			<div class="arpc_form_group auto_hide_in_gp">
 				<label for="arpc_auto_hide_in">
-					<?php _e( 'Auto Hide In', 'arpc-popup-creator' ); ?>
+					<?php esc_html_e( 'Auto Hide In', 'arpc-popup-creator' ); ?>
 				</label>
-				<input class="regular-text" type="text" id="arpc_auto_hide_in" name="arpc_auto_hide_in" placeholder="5000" value="<?php echo esc_attr( $auto_hide_delay_in ); ?>" />
+				<input class="regular-text" type="number" id="arpc_auto_hide_in" name="arpc_auto_hide_in" placeholder="5000" value="<?php echo esc_attr( $auto_hide_delay_in ); ?>" />
 			</div>
-			
+
 			<div class="arpc_form_group">
 				<label for="arpc_show_in_delay">
-					<?php _e( 'Show in Delay', 'arpc-popup-creator' ); ?>
+					<?php esc_html_e( 'Show in Delay', 'arpc-popup-creator' ); ?>
 				</label>
 				<div>
-				<input class="regular-text" type="number" id="arpc_show_in_delay" min="1" max="15" name="arpc_show_in_delay" placeholder="5000" value="<?php echo esc_attr( $delay ); ?>" />
-				<small>Insert time in seconds (1 - 15s)</small>
+					<input class="regular-text" type="number" id="arpc_show_in_delay" min="1" max="15" name="arpc_show_in_delay" placeholder="5" value="<?php echo esc_attr( $delay ); ?>" />
+					<small><?php esc_html_e( 'Insert time in seconds (1 - 15s)', 'arpc-popup-creator' ); ?></small>
 				</div>
 			</div>
-			
+
 			<div class="arpc_form_group">
 				<label for="arpc_title">
-					<?php _e( 'Popup Title', 'arpc-popup-creator' ); ?>
+					<?php esc_html_e( 'Popup Title', 'arpc-popup-creator' ); ?>
 				</label>
-				<input class="regular-text" type="text" id="arpc_title" name="arpc_title" placeholder="Our Spring Sale Has Started" value="<?php echo esc_attr( $title ); ?>" />
+				<input class="regular-text" type="text" id="arpc_title" name="arpc_title" placeholder="<?php esc_attr_e( 'Our Spring Sale Has Started', 'arpc-popup-creator' ); ?>" value="<?php echo esc_attr( $title ); ?>" />
 			</div>
-			
+
 			<div class="arpc_form_group">
 				<label for="arpc_subtitle">
-					<?php _e( 'Popup Sub Title', 'arpc-popup-creator' ); ?>
+					<?php esc_html_e( 'Popup Sub Title', 'arpc-popup-creator' ); ?>
 				</label>
-				<input class="regular-text" type="text" id="arpc_subtitle" name="arpc_subtitle" placeholder="Ex. Subscribe Our News Letter" value="<?php echo esc_attr( $subtitle ); ?>" />
+				<input class="regular-text" type="text" id="arpc_subtitle" name="arpc_subtitle" placeholder="<?php esc_attr_e( 'Ex. Subscribe Our News Letter', 'arpc-popup-creator' ); ?>" value="<?php echo esc_attr( $subtitle ); ?>" />
 			</div>
-			
+
 			<div class="arpc_form_group">
 				<label for="arpc_show_on_exit">
-					<?php _e( 'Show when', 'arpc-popup-creator' ); ?>
+					<?php esc_html_e( 'Show when', 'arpc-popup-creator' ); ?>
 				</label>
 				<div class="arpc_form_group_inner">
-					<label><input type="radio" name="arpc_show_on_exit" id="arpc_show_on_exit" value="0" <?php checked( $show_on_exit, 0 ); ?> /> <?php _e( 'On Page Exit', 'arpc-popup-creator' ); ?></label>
-					<label><input type="radio" name="arpc_show_on_exit" id="arpc_show_on_load" value="1" <?php checked( $show_on_exit, 1 ); ?> /> <?php _e( 'On Page Load', 'arpc-popup-creator' ); ?></label>
-					<label><input disabled type="radio" name="arpc_show_on_exit" id="arpc_show_on_scroll" value="2" <?php checked( $show_on_exit, 2 ); ?> /> <?php _e( 'On Page Scroll Bottom (up coming...)', 'arpc-popup-creator' ); ?></label>
+					<label>
+						<input type="radio" name="arpc_show_on_exit" value="0" <?php checked( $show_on_exit, 0 ); ?> />
+						<?php esc_html_e( 'On Page Exit', 'arpc-popup-creator' ); ?>
+					</label>
+					<label>
+						<input type="radio" name="arpc_show_on_exit" value="1" <?php checked( $show_on_exit, 1 ); ?> />
+						<?php esc_html_e( 'On Page Load', 'arpc-popup-creator' ); ?>
+					</label>
+					<label>
+						<input disabled type="radio" name="arpc_show_on_exit" value="2" <?php checked( $show_on_exit, 2 ); ?> />
+						<?php esc_html_e( 'On Page Scroll Bottom (up coming...)', 'arpc-popup-creator' ); ?>
+					</label>
 				</div>
 			</div>
-			
+
 			<div class="arpc_form_group">
 				<label for="arpc_popup_url">
-					<?php _e( 'Enter popup URL', 'arpc-popup-creator' ); ?>
+					<?php esc_html_e( 'Enter popup URL', 'arpc-popup-creator' ); ?>
 				</label>
-				<input class="regular-text" type="url" id="arpc_popup_url" name="arpc_popup_url" value="<?php echo esc_attr( $popup_url ); ?>" />
+				<input class="regular-text" type="url" id="arpc_popup_url" name="arpc_popup_url" value="<?php echo esc_url( $popup_url ); ?>" />
 			</div>
-			
+
 			<div class="arpc_form_group">
 				<label for="arpc_image_size">
-					<?php _e( 'Select Image Size', 'arpc-popup-creator' ); ?>
+					<?php esc_html_e( 'Select Image Size', 'arpc-popup-creator' ); ?>
 				</label>
 				<select class="regular-text" name="arpc_image_size" id="arpc_image_size">
-					<option value="">Select Image Size</option>
-					<option value="original" <?php selected( 'original', $this->get_popup_metabox_value( $image_size ) ); ?> >Original</option>
-					<option value="landscape" <?php selected( 'landscape', $this->get_popup_metabox_value( $image_size ) ); ?> >Landscape</option>
-					<option value="square"  <?php selected( 'square', $this->get_popup_metabox_value( $image_size ) ); ?> >Square</option>
+					<option value=""><?php esc_html_e( 'Select Image Size', 'arpc-popup-creator' ); ?></option>
+					<option value="original" <?php selected( 'original', $image_size ); ?>><?php esc_html_e( 'Original', 'arpc-popup-creator' ); ?></option>
+					<option value="landscape" <?php selected( 'landscape', $image_size ); ?>><?php esc_html_e( 'Landscape', 'arpc-popup-creator' ); ?></option>
+					<option value="square" <?php selected( 'square', $image_size ); ?>><?php esc_html_e( 'Square', 'arpc-popup-creator' ); ?></option>
 				</select>
 			</div>
-			
+
 			<div class="arpc_form_group hide-elem">
-				<label><?php _e( 'Upload Image for Feature', 'arpc-popup-creator' ); ?></label>
+				<label><?php esc_html_e( 'Upload Image for Feature', 'arpc-popup-creator' ); ?></label>
 				<div id="myImageMetaBox">
-					<button class="button" id="arpc_upload_image"><?php _e( 'Upload Image', 'arpc-popup-creator' ); ?></button>
-					<button class="hidden button" name="arpc_image_remove" id="arpc_delete_custom_img">Remove Image</button>
-					<input type="hidden" name="arpc_image_id" id="arpc_image_id" value="<?php echo $image_id; ?>" />
-					<input type="hidden" name="arpc_image_url" id="arpc_image_url" value="<?php echo $image_url; ?>" />
+					<button class="button" id="arpc_upload_image" type="button"><?php esc_html_e( 'Upload Image', 'arpc-popup-creator' ); ?></button>
+					<button class="hidden button" id="arpc_delete_custom_img" type="button"><?php esc_html_e( 'Remove Image', 'arpc-popup-creator' ); ?></button>
+					<input type="hidden" name="arpc_image_id" id="arpc_image_id" value="<?php echo esc_attr( $image_id ); ?>" />
+					<input type="hidden" name="arpc_image_url" id="arpc_image_url" value="<?php echo esc_url( $image_url ); ?>" />
 					<div id="arpc_image_container"></div>
 				</div>
 			</div>
-			
+
 			<div class="arpc_form_group">
 				<label for="arpc_ww_show">
-					<?php _e( 'Where to show', 'arpc-popup-creator' ); ?>
+					<?php esc_html_e( 'Where to show', 'arpc-popup-creator' ); ?>
 				</label>
-				
 				<?php
-					$args = array(
+				wp_dropdown_pages(
+					array(
 						'depth'             => 1,
 						'class'             => 'arpc-admin-pages regular-text',
 						'id'                => 'arpc_ww_show',
 						'name'              => 'arpc_ww_show',
-						'show_option_none'  => __( 'Select a page', 'arpc-popup-creator' ),
+						'show_option_none'  => esc_html__( 'Select a page', 'arpc-popup-creator' ),
 						'option_none_value' => 0,
 						'echo'              => 1,
 						'selected'          => $selected_page,
-					);
-
-					wp_dropdown_pages( $args );
-					?>
+					)
+				);
+				?>
 			</div>
-		
 		</div>
 		<?php
 	}
 
 	/**
-	 * Update post meta
+	 * Update post meta with sanitized value.
 	 *
-	 * @param [type] $key
-	 * @param [type] $post_id
-	 * @return void
+	 * @param string $key     Meta key.
+	 * @param int    $post_id Post ID.
 	 */
 	protected function update_post_meta_render( $key, $post_id ) {
 		if ( isset( $_POST[ $key ] ) ) {
-			update_post_meta( $post_id, $key, sanitize_text_field( $_POST[ $key ] ) );
+			update_post_meta( $post_id, $key, sanitize_text_field( wp_unslash( $_POST[ $key ] ) ) );
 		}
 	}
 
@@ -230,66 +246,35 @@ class Metabox {
 			return $post_id;
 		}
 
-		if ( isset( $_POST['arpc_popup_url'] ) ) {
-			update_post_meta( $post_id, 'arpc_popup_url', sanitize_text_field( $_POST['arpc_popup_url'] ) );
+		$meta_fields = array(
+			'arpc_popup_url',
+			'arpc_image_size',
+			'arpc_auto_hide_in',
+			'arpc_show_in_delay',
+			'arpc_title',
+			'arpc_subtitle',
+			'arpc_show_on_exit',
+			'arpc_ww_show',
+			'arpc_image_id',
+			'arpc_image_url',
+		);
+
+		foreach ( $meta_fields as $field ) {
+			$this->update_post_meta_render( $field, $post_id );
 		}
 
-		if ( isset( $_POST['arpc_image_size'] ) ) {
-			update_post_meta( $post_id, 'arpc_image_size', sanitize_text_field( $_POST['arpc_image_size'] ) );
-		}
-
-		if ( isset( $_POST['arpc_auto_hide_in'] ) ) {
-			update_post_meta( $post_id, 'arpc_auto_hide_in', sanitize_text_field( $_POST['arpc_auto_hide_in'] ) );
-		}
-
-		if ( isset( $_POST['arpc_show_in_delay'] ) ) {
-			update_post_meta( $post_id, 'arpc_show_in_delay', sanitize_text_field( $_POST['arpc_show_in_delay'] ) );
-		}
-
-		if ( isset( $_POST['arpc_title'] ) ) {
-			update_post_meta( $post_id, 'arpc_title', sanitize_text_field( $_POST['arpc_title'] ) );
-		}
-
-		if ( isset( $_POST['arpc_subtitle'] ) ) {
-			update_post_meta( $post_id, 'arpc_subtitle', sanitize_text_field( $_POST['arpc_subtitle'] ) );
-		}
-
-		if ( isset( $_POST['arpc_show_on_exit'] ) ) {
-			update_post_meta( $post_id, 'arpc_show_on_exit', sanitize_text_field( $_POST['arpc_show_on_exit'] ) );
-		}
-
-		if ( isset( $_POST['arpc_ww_show'] ) ) {
-			update_post_meta( $post_id, 'arpc_ww_show', sanitize_text_field( $_POST['arpc_ww_show'] ) );
-		}
-
-		if ( isset( $_POST['arpc_active'] ) ) {
-			update_post_meta( $post_id, 'arpc_active', true );
-		} else {
-			update_post_meta( $post_id, 'arpc_active', false );
-		}
-
-		if ( isset( $_POST['arpc_auto_hide_pu'] ) ) {
-			update_post_meta( $post_id, 'arpc_auto_hide_pu', true );
-		} else {
-			update_post_meta( $post_id, 'arpc_auto_hide_pu', false );
-		}
-
-		if ( isset( $_POST['arpc_image_id'] ) ) {
-			update_post_meta( $post_id, 'arpc_image_id', sanitize_text_field( $_POST['arpc_image_id'] ) );
-		}
-
-		// if( isset( $_POST['arpc_image_url'] ) ) {
-		//     update_post_meta($post_id, 'arpc_image_url', sanitize_text_field( $_POST['arpc_image_url'] ) );
-		// }
-
-		$this->update_post_meta_render( 'arpc_image_url', $post_id );
+		// Save checkboxes as boolean values.
+		update_post_meta( $post_id, 'arpc_active', isset( $_POST['arpc_active'] ) ? 1 : 0 );
+		update_post_meta( $post_id, 'arpc_auto_hide_pu', isset( $_POST['arpc_auto_hide_pu'] ) ? 1 : 0 );
 	}
 
+	/**
+	 * Get meta box value or empty string.
+	 *
+	 * @param mixed $value Value.
+	 * @return string
+	 */
 	public function get_popup_metabox_value( $value ) {
-		if ( isset( $value ) && ! empty( $value ) ) {
-			return $value;
-		} else {
-			return '';
-		}
+		return ( isset( $value ) && '' !== $value ) ? $value : '';
 	}
 }
