@@ -1,12 +1,19 @@
 <div class="arpc__template arpc__template_style_3">
 	<div class="arpc-popup-creator-body-inner">
 		<?php
-			$content = wp_trim_words( get_the_content(), 5, '' );
-			$content = $content ? $content : __( 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.' );
 		if ( $title ) :
-			printf( '<h3 class="arpc-popup-modal-title">%s</h3>', $title );
+			printf(
+				'<h3 class="arpc-popup-modal-title">%s</h3>',
+				esc_html( $title )
+			);
 			endif;
-			printf( '<div>%s</div>', $content );
+
+			if ( $content ) {
+				printf(
+					'<div class="arpc-popup-modal-content">%s</div>',
+					wp_kses_post( get_the_content() )
+				);
+			}
 		?>
 		<div class="arpc-popup-form">
 			<?php echo do_shortcode( '[arpc_newsletter2]' ); ?>

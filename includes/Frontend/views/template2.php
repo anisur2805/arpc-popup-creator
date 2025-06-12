@@ -16,21 +16,35 @@
 	<div class="arpc-popup-creator-body-inner">
 		<p><strong>Subscribe Now</strong></p>
 		<?php
-		$content = wp_trim_words( get_the_content(), 5, '' );
 		if ( $title ) :
-			printf( '<h3 class="arpc-popup-modal-title">%s</h3>', $title );
-			endif;
-			// if ($subtitle) :
-			//  printf('<h4 class="arpc-popup-modal-title">%s</h4>', $subtitle);
-			// endif;
-			// printf('<div>%s</div>', $content);
+			printf(
+				'<h3 class="arpc-popup-modal-title">%s</h3>',
+				esc_html( $title )
+			);
+		endif;
+
+		if ( $subtitle ) :
+			 printf(
+				'<h4 class="arpc-popup-modal-title">%s</h4>',
+				esc_html( $subtitle )
+			);
+		endif;
+
+		if ( $content ) {
+			printf(
+				'<div class="arpc-popup-modal-content">%s</div>',
+				wp_kses_post( get_the_content() )
+			);
+		}
+
+		printf(
+			'<p>%s</p>',
+			esc_html( 'Do subscribe to receive updates on new arrivals, special offers & our promotions' )
+		);
 		?>
-		<p>Do subscribe to receive updates on new arrivals, special offers & our promotions</p>
 		<div class="arpc-popup-form">
 			<?php echo do_shortcode( '[arpc_newsletter]' ); ?>
 		</div>
 	</div>
-
 	<button class="arpc-close-button"></button>
-
 </div>
