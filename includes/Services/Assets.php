@@ -73,12 +73,8 @@ class Assets {
 				'version' => filemtime( ARPC_PATH . '/assets/css/admin-style.css' ),
 			),
 			'arpc-style'       => array(
-				'src'     => ARPC_ASSETS . '/css/arpc-style.css',
-				'version' => filemtime( ARPC_PATH . '/assets/css/arpc-style.css' ),
-			),
-			'arpc-frontend'    => array(
-				'src'     => ARPC_ASSETS . '/css/frontend.css',
-				'version' => filemtime( ARPC_PATH . '/assets/css/frontend.css' ),
+				'src'     => ARPC_ASSETS . '/css/puc-style.css',
+				'version' => filemtime( ARPC_PATH . '/assets/css/puc-style.css' ),
 			),
 		);
 	}
