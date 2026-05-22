@@ -90,5 +90,28 @@ class Assets {
 		foreach ( $this->get_styles() as $handle => $style ) {
 			wp_register_style( $handle, $style['src'], array(), $style['version'] );
 		}
+
+		// Localize scripts with AJAX data.
+		wp_localize_script(
+			'arpc-modal-form',
+			'arpcModalForm',
+			array(
+				'ajaxUrl' => admin_url( 'admin-ajax.php' ),
+				'success' => __( 'Thanks for subscribe', 'arpc-popup-creator' ),
+				'error'   => __( 'Something went wrong in Front area', 'arpc-popup-creator' ),
+			)
+		);
+
+		wp_localize_script(
+			'admin-subscriber',
+			'arpcAdminSub',
+			array(
+				'nonce'   => wp_create_nonce( 'admin-subscriber' ),
+				'ajaxUrl' => admin_url( 'admin-ajax.php' ),
+				'confirm' => __( 'Are you sure?', 'arpc-popup-creator' ),
+				'success' => __( 'Thanks for subscribe', 'arpc-popup-creator' ),
+				'error'   => __( 'Something went wrong', 'arpc-popup-creator' ),
+			)
+		);
 	}
 }
