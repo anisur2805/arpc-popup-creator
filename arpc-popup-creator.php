@@ -15,11 +15,11 @@ if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
 	require_once __DIR__ . '/vendor/autoload.php';
 }
 
-use ARPC\Popup\Admin;
-use ARPC\Popup\Ajax;
-use ARPC\Popup\Assets;
-use ARPC\Popup\Frontend;
-use ARPC\Popup\Installer;
+use ARPC\Popup\Controllers\Admin;
+use ARPC\Popup\Controllers\Ajax;
+use ARPC\Popup\Controllers\Frontend;
+use ARPC\Popup\Services\Assets;
+use ARPC\Popup\Services\Installer;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -31,12 +31,14 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @package ARPC\Popup
  * @since   1.0
  * @version 1.0
- *
- * @return mixed
  */
 final class ARPC_Popup_Creator {
+
 	const VERSION = '1.0';
 
+	/**
+	 * Constructor.
+	 */
 	public function __construct() {
 		$this->define_constants();
 		add_action( 'plugins_loaded', array( $this, 'init_plugin' ) );
@@ -44,10 +46,10 @@ final class ARPC_Popup_Creator {
 	}
 
 	/**
-	* Initialize a singleton instance
-	*
-	* @return Popup_Creator
-	*/
+	 * Initialize singleton instance.
+	 *
+	 * @return self
+	 */
 	public static function init() {
 		static $instance = false;
 
@@ -59,57 +61,50 @@ final class ARPC_Popup_Creator {
 	}
 
 	/**
-	* define plugin require constants
-	*
-	* @return void
-	*/
+	 * Define plugin constants.
+	 */
 	public function define_constants() {
 		define( 'ARPC_VERSION', self::VERSION );
 		define( 'ARPC_FILE', __FILE__ );
 		define( 'ARPC_PATH', __DIR__ );
 		define( 'ARPC_URL', plugins_url( '', __FILE__ ) );
 		define( 'ARPC_ASSETS', ARPC_URL . '/assets' );
-		define( 'ARPC_INCLUDES', ARPC_URL . '/includes' );
 	}
 
 	/**
-	 * Do stuff upon plugin installation
-	 */
-	public function activate() {
-
-		$installer = new Installer();
-		$installer->run();
-
-		$installed = get_option( 'arpc_installed' );
-
-		if ( ! $installed ) {
-			update_option( 'arpc_installed', time() );
-		}
-
-		update_option( 'arpc_version', ARPC_VERSION );
-	}
-
-	/**
-	 * Load plugin text domain
+	 * Initialize plugin after plugins are loaded.
 	 */
 	public function init_plugin() {
-		load_plugin_textdomain( 'arpc-popup-creator', false, plugin_dir_path( __FILE__ ) . 'languages' );
-
-		if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
-			new Ajax();
-		}
-
 		if ( is_admin() ) {
 			new Admin();
 		} else {
-			// Instantiate Front End Popup.
 			new Frontend();
 		}
+
+		new Ajax();
+		new Assets();
+	}
+
+	/**
+	 * Run on plugin activation.
+	 */
+	public function activate() {
+		$installer = new Installer();
+		$installer->run();
+
+		$installed = get_option( 'arpc_popup_installed' );
+		if ( ! $installed ) {
+			update_option( 'arpc_popup_installed', time() );
+		}
+
+		update_option( 'arpc_popup_version', ARPC_VERSION );
+
+		flush_rewrite_rules();
 	}
 }
 
 /**
- * Initialize the main plugin
+ * Initialize the plugin.
  *
  * @return ARPC_Popup_Creator
  */
@@ -117,5 +112,28 @@ function arpc_popup_creator() {
 	return ARPC_Popup_Creator::init();
 }
 
-// kick-off the plugin.
 arpc_popup_creator();
+
+// Register image sizes.
+add_action(
+	'after_setup_theme',
+	function () {
+		add_image_size( 'popup-creator-landscape', 800, 600, true );
+		add_image_size( 'popup-creator-square', 500, 500, true );
+		add_image_size( 'popup-creator-thumbnail', 70 );
+	}
+);
+
+// Change Add title text.
+add_filter(
+	'enter_title_here',
+	function ( $title ) {
+		$screen = get_current_screen();
+
+		if ( 'arpc_popup' === $screen->post_type ) {
+			$title = __( 'Add Popup title', 'arpc-popup-creator' );
+		}
+
+		return $title;
+	}
+);
