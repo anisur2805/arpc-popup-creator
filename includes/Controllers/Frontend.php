@@ -2,8 +2,6 @@
 
 namespace ARPC\Popup\Controllers;
 
-use ARPC\Popup\Models\Popup;
-
 /**
  * Frontend Controller
  *
@@ -24,49 +22,51 @@ class Frontend {
 	 * Render active popups in footer.
 	 */
 	public function render_popups() {
-		$settings = get_option( 'arpc_general_setting' );
-		$template = isset( $settings['arpc_general_settings_template'] ) ? $settings['arpc_general_settings_template'] : 'template1';
+		$options = get_option( 'arpc_setting_opn' );
+		$setting = get_option( 'arpc_general_setting' );
+		$value   = isset( $setting['arpc_general_settings_template'] ) ? $setting['arpc_general_settings_template'] : 'template1';
 
 		wp_enqueue_style( 'arpc-style' );
 		wp_enqueue_script( 'plain-modal' );
 		wp_enqueue_script( 'arpc-main' );
 		wp_enqueue_script( 'arpc-modal-form' );
 
-		$popups = Popup::get_active();
+		$args = array(
+			'post_type'   => 'arpc_popup',
+			'post_status' => 'publish',
+			'meta_key'    => 'arpc_active',
+			'meta_value'  => 1,
+		);
 
-		foreach ( $popups as $popup ) {
-			$this->render_single_popup( $popup, $template );
+		$arpc_query = new \WP_Query( $args );
+
+		while ( $arpc_query->have_posts() ) {
+			$arpc_query->the_post();
+
+			$image_size    = get_post_meta( get_the_ID(), 'arpc_image_size', true );
+			$exit          = get_post_meta( get_the_ID(), 'arpc_show_on_exit', true );
+			$delay         = get_post_meta( get_the_ID(), 'arpc_show_in_delay', true );
+			$title         = get_post_meta( get_the_ID(), 'arpc_title', true );
+			$subtitle      = get_post_meta( get_the_ID(), 'arpc_subtitle', true );
+			$feature_image = get_the_post_thumbnail_url( get_the_ID(), $image_size );
+			$popup_url     = get_post_meta( get_the_ID(), 'arpc_popup_url', true );
+			$show_in_obj   = get_post_meta( get_the_ID(), 'arpc_ww_show', true );
+			$auto_hide     = get_post_meta( get_the_ID(), 'arpc_auto_hide_pu', true );
+
+			$delay = $delay ? $delay * 1000 : 0;
+
+			$show_in    = get_post( $show_in_obj );
+			$post       = get_post( $show_in_obj );
+			$slug       = $post ? $post->post_name : '';
+			$show_in_id = $show_in ? $show_in->ID : 0;
+			$template   = isset( $options['arpc_choose_temp'] ) ? $options['arpc_choose_temp'] : 'template1';
+
+			if ( is_page( $show_in_id ) ) {
+				include ARPC_PATH . '/includes/Views/frontend/modal.php';
+			}
 		}
-	}
 
-	/**
-	 * Render a single popup.
-	 *
-	 * @param \WP_Post $popup    Popup post object.
-	 * @param string   $template Template name.
-	 */
-	private function render_single_popup( $popup, $template ) {
-		$image_size    = Popup::get_meta( $popup->ID, 'arpc_image_size' );
-		$exit          = Popup::get_meta( $popup->ID, 'arpc_show_on_exit' );
-		$delay         = Popup::get_meta( $popup->ID, 'arpc_show_in_delay' );
-		$title         = Popup::get_meta( $popup->ID, 'arpc_title' );
-		$subtitle      = Popup::get_meta( $popup->ID, 'arpc_subtitle' );
-		$feature_image = get_the_post_thumbnail_url( $popup->ID, $image_size );
-		$popup_url     = Popup::get_meta( $popup->ID, 'arpc_popup_url' );
-		$show_in_obj   = Popup::get_meta( $popup->ID, 'arpc_ww_show' );
-		$auto_hide     = Popup::get_meta( $popup->ID, 'arpc_auto_hide_pu' );
-
-		$delay = $delay ? $delay * 1000 : 0;
-
-		$show_in = get_post( $show_in_obj );
-		$slug    = $show_in ? $show_in->post_name : '';
-		$show_in_id = $show_in ? $show_in->ID : 0;
-
-		if ( ! is_page( $show_in_id ) ) {
-			return;
-		}
-
-		include ARPC_PATH . '/includes/Views/frontend/modal.php';
+		wp_reset_query();
 	}
 
 	/**
