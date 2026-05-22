@@ -22,6 +22,9 @@ class Frontend {
 	 * Render active popups in footer.
 	 */
 	public function render_popups() {
+		// Debug: verify hook is called
+		echo '<!-- ARPC: render_popups called -->';
+
 		$options = get_option( 'arpc_setting_opn' );
 		$setting = get_option( 'arpc_general_setting' );
 		$value   = isset( $setting['arpc_general_settings_template'] ) ? $setting['arpc_general_settings_template'] : 'template1';
@@ -39,6 +42,9 @@ class Frontend {
 		);
 
 		$arpc_query = new \WP_Query( $args );
+
+		// Debug: check if popups are found
+		echo '<!-- ARPC Debug: Found ' . $arpc_query->found_posts . ' active popups -->';
 
 		while ( $arpc_query->have_posts() ) {
 			$arpc_query->the_post();
@@ -60,6 +66,9 @@ class Frontend {
 			$slug       = $post ? $post->post_name : '';
 			$show_in_id = $show_in ? $show_in->ID : 0;
 			$template   = isset( $options['arpc_choose_temp'] ) ? $options['arpc_choose_temp'] : 'template1';
+
+			// Debug: check page matching
+			echo '<!-- ARPC Debug: Popup ' . get_the_ID() . ' targets page ' . $show_in_id . ', is_page: ' . (is_page( $show_in_id ) ? 'yes' : 'no') . ' -->';
 
 			if ( is_page( $show_in_id ) ) {
 				include ARPC_PATH . '/includes/Views/frontend/modal.php';
