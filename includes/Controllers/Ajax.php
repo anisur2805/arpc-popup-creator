@@ -35,7 +35,6 @@ class Ajax {
 		$data = array(
 			'name'  => isset( $_POST['arpc-name'] ) ? sanitize_text_field( $_POST['arpc-name'] ) : '',
 			'email' => isset( $_POST['arpc-email'] ) ? sanitize_text_field( $_POST['arpc-email'] ) : '',
-			'popup' => isset( $_POST['arpc-popup-id'] ) ? intval( $_POST['arpc-popup-id'] ) : 0,
 		);
 
 		$result = Subscriber::insert( $data );
