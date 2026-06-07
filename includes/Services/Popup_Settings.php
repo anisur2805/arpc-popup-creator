@@ -39,6 +39,11 @@ class Popup_Settings {
 			'close_overlay'                 => true,
 			'prevent_scroll'                => true,
 			'close_back'                    => true,
+			'countdown_enabled'             => false,
+			'countdown_target'              => '',
+			'countdown_expire_text'         => '',
+			'popup_type'                    => 'modal',
+			'bar_position'                  => 'top',
 			'overlay_color'                 => 'rgba(0, 0, 0, 0.7)',
 			'overlay_blur'                  => false,
 			'overlay_blur_amount'           => 4,
@@ -146,6 +151,11 @@ class Popup_Settings {
 			'open_selector'                 => self::sanitize_text( $raw_settings, 'open_selector' ),
 			'close_selector'                => self::sanitize_text( $raw_settings, 'close_selector' ),
 			'disable_link'                  => ! empty( $raw_settings['disable_link'] ),
+			'countdown_enabled'             => ! empty( $raw_settings['countdown_enabled'] ),
+			'countdown_target'              => self::sanitize_datetime( $raw_settings, 'countdown_target' ),
+			'countdown_expire_text'         => self::sanitize_text( $raw_settings, 'countdown_expire_text' ),
+			'popup_type'                    => self::sanitize_choice( $raw_settings, 'popup_type', array_keys( self::popup_type_choices() ), $defaults['popup_type'] ),
+			'bar_position'                  => self::sanitize_choice( $raw_settings, 'bar_position', array( 'top', 'bottom' ), $defaults['bar_position'] ),
 			'close_overlay'                 => ! empty( $raw_settings['close_overlay'] ),
 			'prevent_scroll'                => ! empty( $raw_settings['prevent_scroll'] ),
 			'close_back'                    => ! empty( $raw_settings['close_back'] ),
@@ -242,6 +252,20 @@ class Popup_Settings {
 		}
 
 		return $labels;
+	}
+
+	/**
+	 * Get popup type choices.
+	 *
+	 * @return array
+	 */
+	public static function popup_type_choices() {
+		return array(
+			'modal'            => __( 'Modal', 'arpc-popup-creator' ),
+			'slide-in'         => __( 'Slide In', 'arpc-popup-creator' ),
+			'notification-bar' => __( 'Notification Bar', 'arpc-popup-creator' ),
+			'fullscreen'       => __( 'Fullscreen', 'arpc-popup-creator' ),
+		);
 	}
 
 	/**

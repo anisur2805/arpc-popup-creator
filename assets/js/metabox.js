@@ -111,6 +111,21 @@
 		container.on("change", "#arpc-overlay-blur", function () {
 			container.find("[data-overlay-blur-amount]").toggleClass("is-hidden", !this.checked)
 		})
+
+		function toggleBarPosition(popupType) {
+			container.find("[data-bar-position-field]").toggleClass("is-hidden", popupType !== "notification-bar")
+		}
+
+		var checkedType = container.find("[data-popup-type-input]:checked").val() || "modal"
+		toggleBarPosition(checkedType)
+
+		container.on("change", "[data-popup-type-input]", function () {
+			toggleBarPosition($(this).val())
+		})
+
+		container.on("change", "[data-countdown-toggle]", function () {
+			container.find("[data-countdown-options]").toggleClass("is-hidden", !this.checked)
+		})
 	}
 
 	function bindFieldResets(container) {

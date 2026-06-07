@@ -95,8 +95,10 @@
 	}
 
 	function updateBodyScrollState() {
+		var overlayTypes = ["modal", "fullscreen"]
 		var shouldLock = popupInstances.some(function (instance) {
-			return instance.isOpen && instance.settings.prevent_scroll
+			var popupType = instance.settings.popup_type || "modal"
+			return instance.isOpen && instance.settings.prevent_scroll && overlayTypes.indexOf(popupType) !== -1
 		})
 
 		document.body.classList.toggle("arpc-popup-open", shouldLock)
@@ -305,6 +307,67 @@
 		restartTimer()
 	}
 
+	function padNumber(value) {
+		return value < 10 ? "0" + value : String(value)
+	}
+
+	function initCountdown(element) {
+		var targetRaw = element.getAttribute("data-countdown-target")
+		var target = targetRaw ? new Date(targetRaw).getTime() : 0
+		if (!target) {
+			return
+		}
+
+		var daysEl = element.querySelector("[data-countdown-days]")
+		var hoursEl = element.querySelector("[data-countdown-hours]")
+		var minutesEl = element.querySelector("[data-countdown-minutes]")
+		var secondsEl = element.querySelector("[data-countdown-seconds]")
+		var timer = null
+
+		function render() {
+			var diff = target - Date.now()
+
+			if (diff <= 0) {
+				element.classList.add("is-expired")
+
+				var expired = element.getAttribute("data-countdown-expired")
+				if (expired) {
+					element.textContent = ""
+					var message = document.createElement("p")
+					message.className = "arpc-countdown__expired"
+					message.textContent = expired
+					element.appendChild(message)
+				} else {
+					if (daysEl) daysEl.textContent = "00"
+					if (hoursEl) hoursEl.textContent = "00"
+					if (minutesEl) minutesEl.textContent = "00"
+					if (secondsEl) secondsEl.textContent = "00"
+				}
+
+				if (timer) {
+					window.clearInterval(timer)
+				}
+				return
+			}
+
+			var totalSeconds = Math.floor(diff / 1000)
+
+			if (daysEl) daysEl.textContent = padNumber(Math.floor(totalSeconds / 86400))
+			if (hoursEl) hoursEl.textContent = padNumber(Math.floor((totalSeconds % 86400) / 3600))
+			if (minutesEl) minutesEl.textContent = padNumber(Math.floor((totalSeconds % 3600) / 60))
+			if (secondsEl) secondsEl.textContent = padNumber(totalSeconds % 60)
+		}
+
+		render()
+		timer = window.setInterval(render, 1000)
+	}
+
+	function initCountdowns() {
+		$("[data-arpc-countdown]").each(function () {
+			initCountdown(this)
+		})
+	}
+
 	function setupTrigger(instance) {
 		switch (instance.settings.trigger_mode) {
 			case "click":
@@ -351,6 +414,8 @@
 
 			popupInstances.push(instance)
 		})
+
+		initCountdowns()
 
 		if (!popupInstances.length) {
 			return

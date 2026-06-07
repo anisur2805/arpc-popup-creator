@@ -15,6 +15,7 @@
  * @var array  $location_targets
  * @var array  $open_animation_options
  * @var array  $close_animation_options
+ * @var array  $popup_type_options
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -295,11 +296,62 @@ $render_location_row = static function ( $index, $location, $location_type_label
 		</section>
 
 		<section class="arpc-settings-panel__section" data-arpc-panel="customization">
+				<div class="arpc-settings-card">
+					<h3><?php esc_html_e( 'Countdown Timer', 'arpc-popup-creator' ); ?></h3>
+					<div class="arpc-field-grid">
+						<div class="arpc-field arpc-field--inline">
+							<label for="arpc-countdown-enabled"><?php esc_html_e( 'Enable Countdown', 'arpc-popup-creator' ); ?></label>
+							<label class="arpc-switch">
+								<input id="arpc-countdown-enabled" type="checkbox" name="arpc_popup_settings[countdown_enabled]" value="1" <?php checked( ! empty( $popup_settings['countdown_enabled'] ) ); ?> data-countdown-toggle />
+								<span class="arpc-switch__slider"></span>
+							</label>
+						</div>
+
+						<div class="arpc-field <?php echo ! empty( $popup_settings['countdown_enabled'] ) ? '' : 'is-hidden'; ?>" data-countdown-options>
+							<label for="arpc-countdown-target"><?php esc_html_e( 'Countdown End Date', 'arpc-popup-creator' ); ?></label>
+							<input id="arpc-countdown-target" type="datetime-local" name="arpc_popup_settings[countdown_target]" value="<?php echo esc_attr( $popup_settings['countdown_target'] ); ?>" />
+							<small><?php esc_html_e( 'The popup countdown ticks down to this date and time.', 'arpc-popup-creator' ); ?></small>
+						</div>
+
+						<div class="arpc-field <?php echo ! empty( $popup_settings['countdown_enabled'] ) ? '' : 'is-hidden'; ?>" data-countdown-options>
+							<label for="arpc-countdown-expire-text"><?php esc_html_e( 'Expired Message', 'arpc-popup-creator' ); ?></label>
+							<input id="arpc-countdown-expire-text" type="text" name="arpc_popup_settings[countdown_expire_text]" value="<?php echo esc_attr( $popup_settings['countdown_expire_text'] ); ?>" placeholder="<?php esc_attr_e( 'This offer has ended.', 'arpc-popup-creator' ); ?>" />
+							<small><?php esc_html_e( 'Shown when the countdown reaches zero.', 'arpc-popup-creator' ); ?></small>
+						</div>
+					</div>
+				</div>
+
 			<div class="arpc-settings-card">
 				<h3><?php esc_html_e( 'Customization', 'arpc-popup-creator' ); ?></h3>
 				<div class="arpc-field-grid">
 					<div class="arpc-field">
-						<label for="arpc-overlay-color"><?php esc_html_e( 'Overlay Background Color', 'arpc-popup-creator' ); ?></label>
+						<label><?php esc_html_e( 'Popup Type', 'arpc-popup-creator' ); ?></label>
+							<div class="arpc-choice-row">
+								<?php foreach ( $popup_type_options as $type_key => $type_label ) : ?>
+									<label class="arpc-choice-pill">
+										<input type="radio" name="arpc_popup_settings[popup_type]" value="<?php echo esc_attr( $type_key ); ?>" <?php checked( $popup_settings['popup_type'], $type_key ); ?> data-popup-type-input />
+										<span><?php echo esc_html( $type_label ); ?></span>
+									</label>
+								<?php endforeach; ?>
+							</div>
+						</div>
+
+						<div class="arpc-field <?php echo 'notification-bar' === $popup_settings['popup_type'] ? '' : 'is-hidden'; ?>" data-bar-position-field>
+							<label><?php esc_html_e( 'Bar Position', 'arpc-popup-creator' ); ?></label>
+							<div class="arpc-choice-row">
+								<label class="arpc-choice-pill">
+									<input type="radio" name="arpc_popup_settings[bar_position]" value="top" <?php checked( $popup_settings['bar_position'], 'top' ); ?> />
+									<span><?php esc_html_e( 'Top', 'arpc-popup-creator' ); ?></span>
+								</label>
+								<label class="arpc-choice-pill">
+									<input type="radio" name="arpc_popup_settings[bar_position]" value="bottom" <?php checked( $popup_settings['bar_position'], 'bottom' ); ?> />
+									<span><?php esc_html_e( 'Bottom', 'arpc-popup-creator' ); ?></span>
+								</label>
+							</div>
+						</div>
+
+						<div class="arpc-field">
+							<label for="arpc-overlay-color"><?php esc_html_e( 'Overlay Background Color', 'arpc-popup-creator' ); ?></label>
 						<div class="arpc-reset-field">
 							<input id="arpc-overlay-color" type="text" name="arpc_popup_settings[overlay_color]" value="<?php echo esc_attr( $popup_settings['overlay_color'] ); ?>" placeholder="rgba(0, 0, 0, 0.7)" data-default-value="rgba(0, 0, 0, 0.7)" />
 							<button type="button" class="button button-secondary" data-reset-field="#arpc-overlay-color"><?php esc_html_e( 'Reset', 'arpc-popup-creator' ); ?></button>

@@ -70,6 +70,7 @@ class Metabox {
 			'location_targets'   => Popup_Settings::location_target_sources(),
 			'open_animation_options' => Popup_Settings::opening_animation_options(),
 			'close_animation_options' => Popup_Settings::closing_animation_options(),
+			'popup_type_options' => Popup_Settings::popup_type_choices(),
 		);
 
 		extract( $data ); // phpcs:ignore WordPress.CodeAnalysis.AssignmentInCondition.Found

@@ -30,6 +30,10 @@ $position_map = array(
 
 $position_pair = isset( $position_map[ $popup_settings['popup_position'] ] ) ? $position_map[ $popup_settings['popup_position'] ] : $position_map['center-center'];
 $position_pair = explode( '|', $position_pair );
+
+if ( 'notification-bar' === $popup_settings['popup_type'] ) {
+	$position_pair[1] = 'bottom' === $popup_settings['bar_position'] ? 'flex-end' : 'flex-start';
+}
 $close_margin  = $popup_settings['close_button_margin'];
 $close_padding = $popup_settings['close_button_padding'];
 $close_radius  = $popup_settings['close_button_border_radius'];
@@ -56,6 +60,7 @@ $wrapper_classes = array(
 	'arpc-popup-creator',
 	'arpc-template',
 	'arpc-' . $template,
+	'arpc-type-' . $popup_settings['popup_type'],
 	'arpc-layout-' . $popup_settings['layout_style'],
 	'arpc-close-' . $popup_settings['close_button_position'],
 );
@@ -89,6 +94,29 @@ if ( ! empty( $popup_settings['close_button_outside'] ) ) {
 					<?php endif; ?>>
 					<span aria-hidden="true">&times;</span>
 				</button>
+			<?php endif; ?>
+			<?php if ( ! empty( $popup_settings['countdown_enabled'] ) && ! empty( $popup_settings['countdown_target'] ) ) : ?>
+				<div class="arpc-countdown"
+					data-arpc-countdown
+					data-countdown-target="<?php echo esc_attr( $popup_settings['countdown_target'] ); ?>"
+					data-countdown-expired="<?php echo esc_attr( $popup_settings['countdown_expire_text'] ); ?>">
+					<div class="arpc-countdown__unit">
+						<span class="arpc-countdown__value" data-countdown-days>00</span>
+						<span class="arpc-countdown__label"><?php esc_html_e( 'Days', 'arpc-popup-creator' ); ?></span>
+					</div>
+					<div class="arpc-countdown__unit">
+						<span class="arpc-countdown__value" data-countdown-hours>00</span>
+						<span class="arpc-countdown__label"><?php esc_html_e( 'Hours', 'arpc-popup-creator' ); ?></span>
+					</div>
+					<div class="arpc-countdown__unit">
+						<span class="arpc-countdown__value" data-countdown-minutes>00</span>
+						<span class="arpc-countdown__label"><?php esc_html_e( 'Minutes', 'arpc-popup-creator' ); ?></span>
+					</div>
+					<div class="arpc-countdown__unit">
+						<span class="arpc-countdown__value" data-countdown-seconds>00</span>
+						<span class="arpc-countdown__label"><?php esc_html_e( 'Seconds', 'arpc-popup-creator' ); ?></span>
+					</div>
+				</div>
 			<?php endif; ?>
 			<div class="arpc-popup-creator-body">
 				<?php include ARPC_PATH . "/includes/Views/frontend/{$template}.php"; ?>
