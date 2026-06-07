@@ -1,2 +1,5 @@
 /vendor/
 /node_modules/
+/ref/
+/FEATURE_CHECKLIST.md
+/README.md

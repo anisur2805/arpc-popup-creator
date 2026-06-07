@@ -38,6 +38,4 @@ $content = $content ? $content : __( 'Lorem ipsum dolor sit amet, consectetur ad
 			</li>
 		</ul>
 	</div>
-
-	<button class="arpc-close-button"></button>
 </div>

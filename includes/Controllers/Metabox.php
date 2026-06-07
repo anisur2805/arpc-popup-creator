@@ -3,6 +3,7 @@
 namespace ARPC\Popup\Controllers;
 
 use ARPC\Popup\Models\Popup;
+use ARPC\Popup\Services\Popup_Settings;
 
 /**
  * Metabox Controller
@@ -56,18 +57,19 @@ class Metabox {
 		wp_nonce_field( 'popup_creator', 'popup_creator_nonce' );
 
 		$data = array(
-			'delay'              => Popup::get_meta( $post->ID, 'arpc_show_in_delay' ) ?: 1,
+			'popup_settings'     => Popup_Settings::get( $post->ID ),
 			'title'              => Popup::get_meta( $post->ID, 'arpc_title' ),
 			'subtitle'           => Popup::get_meta( $post->ID, 'arpc_subtitle' ),
-			'auto_hide_delay_in' => Popup::get_meta( $post->ID, 'arpc_auto_hide_in' ),
-			'auto_hide'          => Popup::get_meta( $post->ID, 'arpc_auto_hide_pu' ),
 			'image_size'         => Popup::get_meta( $post->ID, 'arpc_image_size' ),
-			'show_on_exit'       => Popup::get_meta( $post->ID, 'arpc_show_on_exit' ) ?: 0,
 			'popup_url'          => Popup::get_meta( $post->ID, 'arpc_popup_url' ),
-			'is_active'          => Popup::get_meta( $post->ID, 'arpc_active' ),
-			'selected_page'      => Popup::get_meta( $post->ID, 'arpc_ww_show' ),
 			'image_id'           => Popup::get_meta( $post->ID, 'arpc_image_id' ),
 			'image_url'          => Popup::get_meta( $post->ID, 'arpc_image_url' ),
+			'role_labels'        => Popup_Settings::role_labels(),
+			'manual_trigger'     => Popup_Settings::manual_trigger_key( $post->ID ),
+			'location_type_labels' => Popup_Settings::location_type_choices(),
+			'location_targets'   => Popup_Settings::location_target_sources(),
+			'open_animation_options' => Popup_Settings::opening_animation_options(),
+			'close_animation_options' => Popup_Settings::closing_animation_options(),
 		);
 
 		extract( $data ); // phpcs:ignore WordPress.CodeAnalysis.AssignmentInCondition.Found
@@ -119,6 +121,8 @@ class Metabox {
 			return;
 		}
 
+		$settings = isset( $_POST['arpc_popup_settings'] ) ? wp_unslash( $_POST['arpc_popup_settings'] ) : array();
+		Popup_Settings::save( $post_id, $settings );
 		Popup::save_metabox( $post_id, $_POST );
 	}
 }

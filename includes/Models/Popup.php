@@ -86,12 +86,8 @@ class Popup {
 		$fields = array(
 			'arpc_popup_url',
 			'arpc_image_size',
-			'arpc_auto_hide_in',
-			'arpc_show_in_delay',
 			'arpc_title',
 			'arpc_subtitle',
-			'arpc_show_on_exit',
-			'arpc_ww_show',
 			'arpc_image_id',
 			'arpc_image_url',
 		);
@@ -102,12 +98,8 @@ class Popup {
 			}
 		}
 
-		// Checkbox fields.
-		$checkboxes = array( 'arpc_active', 'arpc_auto_hide_pu' );
-
-		foreach ( $checkboxes as $checkbox ) {
-			$value = isset( $data[ $checkbox ] ) ? true : false;
-			self::update_meta( $post_id, $checkbox, $value );
+		if ( isset( $data['arpc_ww_show'] ) ) {
+			self::update_meta( $post_id, 'arpc_ww_show', absint( $data['arpc_ww_show'] ) );
 		}
 	}
 }

@@ -39,6 +39,4 @@ $content = wp_trim_words( get_the_content(), 5, '' );
 			<?php echo do_shortcode( '[arpc_newsletter]' ); ?>
 		</div>
 	</div>
-
-	<button class="arpc-close-button"></button>
 </div>
