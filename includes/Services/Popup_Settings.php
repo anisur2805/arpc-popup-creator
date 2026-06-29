@@ -25,6 +25,7 @@ class Popup_Settings {
 		return array(
 			'enabled'                       => false,
 			'trigger_mode'                  => 'load',
+			'scroll_depth'                  => 50,
 			'open_delay'                    => 0,
 			'auto_close_delay'              => 0,
 			'periodicity'                   => 'every_time',
@@ -139,7 +140,8 @@ class Popup_Settings {
 
 		$settings = array(
 			'enabled'                       => ! empty( $raw_settings['enabled'] ),
-			'trigger_mode'                  => self::sanitize_choice( $raw_settings, 'trigger_mode', array( 'click', 'load', 'scroll', 'exit', 'inactivity' ), $defaults['trigger_mode'] ),
+			'trigger_mode'                  => self::sanitize_choice( $raw_settings, 'trigger_mode', self::free_trigger_modes(), $defaults['trigger_mode'] ),
+			'scroll_depth'                  => (int) self::sanitize_choice( $raw_settings, 'scroll_depth', array( '25', '50', '75' ), (string) $defaults['scroll_depth'] ),
 			'open_delay'                    => self::sanitize_int( $raw_settings, 'open_delay', 0, 86400, $defaults['open_delay'] ),
 			'auto_close_delay'              => self::sanitize_int( $raw_settings, 'auto_close_delay', 0, 86400, $defaults['auto_close_delay'] ),
 			'periodicity'                   => self::sanitize_choice( $raw_settings, 'periodicity', array( 'every_time', 'once_per_period', 'once_only' ), $defaults['periodicity'] ),
@@ -252,6 +254,29 @@ class Popup_Settings {
 		}
 
 		return $labels;
+	}
+
+	/**
+	 * Trigger modes available in the free tier.
+	 *
+	 * @return array
+	 */
+	public static function free_trigger_modes() {
+		return array( 'click', 'load', 'scroll' );
+	}
+
+	/**
+	 * Trigger modes reserved for the pro tier.
+	 *
+	 * Shown disabled in the UI as an upgrade teaser; rejected on save.
+	 *
+	 * @return array
+	 */
+	public static function pro_trigger_modes() {
+		return array(
+			'exit'       => __( 'On Exit', 'arpc-popup-creator' ),
+			'inactivity' => __( 'On Inactivity', 'arpc-popup-creator' ),
+		);
 	}
 
 	/**
@@ -391,6 +416,8 @@ class Popup_Settings {
 			'sitewide' => __( 'Sitewide', 'arpc-popup-creator' ),
 			'page'     => __( 'Pages', 'arpc-popup-creator' ),
 			'post'     => __( 'Posts', 'arpc-popup-creator' ),
+			'category' => __( 'Categories', 'arpc-popup-creator' ),
+			'post_tag' => __( 'Tags', 'arpc-popup-creator' ),
 		);
 
 		$post_types = get_post_types(
@@ -418,27 +445,39 @@ class Popup_Settings {
 	 */
 	public static function location_target_sources() {
 		$sources = array(
-			'page' => array(
+			'page'     => array(
 				'label' => __( 'Pages', 'arpc-popup-creator' ),
-				'items' => get_pages(
-					array(
-						'sort_column' => 'post_title',
-						'sort_order'  => 'ASC',
+				'items' => self::post_items(
+					get_pages(
+						array(
+							'sort_column' => 'post_title',
+							'sort_order'  => 'ASC',
+						)
 					)
 				),
 			),
-			'post' => array(
+			'post'     => array(
 				'label' => __( 'Posts', 'arpc-popup-creator' ),
-				'items' => get_posts(
-					array(
-						'post_type'        => 'post',
-						'post_status'      => 'publish',
-						'numberposts'      => 200,
-						'orderby'          => 'title',
-						'order'            => 'ASC',
-						'suppress_filters' => false,
+				'items' => self::post_items(
+					get_posts(
+						array(
+							'post_type'        => 'post',
+							'post_status'      => 'publish',
+							'numberposts'      => 200,
+							'orderby'          => 'title',
+							'order'            => 'ASC',
+							'suppress_filters' => false,
+						)
 					)
 				),
+			),
+			'category' => array(
+				'label' => __( 'Categories', 'arpc-popup-creator' ),
+				'items' => self::term_items( 'category' ),
+			),
+			'post_tag' => array(
+				'label' => __( 'Tags', 'arpc-popup-creator' ),
+				'items' => self::term_items( 'post_tag' ),
 			),
 		);
 
@@ -449,20 +488,74 @@ class Popup_Settings {
 
 			$sources[ $type ] = array(
 				'label' => $label,
-				'items' => get_posts(
-					array(
-						'post_type'        => $type,
-						'post_status'      => 'publish',
-						'numberposts'      => 200,
-						'orderby'          => 'title',
-						'order'            => 'ASC',
-						'suppress_filters' => false,
+				'items' => self::post_items(
+					get_posts(
+						array(
+							'post_type'        => $type,
+							'post_status'      => 'publish',
+							'numberposts'      => 200,
+							'orderby'          => 'title',
+							'order'            => 'ASC',
+							'suppress_filters' => false,
+						)
 					)
 				),
 			);
 		}
 
 		return $sources;
+	}
+
+	/**
+	 * Normalize post objects into id/label pairs.
+	 *
+	 * @param array $posts Post objects.
+	 * @return array
+	 */
+	private static function post_items( $posts ) {
+		$items = array();
+
+		foreach ( (array) $posts as $post ) {
+			$items[] = array(
+				'id'    => (int) $post->ID,
+				'label' => $post->post_title,
+			);
+		}
+
+		return $items;
+	}
+
+	/**
+	 * Normalize taxonomy terms into id/label pairs.
+	 *
+	 * @param string $taxonomy Taxonomy slug.
+	 * @return array
+	 */
+	private static function term_items( $taxonomy ) {
+		$terms = get_terms(
+			array(
+				'taxonomy'   => $taxonomy,
+				'hide_empty' => false,
+				'number'     => 200,
+				'orderby'    => 'name',
+				'order'      => 'ASC',
+			)
+		);
+
+		if ( is_wp_error( $terms ) ) {
+			return array();
+		}
+
+		$items = array();
+
+		foreach ( $terms as $term ) {
+			$items[] = array(
+				'id'    => (int) $term->term_id,
+				'label' => $term->name,
+			);
+		}
+
+		return $items;
 	}
 
 	/**
@@ -533,13 +626,6 @@ class Popup_Settings {
 		$legacy_mode = get_post_meta( $post_id, 'arpc_show_on_exit', true );
 		$enabled     = (bool) get_post_meta( $post_id, 'arpc_active', true );
 
-		$trigger_mode = 'exit';
-		if ( '1' === (string) $legacy_mode ) {
-			$trigger_mode = 'load';
-		} elseif ( '2' === (string) $legacy_mode ) {
-			$trigger_mode = 'scroll';
-		}
-
 		$display_locations = array(
 			array(
 				'mode' => 'include',
@@ -548,13 +634,20 @@ class Popup_Settings {
 			),
 		);
 
-		return array(
+		$legacy = array(
 			'enabled'           => $enabled,
-			'trigger_mode'      => $trigger_mode,
 			'open_delay'        => absint( get_post_meta( $post_id, 'arpc_show_in_delay', true ) ),
 			'auto_close_delay'  => absint( get_post_meta( $post_id, 'arpc_auto_hide_in', true ) ),
 			'display_locations' => $display_locations,
 		);
+
+		// Only map trigger_mode when the legacy meta actually exists; otherwise
+		// new popups would inherit a legacy default instead of defaults().
+		if ( '' !== (string) $legacy_mode ) {
+			$legacy['trigger_mode'] = '2' === (string) $legacy_mode ? 'scroll' : 'load';
+		}
+
+		return $legacy;
 	}
 
 	/**
@@ -711,6 +804,22 @@ class Popup_Settings {
 			return is_single( $ids );
 		}
 
+		if ( 'category' === $type ) {
+			if ( empty( $ids ) ) {
+				return is_category();
+			}
+
+			return is_category( $ids ) || ( is_singular( 'post' ) && has_category( $ids ) );
+		}
+
+		if ( 'post_tag' === $type ) {
+			if ( empty( $ids ) ) {
+				return is_tag();
+			}
+
+			return is_tag( $ids ) || ( is_singular( 'post' ) && has_tag( $ids ) );
+		}
+
 		if ( isset( self::location_type_choices()[ $type ] ) ) {
 			if ( empty( $ids ) ) {
 				return is_singular( $type );
@@ -770,7 +879,7 @@ class Popup_Settings {
 	 * @return string
 	 */
 	private static function sanitize_choice( $payload, $key, $choices, $default ) {
-		$value = isset( $payload[ $key ] ) ? sanitize_text_field( wp_unslash( $payload[ $key ] ) ) : $default;
+		$value = isset( $payload[ $key ] ) && is_scalar( $payload[ $key ] ) ? sanitize_text_field( wp_unslash( (string) $payload[ $key ] ) ) : $default;
 		return in_array( $value, $choices, true ) ? $value : $default;
 	}
 

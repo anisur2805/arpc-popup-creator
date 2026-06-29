@@ -82,7 +82,7 @@ $render_location_row = static function ( $index, $location, $location_type_label
 				<?php if ( ! empty( $target_data['items'] ) ) : ?>
 					<select multiple size="6" name="arpc_popup_settings[display_locations][<?php echo esc_attr( $index ); ?>][ids][]" class="arpc-multi-select">
 						<?php foreach ( $target_data['items'] as $target_item ) : ?>
-							<option value="<?php echo esc_attr( $target_item->ID ); ?>" <?php selected( in_array( $target_item->ID, $location['ids'], true ), true ); ?>><?php echo esc_html( $target_item->post_title ); ?></option>
+							<option value="<?php echo esc_attr( $target_item['id'] ); ?>" <?php selected( in_array( (int) $target_item['id'], array_map( 'intval', $location['ids'] ), true ), true ); ?>><?php echo esc_html( $target_item['label'] ); ?></option>
 						<?php endforeach; ?>
 					</select>
 				<?php else : ?>
@@ -120,11 +120,9 @@ $render_location_row = static function ( $index, $location, $location_type_label
 						<div class="arpc-choice-row">
 							<?php
 							$trigger_modes = array(
-								'click'      => __( 'Click', 'arpc-popup-creator' ),
-								'load'       => __( 'On Load', 'arpc-popup-creator' ),
-								'scroll'     => __( 'On Scroll', 'arpc-popup-creator' ),
-								'exit'       => __( 'On Exit', 'arpc-popup-creator' ),
-								'inactivity' => __( 'On Inactivity', 'arpc-popup-creator' ),
+								'click'  => __( 'Click', 'arpc-popup-creator' ),
+								'load'   => __( 'On Load', 'arpc-popup-creator' ),
+								'scroll' => __( 'On Scroll', 'arpc-popup-creator' ),
 							);
 							foreach ( $trigger_modes as $mode_key => $mode_label ) :
 								?>
@@ -133,7 +131,23 @@ $render_location_row = static function ( $index, $location, $location_type_label
 									<span><?php echo esc_html( $mode_label ); ?></span>
 								</label>
 							<?php endforeach; ?>
+							<?php foreach ( \ARPC\Popup\Services\Popup_Settings::pro_trigger_modes() as $mode_key => $mode_label ) : ?>
+								<label class="arpc-choice-pill arpc-choice-pill--pro" title="<?php esc_attr_e( 'Available in Pro', 'arpc-popup-creator' ); ?>">
+									<input type="radio" value="<?php echo esc_attr( $mode_key ); ?>" disabled />
+									<span><?php echo esc_html( $mode_label ); ?> <em class="arpc-pro-badge"><?php esc_html_e( 'Pro', 'arpc-popup-creator' ); ?></em></span>
+								</label>
+							<?php endforeach; ?>
 						</div>
+					</div>
+
+					<div class="arpc-field <?php echo 'scroll' === $popup_settings['trigger_mode'] ? '' : 'is-hidden'; ?>" data-trigger-section="scroll">
+						<label for="arpc-scroll-depth"><?php esc_html_e( 'Scroll Depth', 'arpc-popup-creator' ); ?></label>
+						<select id="arpc-scroll-depth" name="arpc_popup_settings[scroll_depth]">
+							<option value="25" <?php selected( (int) $popup_settings['scroll_depth'], 25 ); ?>>25%</option>
+							<option value="50" <?php selected( (int) $popup_settings['scroll_depth'], 50 ); ?>>50%</option>
+							<option value="75" <?php selected( (int) $popup_settings['scroll_depth'], 75 ); ?>>75%</option>
+						</select>
+						<small><?php esc_html_e( 'Open the popup after the visitor scrolls this far down the page.', 'arpc-popup-creator' ); ?></small>
 					</div>
 
 					<div class="arpc-field <?php echo 'click' === $popup_settings['trigger_mode'] ? 'is-hidden' : ''; ?>" data-trigger-section="timed">

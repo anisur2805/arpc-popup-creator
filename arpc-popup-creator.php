@@ -18,6 +18,8 @@ if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
 use ARPC\Popup\Controllers\Admin;
 use ARPC\Popup\Controllers\Ajax;
 use ARPC\Popup\Controllers\Frontend;
+use ARPC\Popup\Controllers\Post_Type;
+use ARPC\Popup\Controllers\Block_Patterns;
 use ARPC\Popup\Services\Assets;
 use ARPC\Popup\Services\Installer;
 
@@ -75,6 +77,11 @@ final class ARPC_Popup_Creator {
 	 * Initialize plugin after plugins are loaded.
 	 */
 	public function init_plugin() {
+		// Register the popup post type in every context (admin, frontend, REST)
+		// so the block editor's REST routes are available for saving.
+		new Post_Type();
+		new Block_Patterns();
+
 		if ( is_admin() ) {
 			new Admin();
 		} else {

@@ -46,7 +46,7 @@ class Post_Type {
 			'publicly_queryable'    => true,
 			'show_ui'               => true,
 			'show_in_menu'          => true,
-			'show_in_rest'          => false,
+			'show_in_rest'          => true,
 			'rest_base'             => 'arpc-popup',
 			'rest_controller_class' => 'WP_REST_Posts_Controller',
 			'menu_position'         => 60,

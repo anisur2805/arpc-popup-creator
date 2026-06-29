@@ -256,6 +256,7 @@
 
 	function bindScrollTrigger(instance) {
 		var handled = false
+		var depth = parseInt(instance.settings.scroll_depth || 50, 10) / 100
 
 		$(window).on("scroll.arpcPopup" + instance.id, function () {
 			if (handled || instance.isOpen || wasAlreadyShown(instance)) {
@@ -267,7 +268,7 @@
 			var totalHeight = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight)
 			var progress = (scrollTop + viewportHeight) / totalHeight
 
-			if (progress >= 0.65) {
+			if (progress >= depth) {
 				handled = true
 				triggerOpenWithDelay(instance)
 			}

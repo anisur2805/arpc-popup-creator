@@ -89,6 +89,7 @@
 			var isClick = triggerMode === "click"
 			container.find('[data-trigger-section="click"]').toggleClass("is-hidden", !isClick)
 			container.find('[data-trigger-section="timed"]').toggleClass("is-hidden", isClick)
+			container.find('[data-trigger-section="scroll"]').toggleClass("is-hidden", triggerMode !== "scroll")
 		}
 
 		var checkedTrigger = container.find('input[name="arpc_popup_settings[trigger_mode]"]:checked').val() || "load"

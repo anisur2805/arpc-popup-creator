@@ -119,7 +119,32 @@ if ( ! empty( $popup_settings['close_button_outside'] ) ) {
 				</div>
 			<?php endif; ?>
 			<div class="arpc-popup-creator-body">
-				<?php include ARPC_PATH . "/includes/Views/frontend/{$template}.php"; ?>
+				<div class="arpc__template arpc__canvas">
+					<?php if ( $feature_image ) : ?>
+						<div class="arpc-popup-image">
+							<?php if ( $popup_url ) : ?>
+								<a target="_blank" rel="noopener noreferrer" href="<?php echo esc_url( $popup_url ); ?>">
+									<img src="<?php echo esc_url( $feature_image ); ?>" alt="<?php echo esc_attr( $title ? $title : get_the_title() ); ?>" />
+								</a>
+							<?php else : ?>
+								<img src="<?php echo esc_url( $feature_image ); ?>" alt="<?php echo esc_attr( $title ? $title : get_the_title() ); ?>" />
+							<?php endif; ?>
+						</div>
+					<?php endif; ?>
+					<?php if ( $title ) : ?>
+						<h2 class="arpc-popup-modal-title"><?php echo esc_html( $title ); ?></h2>
+					<?php endif; ?>
+					<?php if ( $subtitle ) : ?>
+						<p class="arpc-popup-modal-subtitle"><?php echo esc_html( $subtitle ); ?></p>
+					<?php endif; ?>
+					<div class="arpc__content">
+						<?php
+						// The popup body is the editor canvas: render the full
+						// block/shortcode content through the standard the_content filters.
+						echo apply_filters( 'the_content', get_the_content() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+						?>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

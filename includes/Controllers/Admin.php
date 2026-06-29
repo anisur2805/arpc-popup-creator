@@ -26,7 +26,6 @@ class Admin {
 	public function __construct() {
 		new Data_Table();
 		new Metabox();
-		new Post_Type();
 		new Settings();
 
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );

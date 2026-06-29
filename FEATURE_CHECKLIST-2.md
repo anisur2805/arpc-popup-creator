@@ -171,52 +171,62 @@ Offer these FREE:
 ```md
 # Popup Types
 
-- Modal Popup
-- Slide In
-- Notification Bar
-- Fullscreen Popup
-- Floating Button Popup
-- Video Popup
+- Modal Popup ✅
+- Slide In ✅
+- Notification Bar ✅
+- Fullscreen Popup ✅
 
 # Triggers
 
-- On Page Load
-- Delayed Popup
-- Click Trigger
-- After Scroll 25/50/75%
-- After X Seconds
+- On Page Load ✅
+- Delayed Popup ✅
+- Click Trigger ✅
+- After Scroll 25/50/75% ✅
+- After X Seconds ✅
 
 # Display Rules
 
-- Entire Site
-- Specific Pages
-- Specific Posts
-- Categories
-- Tags
-- CPT Support
+- Entire Site ✅
+- Specific Pages ✅
+- Specific Posts ✅
+- Categories ✅
+- Tags ✅
+- CPT Support ✅
 
 # Design
 
-- Gutenberg Builder
-- Drag & Drop Layout
-- Template Library
-- Responsive Controls
+- Gutenberg Builder ✅
+- Drag & Drop Layout ✅ (via Gutenberg)
+- Pattern Library ✅ (3 starter patterns; grow over time)
+- Responsive Controls ✅ (per-device visibility)
 
 # Marketing
 
-- Email Form Integration
-- Countdown Timer
-- CTA Buttons
-- Social Proof Block
-- Cookie Frequency Control
+- Email Form Integration ✅
+- Countdown Timer ✅
+- CTA Buttons ✅ (via Gutenberg buttons block)
+- Frequency Control ✅ (every time / once per period / once only)
 
 # UX
 
-- Mobile Visibility
-- Close Button
-- ESC Close
-- Overlay Click Close
+- Mobile Visibility ✅
+- Close Button ✅
+- ESC Close ✅
+- Overlay Click Close ✅
 ```
+
+### Free Roadmap (not built yet — do not advertise)
+
+```md
+- Floating Button Popup
+- Video Popup
+- Social Proof Block
+- Per-device sizing controls
+- Frequency period units beyond hours
+```
+
+> Exit Intent and Inactivity triggers are implemented in code but gated as
+> Pro: shown disabled with a "Pro" badge in the free UI and rejected on save.
 
 ### Why?
 
