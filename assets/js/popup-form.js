@@ -26,10 +26,8 @@
             $.post( arpcModalForm.ajaxUrl, data, function ( response ) {
 
                 if ( response.success ) {
-                    if ( response.success ) {
-                        self.find( "p.hide" ).addClass( "success" );
-                        self[0].reset();
-                    }
+                    self.find( "p.hide" ).addClass( "success" );
+                    self[0].reset();
                 }
                 
             } ).fail( function ( e ) {

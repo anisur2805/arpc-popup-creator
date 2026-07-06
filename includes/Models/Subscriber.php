@@ -10,6 +10,28 @@ namespace ARPC\Popup\Models;
 class Subscriber {
 
 	/**
+	 * Cached list of columns in the subscriber table.
+	 *
+	 * @var array|null
+	 */
+	private static $columns;
+
+	/**
+	 * Get the column names for the subscriber table.
+	 *
+	 * @return array
+	 */
+	private static function get_columns() {
+		if ( null === self::$columns ) {
+			global $wpdb;
+			$cols           = $wpdb->get_results( "SHOW COLUMNS FROM `{$wpdb->prefix}arpc_subscriber`" );
+			self::$columns  = wp_list_pluck( $cols, 'Field' );
+		}
+
+		return self::$columns;
+	}
+
+	/**
 	 * Insert a new subscriber.
 	 *
 	 * @param array $args Subscriber data.
@@ -28,9 +50,21 @@ class Subscriber {
 		);
 
 		$data   = wp_parse_args( $args, $defaults );
-		$format = array( '%s', '%s', '%s', '%d', '%d', '%s' );
 
-		$inserted = $wpdb->insert( "{$wpdb->prefix}arpc_subscriber", $data, $format );
+		// Only include columns that actually exist in the table.
+		$columns  = self::get_columns();
+		$filtered = array_intersect_key( $data, array_flip( $columns ) );
+		$formats  = array();
+
+		foreach ( $filtered as $key => $value ) {
+			if ( in_array( $key, array( 'popup_id', 'created_by' ), true ) ) {
+				$formats[] = '%d';
+			} else {
+				$formats[] = '%s';
+			}
+		}
+
+		$inserted = $wpdb->insert( "{$wpdb->prefix}arpc_subscriber", $filtered, $formats );
 
 		if ( ! $inserted ) {
 			return new \WP_Error( 'failed-to-insert', __( 'Failed to insert', 'arpc-popup-creator' ) );

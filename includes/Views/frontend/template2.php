@@ -7,6 +7,7 @@
  * @var string $feature_image  Feature image URL.
  * @var string $popup_url      Popup link URL.
  * @var string $form_shortcode Custom form shortcode.
+ * @var array  $categories     Interest category labels.
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -41,7 +42,7 @@ $content = get_the_content();
 			if ( ! empty( $form_shortcode ) ) {
 				echo do_shortcode( wp_kses_post( $form_shortcode ) );
 			} else {
-				echo do_shortcode( '[arpc_newsletter]' );
+				include ARPC_PATH . '/includes/Views/frontend/newsletter-form.php';
 			}
 			?>
 		</div>
