@@ -10,28 +10,6 @@ namespace ARPC\Popup\Models;
 class Subscriber {
 
 	/**
-	 * Cached list of columns in the subscriber table.
-	 *
-	 * @var array|null
-	 */
-	private static $columns;
-
-	/**
-	 * Get the column names for the subscriber table.
-	 *
-	 * @return array
-	 */
-	private static function get_columns() {
-		if ( null === self::$columns ) {
-			global $wpdb;
-			$cols           = $wpdb->get_results( "SHOW COLUMNS FROM `{$wpdb->prefix}arpc_subscriber`" );
-			self::$columns  = wp_list_pluck( $cols, 'Field' );
-		}
-
-		return self::$columns;
-	}
-
-	/**
 	 * Insert a new subscriber.
 	 *
 	 * @param array $args Subscriber data.
@@ -52,7 +30,7 @@ class Subscriber {
 		$data   = wp_parse_args( $args, $defaults );
 
 		// Only include columns that actually exist in the table.
-		$columns  = self::get_columns();
+		$columns  = self::get_table_columns();
 		$filtered = array_intersect_key( $data, array_flip( $columns ) );
 		$formats  = array();
 
@@ -71,6 +49,26 @@ class Subscriber {
 		}
 
 		return $wpdb->insert_id;
+	}
+
+	/**
+	 * Get the column names for the subscriber table, cached per request.
+	 *
+	 * @return array
+	 */
+	private static function get_table_columns() {
+		global $wpdb;
+
+		$cache_key = 'arpc_subscriber_columns';
+		$columns   = wp_cache_get( $cache_key, 'arpc_popup' );
+
+		if ( false === $columns ) {
+			$cols    = $wpdb->get_results( "SHOW COLUMNS FROM `{$wpdb->prefix}arpc_subscriber`" );
+			$columns = wp_list_pluck( $cols, 'Field' );
+			wp_cache_set( $cache_key, $columns, 'arpc_popup', 300 );
+		}
+
+		return $columns;
 	}
 
 	/**

@@ -29,8 +29,17 @@ class Admin {
 		new Settings();
 
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
+		add_action( 'admin_init', array( $this, 'maybe_migrate' ) );
 		add_filter( 'set-screen-option', array( __CLASS__, 'set_screen' ), 10, 3 );
 		add_action( 'admin_head', array( $this, 'load_assets' ) );
+	}
+
+	/**
+	 * Run table migrations on admin pages for existing installations.
+	 */
+	public function maybe_migrate() {
+		$installer = new \ARPC\Popup\Services\Installer();
+		$installer->migrate();
 	}
 
 	/**

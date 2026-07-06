@@ -77,10 +77,6 @@ final class ARPC_Popup_Creator {
 	 * Initialize plugin after plugins are loaded.
 	 */
 	public function init_plugin() {
-		// Run schema migrations so existing installations pick up new columns.
-		$installer = new Installer();
-		$installer->migrate();
-
 		// Register the popup post type in every context (admin, frontend, REST)
 		// so the block editor's REST routes are available for saving.
 		new Post_Type();

@@ -87,11 +87,16 @@ class Installer {
 	private function maybe_migrate_subscriber_table() {
 		global $wpdb;
 
-		$table  = "{$wpdb->prefix}arpc_subscriber";
-		$column = $wpdb->get_results( "SHOW COLUMNS FROM `{$table}` LIKE 'interests'" );
+		$table = "{$wpdb->prefix}arpc_subscriber";
+		$cols  = $wpdb->get_results( "SHOW COLUMNS FROM `{$table}`" );
+		$names = wp_list_pluck( $cols, 'Field' );
 
-		if ( empty( $column ) ) {
+		if ( ! in_array( 'interests', $names, true ) ) {
 			$wpdb->query( "ALTER TABLE `{$table}` ADD COLUMN `interests` varchar(255) DEFAULT '' AFTER `email`" ); // phpcs:ignore
+		}
+
+		if ( ! in_array( 'popup_id', $names, true ) ) {
+			$wpdb->query( "ALTER TABLE `{$table}` ADD COLUMN `popup_id` INT(11) UNSIGNED NOT NULL AFTER `id`" ); // phpcs:ignore
 		}
 	}
 }
