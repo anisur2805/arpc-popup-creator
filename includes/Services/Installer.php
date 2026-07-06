@@ -18,6 +18,13 @@ class Installer {
 	}
 
 	/**
+	 * Run migrations on existing installations (called on admin_init).
+	 */
+	public function migrate() {
+		$this->maybe_migrate_subscriber_table();
+	}
+
+	/**
 	 * Add plugin version to options.
 	 */
 	public function add_version() {
