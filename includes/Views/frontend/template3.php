@@ -5,6 +5,7 @@
  * @var string $title          Popup title.
  * @var string $subtitle       Popup subtitle.
  * @var string $form_shortcode Custom form shortcode.
+ * @var array  $categories     Interest category labels.
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -30,19 +31,17 @@ $content = $content ? $content : __( 'Lorem ipsum dolor sit amet, consectetur ad
 			?>
 		</div>
 
-		<ul class="arpc_categories">
-			<li>
-				<label>
-					<input type="checkbox" name="" />
-					<span><?php esc_html_e( 'Tutorials', 'arpc-popup-creator' ); ?></span>
-				</label>
-			</li>
-			<li>
-				<label>
-					<input type="checkbox" name="" />
-					<span><?php esc_html_e( 'Products', 'arpc-popup-creator' ); ?></span>
-				</label>
-			</li>
-		</ul>
+		<?php if ( ! empty( $categories ) ) : ?>
+			<ul class="arpc_categories">
+				<?php foreach ( $categories as $category ) : ?>
+					<li>
+						<label>
+							<input type="checkbox" name="" />
+							<span><?php echo esc_html( $category ); ?></span>
+						</label>
+					</li>
+				<?php endforeach; ?>
+			</ul>
+		<?php endif; ?>
 	</div>
 </div>

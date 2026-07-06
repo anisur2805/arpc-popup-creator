@@ -289,6 +289,25 @@ $render_location_row = static function ( $index, $location, $location_type_label
 						<input id="arpc-form-shortcode" type="text" name="arpc_form_shortcode" value="<?php echo esc_attr( $form_shortcode ); ?>" placeholder="[contact-form-7 id=\"123\"]" />
 						<small><?php esc_html_e( 'Paste any form builder shortcode (CF7, Gravity Forms, etc.). Entries from third-party forms are managed by the form plugin — they won\'t appear in the Subscribers table. Leave empty to use the built-in newsletter form (entries stored in Subscribers table).', 'arpc-popup-creator' ); ?></small>
 					</div>
+					<div class="arpc-field arpc-field--full">
+						<label><?php esc_html_e( 'Interest Categories', 'arpc-popup-creator' ); ?></label>
+						<div class="arpc-repeatable" data-arpc-repeatable="categories">
+							<?php
+							$categories = is_array( $categories ) ? $categories : array();
+							if ( empty( $categories ) ) {
+								$categories = array( '', '' );
+							}
+							foreach ( $categories as $category ) :
+								?>
+								<div class="arpc-repeatable__row">
+									<input type="text" name="arpc_categories[]" value="<?php echo esc_attr( $category ); ?>" placeholder="<?php esc_attr_e( 'e.g. Tutorials', 'arpc-popup-creator' ); ?>" />
+									<button type="button" class="button arpc-repeatable__remove"><?php esc_html_e( 'Remove', 'arpc-popup-creator' ); ?></button>
+								</div>
+							<?php endforeach; ?>
+							<button type="button" class="button arpc-repeatable__add"><?php esc_html_e( 'Add Category', 'arpc-popup-creator' ); ?></button>
+							<small><?php esc_html_e( 'Interest categories shown as checkboxes in Template 3.', 'arpc-popup-creator' ); ?></small>
+						</div>
+					</div>
 					<div class="arpc-field">
 						<label for="arpc-image-size"><?php esc_html_e( 'Select Image Size', 'arpc-popup-creator' ); ?></label>
 						<select id="arpc-image-size" name="arpc_image_size">

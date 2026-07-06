@@ -193,6 +193,23 @@
 		})
 	}
 
+	function bindRepeatableFields(container) {
+		container.on("click", ".arpc-repeatable__add", function () {
+			var wrapper = $(this).closest("[data-arpc-repeatable]")
+			var row = wrapper.find(".arpc-repeatable__row").first().clone()
+			row.find("input").val("")
+			$(this).before(row)
+		})
+
+		container.on("click", ".arpc-repeatable__remove", function () {
+			var rows = $(this).closest("[data-arpc-repeatable]").find(".arpc-repeatable__row")
+			if (rows.length <= 1) {
+				return
+			}
+			$(this).closest(".arpc-repeatable__row").remove()
+		})
+	}
+
 	$(document).ready(function () {
 		var container = $("[data-arpc-metabox]")
 		if (!container.length) {
@@ -205,5 +222,6 @@
 		bindFieldResets(container)
 		bindCopyTrigger(container)
 		bindLocationRules(container)
+		bindRepeatableFields(container)
 	})
 })(jQuery)

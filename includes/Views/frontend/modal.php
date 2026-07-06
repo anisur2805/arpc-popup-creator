@@ -8,6 +8,8 @@
  * @var string $feature_image
  * @var string $popup_url
  * @var string $template
+ * @var string $form_shortcode
+ * @var array  $categories
  * @var array  $popup_settings
  * @var array  $popup_config
  */

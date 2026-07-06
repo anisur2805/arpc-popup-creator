@@ -99,6 +99,13 @@ class Popup {
 			}
 		}
 
+		if ( isset( $data['arpc_categories'] ) && is_array( $data['arpc_categories'] ) ) {
+			$categories = array_map( 'sanitize_text_field', wp_unslash( $data['arpc_categories'] ) );
+			update_post_meta( $post_id, 'arpc_categories', $categories );
+		} else {
+			delete_post_meta( $post_id, 'arpc_categories' );
+		}
+
 		if ( isset( $data['arpc_ww_show'] ) ) {
 			self::update_meta( $post_id, 'arpc_ww_show', absint( $data['arpc_ww_show'] ) );
 		}

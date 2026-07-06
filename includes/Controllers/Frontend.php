@@ -57,6 +57,8 @@ class Frontend {
 			$feature_image   = $this->get_feature_image_url( $popup_id, $image_size );
 			$popup_url       = get_post_meta( $popup_id, 'arpc_popup_url', true );
 			$form_shortcode  = get_post_meta( $popup_id, 'arpc_form_shortcode', true );
+			$categories      = get_post_meta( $popup_id, 'arpc_categories', true );
+			$categories      = is_array( $categories ) ? array_filter( array_map( 'trim', $categories ) ) : array();
 			$template        = ! empty( $value ) ? $value : ( isset( $options['arpc_choose_temp'] ) ? $options['arpc_choose_temp'] : 'template1' );
 			$popup_config  = array(
 				'id'            => $popup_id,
