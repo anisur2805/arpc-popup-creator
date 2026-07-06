@@ -285,6 +285,11 @@ $render_location_row = static function ( $index, $location, $location_type_label
 						<input id="arpc-popup-url" type="url" name="arpc_popup_url" value="<?php echo esc_url( $popup_url ); ?>" placeholder="https://example.com" />
 					</div>
 					<div class="arpc-field">
+						<label for="arpc-form-shortcode"><?php esc_html_e( 'Form Shortcode', 'arpc-popup-creator' ); ?></label>
+						<input id="arpc-form-shortcode" type="text" name="arpc_form_shortcode" value="<?php echo esc_attr( $form_shortcode ); ?>" placeholder="[contact-form-7 id=\"123\"]" />
+						<small><?php esc_html_e( 'Paste any form builder shortcode (CF7, Gravity Forms, etc.). Entries from third-party forms are managed by the form plugin — they won\'t appear in the Subscribers table. Leave empty to use the built-in newsletter form (entries stored in Subscribers table).', 'arpc-popup-creator' ); ?></small>
+					</div>
+					<div class="arpc-field">
 						<label for="arpc-image-size"><?php esc_html_e( 'Select Image Size', 'arpc-popup-creator' ); ?></label>
 						<select id="arpc-image-size" name="arpc_image_size">
 							<option value=""><?php esc_html_e( 'Featured Image Default', 'arpc-popup-creator' ); ?></option>

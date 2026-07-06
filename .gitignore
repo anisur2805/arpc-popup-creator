@@ -3,3 +3,6 @@
 /ref/
 /FEATURE_CHECKLIST.md
 /README.md
+.DS_Store
+*.log
+/.commandcode/

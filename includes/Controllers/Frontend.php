@@ -27,7 +27,7 @@ class Frontend {
 	public function render_popups() {
 		$options = get_option( 'arpc_setting_opn' );
 		$setting = get_option( 'arpc_general_setting' );
-		$value   = isset( $setting['arpc_general_settings_template'] ) ? $setting['arpc_general_settings_template'] : 'template1';
+		$value   = isset( $setting['arpc_general_settings_template'] ) ? $setting['arpc_general_settings_template'] : '';
 
 		wp_enqueue_style( 'arpc-style' );
 		wp_enqueue_script( 'arpc-main' );
@@ -54,9 +54,10 @@ class Frontend {
 			$image_size    = get_post_meta( $popup_id, 'arpc_image_size', true );
 			$title         = get_post_meta( $popup_id, 'arpc_title', true );
 			$subtitle      = get_post_meta( $popup_id, 'arpc_subtitle', true );
-			$feature_image = $this->get_feature_image_url( $popup_id, $image_size );
-			$popup_url     = get_post_meta( $popup_id, 'arpc_popup_url', true );
-			$template      = isset( $options['arpc_choose_temp'] ) ? $options['arpc_choose_temp'] : $value;
+			$feature_image   = $this->get_feature_image_url( $popup_id, $image_size );
+			$popup_url       = get_post_meta( $popup_id, 'arpc_popup_url', true );
+			$form_shortcode  = get_post_meta( $popup_id, 'arpc_form_shortcode', true );
+			$template        = ! empty( $value ) ? $value : ( isset( $options['arpc_choose_temp'] ) ? $options['arpc_choose_temp'] : 'template1' );
 			$popup_config  = array(
 				'id'            => $popup_id,
 				'triggerKey'    => Popup_Settings::manual_trigger_key( $popup_id ),

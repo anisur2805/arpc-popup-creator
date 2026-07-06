@@ -9,13 +9,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 ?>
-<select name="arpc_general_setting[arpc_general_settings_template]" id="arpc_general_settings_template" style="display: none;">
-	<option value=""><?php esc_html_e( 'Select Template', 'arpc-popup-creator' ); ?></option>
-	<option value="template1" <?php selected( $value, 'template1' ); ?>><?php esc_html_e( 'Template 1', 'arpc-popup-creator' ); ?></option>
-	<option value="template2" <?php selected( $value, 'template2' ); ?>><?php esc_html_e( 'Template 2', 'arpc-popup-creator' ); ?></option>
-	<option value="template3" <?php selected( $value, 'template3' ); ?>><?php esc_html_e( 'Template 3', 'arpc-popup-creator' ); ?></option>
-</select>
-
 <div id="choose_template" class="tab-pane active">
 	<div>
 		<div class="choose-template-wrapper">

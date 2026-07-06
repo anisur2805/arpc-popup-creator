@@ -30,6 +30,14 @@ class Settings {
 			'arpc-popup-general-settings'
 		);
 
+		add_settings_field(
+			'arpc_general_settings_template',
+			__( 'Default Popup Template', 'arpc-popup-creator' ),
+			array( $this, 'template_field_callback' ),
+			'arpc-popup-general-settings',
+			'arpc_general_settings_section'
+		);
+
 		// Legacy settings (for backward compatibility).
 		register_setting( 'arpc_setting_opg', 'arpc_setting_opn' );
 
@@ -92,6 +100,16 @@ class Settings {
 	 */
 	public function legacy_section_callback() {
 		echo '<p>' . esc_html__( 'Choose the template you like!', 'arpc-popup-creator' ) . '</p>';
+	}
+
+	/**
+	 * Template field callback for general settings.
+	 */
+	public function template_field_callback() {
+		$setting = get_option( 'arpc_general_setting' );
+		$value   = isset( $setting['arpc_general_settings_template'] ) ? $setting['arpc_general_settings_template'] : 'template1';
+
+		include ARPC_PATH . '/includes/Views/admin/template-selector.php';
 	}
 
 	/**

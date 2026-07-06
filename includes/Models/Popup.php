@@ -90,6 +90,7 @@ class Popup {
 			'arpc_subtitle',
 			'arpc_image_id',
 			'arpc_image_url',
+			'arpc_form_shortcode',
 		);
 
 		foreach ( $fields as $field ) {

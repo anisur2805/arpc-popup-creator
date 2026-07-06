@@ -2,17 +2,18 @@
 /**
  * Template 2 view.
  *
- * @var string $title         Popup title.
- * @var string $subtitle      Popup subtitle.
- * @var string $feature_image Feature image URL.
- * @var string $popup_url     Popup link URL.
+ * @var string $title          Popup title.
+ * @var string $subtitle       Popup subtitle.
+ * @var string $feature_image  Feature image URL.
+ * @var string $popup_url      Popup link URL.
+ * @var string $form_shortcode Custom form shortcode.
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$content = wp_trim_words( get_the_content(), 5, '' );
+$content = get_the_content();
 ?>
 <div class="arpc__template arpc__template_style_2">
 	<div class="arpc__feature-image-wrapper">
@@ -36,7 +37,13 @@ $content = wp_trim_words( get_the_content(), 5, '' );
 		<?php endif; ?>
 		<p><?php esc_html_e( 'Do subscribe to receive updates on new arrivals, special offers & our promotions', 'arpc-popup-creator' ); ?></p>
 		<div class="arpc-popup-form">
-			<?php echo do_shortcode( '[arpc_newsletter]' ); ?>
+			<?php
+			if ( ! empty( $form_shortcode ) ) {
+				echo do_shortcode( wp_kses_post( $form_shortcode ) );
+			} else {
+				echo do_shortcode( '[arpc_newsletter]' );
+			}
+			?>
 		</div>
 	</div>
 </div>
