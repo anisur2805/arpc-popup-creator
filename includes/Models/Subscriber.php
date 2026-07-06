@@ -21,20 +21,18 @@ class Subscriber {
 		$defaults = array(
 			'name'       => '',
 			'email'      => '',
-			'interests'  => '',
-			'popup_id'   => 0,
 			'created_by' => get_current_user_id(),
 			'created_at' => current_time( 'mysql' ),
 		);
 
-		$data   = wp_parse_args( $args, $defaults );
+		$data = wp_parse_args( $args, $defaults );
 
-		// Only include columns that actually exist in the table.
-		$columns  = self::get_table_columns();
-		$filtered = array_intersect_key( $data, array_flip( $columns ) );
-		$formats  = array();
+		// Only add optional columns if they exist in the table.
+		$data = self::filter_optional_columns( $data );
 
-		foreach ( $filtered as $key => $value ) {
+		$formats = array();
+
+		foreach ( $data as $key => $value ) {
 			if ( in_array( $key, array( 'popup_id', 'created_by' ), true ) ) {
 				$formats[] = '%d';
 			} else {
@@ -42,7 +40,7 @@ class Subscriber {
 			}
 		}
 
-		$inserted = $wpdb->insert( "{$wpdb->prefix}arpc_subscriber", $filtered, $formats );
+		$inserted = $wpdb->insert( "{$wpdb->prefix}arpc_subscriber", $data, $formats );
 
 		if ( ! $inserted ) {
 			return new \WP_Error( 'failed-to-insert', __( 'Failed to insert', 'arpc-popup-creator' ) );
@@ -52,23 +50,30 @@ class Subscriber {
 	}
 
 	/**
-	 * Get the column names for the subscriber table, cached per request.
-	 *
-	 * @return array
+	 * Remove optional columns (popup_id, interests) if they don't exist yet.
 	 */
-	private static function get_table_columns() {
+	private static function filter_optional_columns( $data ) {
 		global $wpdb;
 
-		$cache_key = 'arpc_subscriber_columns';
-		$columns   = wp_cache_get( $cache_key, 'arpc_popup' );
+		static $has_popup_id   = null;
+		static $has_interests  = null;
 
-		if ( false === $columns ) {
-			$cols    = $wpdb->get_results( "SHOW COLUMNS FROM `{$wpdb->prefix}arpc_subscriber`" );
-			$columns = wp_list_pluck( $cols, 'Field' );
-			wp_cache_set( $cache_key, $columns, 'arpc_popup', 300 );
+		if ( null === $has_popup_id ) {
+			$popup_col   = $wpdb->get_var( "SHOW COLUMNS FROM `{$wpdb->prefix}arpc_subscriber` LIKE 'popup_id'" );
+			$int_col     = $wpdb->get_var( "SHOW COLUMNS FROM `{$wpdb->prefix}arpc_subscriber` LIKE 'interests'" );
+			$has_popup_id  = ! empty( $popup_col );
+			$has_interests = ! empty( $int_col );
 		}
 
-		return $columns;
+		if ( ! $has_popup_id && isset( $data['popup_id'] ) ) {
+			unset( $data['popup_id'] );
+		}
+
+		if ( ! $has_interests && isset( $data['interests'] ) ) {
+			unset( $data['interests'] );
+		}
+
+		return $data;
 	}
 
 	/**

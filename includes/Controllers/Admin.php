@@ -35,11 +35,16 @@ class Admin {
 	}
 
 	/**
-	 * Run table migrations on admin pages for existing installations.
+	 * Run table migrations for existing installations (runs once).
 	 */
 	public function maybe_migrate() {
+		if ( get_option( 'arpc_db_version' ) >= 2 ) {
+			return;
+		}
+
 		$installer = new \ARPC\Popup\Services\Installer();
 		$installer->migrate();
+		update_option( 'arpc_db_version', 2, false );
 	}
 
 	/**
