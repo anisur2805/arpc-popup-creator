@@ -17,6 +17,9 @@ $has_categories = ! empty( $categories ) && empty( $form_shortcode );
 <div class="arpc-popup-creator-wrapper" id="arpc-popup-creator-wrapper">
 	<form action="" method="post">
 		<div class="arpc-form-group-row">
+			<input class="regular-text arpc_input" type="text" name="arpc-name" value="" placeholder="<?php esc_attr_e( 'Enter your name', 'arpc-popup-creator' ); ?>" />
+		</div>
+		<div class="arpc-form-group-row">
 			<input class="regular-text arpc_input" type="email" name="arpc-email" value="" placeholder="<?php esc_attr_e( 'Enter your email', 'arpc-popup-creator' ); ?>" required/>
 			<button type="submit" class="arpc_submit" name="arpc_submit"><?php esc_html_e( 'Subscribe Now', 'arpc-popup-creator' ); ?></button>
 			<?php wp_nonce_field( 'arpc-modal-form' ); ?>
