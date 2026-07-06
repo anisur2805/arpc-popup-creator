@@ -32,9 +32,15 @@ class Ajax {
 			);
 		}
 
+		$categories = isset( $_POST['arpc-categories'] ) && is_array( $_POST['arpc-categories'] )
+			? array_map( 'sanitize_text_field', wp_unslash( $_POST['arpc-categories'] ) )
+			: array();
+
 		$data = array(
-			'name'  => isset( $_POST['arpc-name'] ) ? sanitize_text_field( $_POST['arpc-name'] ) : '',
-			'email' => isset( $_POST['arpc-email'] ) ? sanitize_text_field( $_POST['arpc-email'] ) : '',
+			'name'      => isset( $_POST['arpc-name'] ) ? sanitize_text_field( $_POST['arpc-name'] ) : '',
+			'email'     => isset( $_POST['arpc-email'] ) ? sanitize_text_field( $_POST['arpc-email'] ) : '',
+			'interests' => implode( ', ', $categories ),
+			'popup_id'  => isset( $_POST['arpc-popup-id'] ) ? intval( $_POST['arpc-popup-id'] ) : 0,
 		);
 
 		$result = Subscriber::insert( $data );

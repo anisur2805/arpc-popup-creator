@@ -63,11 +63,28 @@ class Installer {
 			popup_id INT(11) UNSIGNED NOT NULL,
 			name varchar(100) NOT NULL DEFAULT '',
 			email varchar(100) DEFAULT NULL,
+			interests varchar(255) DEFAULT '',
 			created_at DATETIME NOT NULL,
 			created_by BIGINT(20) UNSIGNED NOT NULL,
 			PRIMARY KEY (`id`)
 		) $charset_collate";
 
 		dbDelta( $subscriber_schema );
+
+		$this->maybe_migrate_subscriber_table();
+	}
+
+	/**
+	 * Add the interests column to existing subscriber tables.
+	 */
+	private function maybe_migrate_subscriber_table() {
+		global $wpdb;
+
+		$table  = "{$wpdb->prefix}arpc_subscriber";
+		$column = $wpdb->get_results( "SHOW COLUMNS FROM `{$table}` LIKE 'interests'" );
+
+		if ( empty( $column ) ) {
+			$wpdb->query( "ALTER TABLE `{$table}` ADD COLUMN `interests` varchar(255) DEFAULT '' AFTER `email`" ); // phpcs:ignore
+		}
 	}
 }

@@ -21,12 +21,14 @@ class Subscriber {
 		$defaults = array(
 			'name'       => '',
 			'email'      => '',
+			'interests'  => '',
+			'popup_id'   => 0,
 			'created_by' => get_current_user_id(),
 			'created_at' => current_time( 'mysql' ),
 		);
 
 		$data   = wp_parse_args( $args, $defaults );
-		$format = array( '%s', '%s', '%d', '%s' );
+		$format = array( '%s', '%s', '%s', '%d', '%d', '%s' );
 
 		$inserted = $wpdb->insert( "{$wpdb->prefix}arpc_subscriber", $data, $format );
 
@@ -77,12 +79,14 @@ class Subscriber {
 		if ( ! empty( $search ) ) {
 			$like  = '%' . $wpdb->esc_like( $search ) . '%';
 			$query = $wpdb->prepare(
-				"SELECT id, name, email, created_at
+				"SELECT id, name, email, interests, created_at
 				FROM {$wpdb->prefix}arpc_subscriber
 				WHERE id LIKE %s
 				OR name LIKE %s
 				OR email LIKE %s
+				OR interests LIKE %s
 				OR created_at LIKE %s",
+				$like,
 				$like,
 				$like,
 				$like,
@@ -93,7 +97,7 @@ class Subscriber {
 		}
 
 		return $wpdb->get_results(
-			"SELECT id, name, email, created_at FROM {$wpdb->prefix}arpc_subscriber",
+			"SELECT id, name, email, interests, created_at FROM {$wpdb->prefix}arpc_subscriber",
 			ARRAY_A
 		);
 	}

@@ -127,16 +127,17 @@ class Subscribers_List_Table extends \WP_List_Table {
 			$orderby = ( isset( $_GET['orderby'] ) ) ? esc_sql( $_GET['orderby'] ) : 'name';
 			$order   = ( isset( $_GET['order'] ) ) ? esc_sql( $_GET['order'] ) : 'ASC';
 
-			//  ORDER BY $orderby $order
 			$like = '%' . $wpdb->esc_like( $search ) . '%';
 
 			$query = $wpdb->prepare(
-				"SELECT id, name, email, created_at
+				"SELECT id, name, email, interests, created_at
 				FROM {$wpdb->prefix}arpc_subscriber
 				WHERE id LIKE %s
 				OR name LIKE %s
 				OR email LIKE %s
+				OR interests LIKE %s
 				OR created_at LIKE %s",
+				$like,
 				$like,
 				$like,
 				$like,
@@ -146,7 +147,7 @@ class Subscribers_List_Table extends \WP_List_Table {
 			return $wpdb->get_results( $query, ARRAY_A ); // phpcs:ignore
 
 		} else {
-			return $wpdb->get_results( "SELECT id, name, email, created_at from {$wpdb->prefix}arpc_subscriber", ARRAY_A );
+			return $wpdb->get_results( "SELECT id, name, email, interests, created_at from {$wpdb->prefix}arpc_subscriber", ARRAY_A );
 		}
 	}
 
@@ -204,6 +205,7 @@ class Subscribers_List_Table extends \WP_List_Table {
 			'name'       => __( 'Full Name', 'arpc-popup-creator' ),
 			'popup'      => __( 'Popup', 'arpc-popup-creator' ),
 			'email'      => __( 'Email', 'arpc-popup-creator' ),
+			'interests'  => __( 'Interests', 'arpc-popup-creator' ),
 			'created_at' => __( 'Subscribed On', 'arpc-popup-creator' ),
 		);
 
@@ -216,6 +218,10 @@ class Subscribers_List_Table extends \WP_List_Table {
 
 	public function column_popup( $item ) {
 		return 'Hello World';
+	}
+
+	public function column_interests( $item ) {
+		return isset( $item['interests'] ) && $item['interests'] ? esc_html( $item['interests'] ) : '—';
 	}
 
 	public function column_created_at( $item ) {
