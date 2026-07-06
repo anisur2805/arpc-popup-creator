@@ -12,7 +12,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$has_categories = ! empty( $categories ) && empty( $form_shortcode );
+// Show checkboxes only when using the built-in newsletter (not a custom form shortcode).
+// Use saved categories; fall back to defaults when none are configured.
+if ( empty( $form_shortcode ) ) {
+	$display_categories = ! empty( $categories ) ? $categories : array(
+		__( 'Tutorials', 'arpc-popup-creator' ),
+		__( 'Products', 'arpc-popup-creator' ),
+	);
+} else {
+	$display_categories = array();
+}
 ?>
 <div class="arpc-popup-creator-wrapper" id="arpc-popup-creator-wrapper">
 	<form action="" method="post">
@@ -26,9 +35,9 @@ $has_categories = ! empty( $categories ) && empty( $form_shortcode );
 			<input type="hidden" name="action" value="arpc_modal_form_action">
 			<input type="hidden" name="arpc-popup-id" value="<?php echo esc_attr( get_the_ID() ); ?>" />
 		</div>
-		<?php if ( $has_categories ) : ?>
+		<?php if ( ! empty( $display_categories ) ) : ?>
 			<ul class="arpc_categories">
-				<?php foreach ( $categories as $category ) : ?>
+				<?php foreach ( $display_categories as $category ) : ?>
 					<li>
 						<label>
 							<input type="checkbox" name="arpc-categories[]" value="<?php echo esc_attr( $category ); ?>" />
