@@ -42,6 +42,12 @@ class Frontend {
 			'post_type'      => 'arpc_popup',
 			'post_status'    => 'publish',
 			'posts_per_page' => -1,
+			'meta_query'     => array(
+				array(
+					'key'   => 'arpc_active',
+					'value' => 1,
+				),
+			),
 		);
 
 		// Preview mode: render only the requested popup, bypassing all
