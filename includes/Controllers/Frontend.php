@@ -56,6 +56,11 @@ class Frontend {
 				continue;
 			}
 
+			// Run the editor content through the_content so Gutenberg blocks,
+			// embeds and shortcodes render. get_the_content() alone returns raw
+			// block markup, which never reaches do_blocks().
+			$popup_content = apply_filters( 'the_content', get_the_content() );
+
 			$image_size     = get_post_meta( $popup_id, 'arpc_image_size', true );
 			$title          = get_post_meta( $popup_id, 'arpc_title', true );
 			$subtitle       = get_post_meta( $popup_id, 'arpc_subtitle', true );

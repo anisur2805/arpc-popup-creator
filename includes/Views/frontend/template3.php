@@ -2,6 +2,9 @@
 /**
  * Template 3 view.
  *
+ * @package ARPC\Popup
+ *
+ * @var string $popup_content  Rendered popup body content.
  * @var string $title          Popup title.
  * @var string $subtitle       Popup subtitle.
  * @var string $form_shortcode Custom form shortcode.
@@ -12,15 +15,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$content = get_the_content();
-$content = $content ? $content : __( 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', 'arpc-popup-creator' );
+// Already run through the_content in Frontend::render_popups().
+$content = isset( $popup_content ) ? $popup_content : '';
 ?>
 <div class="arpc__template arpc__template_style_3">
 	<div class="arpc-popup-creator-body-inner">
 		<?php if ( $title ) : ?>
 			<h3 class="arpc-popup-modal-title"><?php echo esc_html( $title ); ?></h3>
 		<?php endif; ?>
-		<div><?php echo wp_kses_post( $content ); ?></div>
+		<?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Post content already rendered through the_content, which kses-filters on save; escaping again would strip video and other embeds. ?>
+		<div><?php echo $content; ?></div>
 
 		<div class="arpc-popup-form">
 			<?php

@@ -1,4 +1,9 @@
 <?php
+/**
+ * Popup starter block patterns.
+ *
+ * @package ARPC\Popup
+ */
 
 namespace ARPC\Popup\Controllers;
 
@@ -79,6 +84,14 @@ class Block_Patterns {
 					'content'     => $this->simple_choices(),
 				)
 			),
+			'video'          => array_merge(
+				$shared,
+				array(
+					'title'       => __( 'Video — Embed & Call to Action', 'arpc-popup-creator' ),
+					'description' => __( 'Heading above an embedded video with a call-to-action button.', 'arpc-popup-creator' ),
+					'content'     => $this->video(),
+				)
+			),
 		);
 	}
 
@@ -146,6 +159,41 @@ HTML;
 <!-- wp:shortcode -->
 [arpc_newsletter]
 <!-- /wp:shortcode -->
+HTML;
+	}
+
+	/**
+	 * Pattern: embedded video with a call to action.
+	 *
+	 * Uses core/embed so any provider oEmbed supports (YouTube, Vimeo, ...) works.
+	 * Swap in core/video instead to host the file in the media library.
+	 *
+	 * @return string
+	 */
+	private function video() {
+		$heading = esc_html__( 'Watch How It Works', 'arpc-popup-creator' );
+		$intro   = esc_html__( 'A two minute tour of everything you can do.', 'arpc-popup-creator' );
+		$cta     = esc_html__( 'Get Started', 'arpc-popup-creator' );
+
+		return <<<HTML
+<!-- wp:heading {"textAlign":"center"} -->
+<h2 class="wp-block-heading has-text-align-center">{$heading}</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">{$intro}</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:embed {"type":"video","responsive":true,"className":"wp-embed-aspect-16-9 wp-has-aspect-ratio"} -->
+<figure class="wp-block-embed is-type-video wp-embed-aspect-16-9 wp-has-aspect-ratio"><div class="wp-block-embed__wrapper">
+</div></figure>
+<!-- /wp:embed -->
+
+<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
+<div class="wp-block-buttons"><!-- wp:button -->
+<div class="wp-block-button"><a class="wp-block-button__link wp-element-button">{$cta}</a></div>
+<!-- /wp:button --></div>
+<!-- /wp:buttons -->
 HTML;
 	}
 

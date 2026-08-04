@@ -2,6 +2,9 @@
 /**
  * Template 2 view.
  *
+ * @package ARPC\Popup
+ *
+ * @var string $popup_content  Rendered popup body content.
  * @var string $title          Popup title.
  * @var string $subtitle       Popup subtitle.
  * @var string $feature_image  Feature image URL.
@@ -14,7 +17,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$content = get_the_content();
+// Already run through the_content in Frontend::render_popups().
+$content = isset( $popup_content ) ? $popup_content : '';
 ?>
 <div class="arpc__template arpc__template_style_2">
 	<div class="arpc__feature-image-wrapper">
@@ -36,7 +40,12 @@ $content = get_the_content();
 		<?php if ( $title ) : ?>
 			<h3 class="arpc-popup-modal-title"><?php echo esc_html( $title ); ?></h3>
 		<?php endif; ?>
-		<p><?php esc_html_e( 'Do subscribe to receive updates on new arrivals, special offers & our promotions', 'arpc-popup-creator' ); ?></p>
+		<?php if ( '' !== trim( (string) $content ) ) : ?>
+			<?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Post content already rendered through the_content, which kses-filters on save; escaping again would strip video and other embeds. ?>
+			<div><?php echo $content; ?></div>
+		<?php else : ?>
+			<p><?php esc_html_e( 'Do subscribe to receive updates on new arrivals, special offers & our promotions', 'arpc-popup-creator' ); ?></p>
+		<?php endif; ?>
 		<div class="arpc-popup-form">
 			<?php
 			if ( ! empty( $form_shortcode ) ) {
