@@ -48,7 +48,8 @@
 			month: 30 * 24 * 60 * 60 * 1000,
 		}
 
-		return (multipliers[unit] || multipliers.day) * Math.max(value, 1)
+		// Falls back to hours to match the PHP default in Popup_Settings::defaults().
+		return (multipliers[unit] || multipliers.hour) * Math.max(value, 1)
 	}
 
 	function wasAlreadyShown(instance) {

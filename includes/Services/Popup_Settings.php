@@ -1,4 +1,9 @@
 <?php
+/**
+ * Popup settings service.
+ *
+ * @package ARPC\Popup
+ */
 
 namespace ARPC\Popup\Services;
 
@@ -146,7 +151,7 @@ class Popup_Settings {
 			'auto_close_delay'              => self::sanitize_int( $raw_settings, 'auto_close_delay', 0, 86400, $defaults['auto_close_delay'] ),
 			'periodicity'                   => self::sanitize_choice( $raw_settings, 'periodicity', array( 'every_time', 'once_per_period', 'once_only' ), $defaults['periodicity'] ),
 			'period_value'                  => self::sanitize_int( $raw_settings, 'period_value', 1, 3650, $defaults['period_value'] ),
-			'period_unit'                   => self::sanitize_choice( $raw_settings, 'period_unit', array( 'hour' ), $defaults['period_unit'] ),
+			'period_unit'                   => self::sanitize_choice( $raw_settings, 'period_unit', array_keys( self::period_unit_choices() ), $defaults['period_unit'] ),
 			'activity_mode'                 => self::sanitize_choice( $raw_settings, 'activity_mode', array( 'always', 'certain_period' ), $defaults['activity_mode'] ),
 			'activity_start'                => self::sanitize_datetime( $raw_settings, 'activity_start' ),
 			'activity_end'                  => self::sanitize_datetime( $raw_settings, 'activity_end' ),
@@ -290,6 +295,23 @@ class Popup_Settings {
 			'slide-in'         => __( 'Slide In', 'arpc-popup-creator' ),
 			'notification-bar' => __( 'Notification Bar', 'arpc-popup-creator' ),
 			'fullscreen'       => __( 'Fullscreen', 'arpc-popup-creator' ),
+		);
+	}
+
+	/**
+	 * Get the units available for the "Once Per Period" frequency setting.
+	 *
+	 * Keys must stay in sync with the multipliers in assets/js/popup-main.js.
+	 *
+	 * @return array
+	 */
+	public static function period_unit_choices() {
+		return array(
+			'minute' => __( 'Minutes', 'arpc-popup-creator' ),
+			'hour'   => __( 'Hours', 'arpc-popup-creator' ),
+			'day'    => __( 'Days', 'arpc-popup-creator' ),
+			'week'   => __( 'Weeks', 'arpc-popup-creator' ),
+			'month'  => __( 'Months', 'arpc-popup-creator' ),
 		);
 	}
 

@@ -2,6 +2,8 @@
 /**
  * Metabox view template.
  *
+ * @package ARPC\Popup
+ *
  * @var array  $popup_settings
  * @var string $title
  * @var string $subtitle
@@ -12,6 +14,7 @@
  * @var array  $role_labels
  * @var string $manual_trigger
  * @var array  $location_type_labels
+ * @var array  $period_unit_options
  * @var array  $location_targets
  * @var array  $open_animation_options
  * @var array  $close_animation_options
@@ -182,12 +185,16 @@ $render_location_row = static function ( $index, $location, $location_type_label
 						</div>
 						<div class="arpc-inline-inputs <?php echo 'once_per_period' === $popup_settings['periodicity'] ? '' : 'is-hidden'; ?>" data-periodicity-options>
 							<div>
-								<input type="number" min="1" name="arpc_popup_settings[period_value]" value="<?php echo esc_attr( $popup_settings['period_value'] ); ?>" />
-								<input type="hidden" name="arpc_popup_settings[period_unit]" value="hour" />
-								<small><?php esc_html_e( 'Period Hours', 'arpc-popup-creator' ); ?></small>
+								<input type="number" min="1" id="arpc-period-value" name="arpc_popup_settings[period_value]" value="<?php echo esc_attr( $popup_settings['period_value'] ); ?>" />
+								<small><?php esc_html_e( 'Show again after', 'arpc-popup-creator' ); ?></small>
 							</div>
-							<div class="arpc-unit-chip-wrap">
-								<span class="arpc-unit-chip"><?php esc_html_e( 'hrs', 'arpc-popup-creator' ); ?></span>
+							<div>
+								<select id="arpc-period-unit" name="arpc_popup_settings[period_unit]">
+									<?php foreach ( $period_unit_options as $unit_key => $unit_label ) : ?>
+										<option value="<?php echo esc_attr( $unit_key ); ?>" <?php selected( $popup_settings['period_unit'], $unit_key ); ?>><?php echo esc_html( $unit_label ); ?></option>
+									<?php endforeach; ?>
+								</select>
+								<small><?php esc_html_e( 'Period Unit', 'arpc-popup-creator' ); ?></small>
 							</div>
 						</div>
 					</div>

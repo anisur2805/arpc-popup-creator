@@ -1,4 +1,9 @@
 <?php
+/**
+ * Popup settings metabox controller.
+ *
+ * @package ARPC\Popup
+ */
 
 namespace ARPC\Popup\Controllers;
 
@@ -57,25 +62,27 @@ class Metabox {
 		wp_nonce_field( 'popup_creator', 'popup_creator_nonce' );
 
 		$data = array(
-			'popup_settings'     => Popup_Settings::get( $post->ID ),
-			'title'              => Popup::get_meta( $post->ID, 'arpc_title' ),
-			'subtitle'           => Popup::get_meta( $post->ID, 'arpc_subtitle' ),
-			'image_size'         => Popup::get_meta( $post->ID, 'arpc_image_size' ),
-			'popup_url'          => Popup::get_meta( $post->ID, 'arpc_popup_url' ),
-			'image_id'           => Popup::get_meta( $post->ID, 'arpc_image_id' ),
-			'image_url'          => Popup::get_meta( $post->ID, 'arpc_image_url' ),
-			'form_shortcode'     => Popup::get_meta( $post->ID, 'arpc_form_shortcode' ),
-			'categories'         => Popup::get_meta( $post->ID, 'arpc_categories' ),
-			'role_labels'        => Popup_Settings::role_labels(),
-			'manual_trigger'     => Popup_Settings::manual_trigger_key( $post->ID ),
-			'location_type_labels' => Popup_Settings::location_type_choices(),
-			'location_targets'   => Popup_Settings::location_target_sources(),
-			'open_animation_options' => Popup_Settings::opening_animation_options(),
+			'popup_settings'          => Popup_Settings::get( $post->ID ),
+			'title'                   => Popup::get_meta( $post->ID, 'arpc_title' ),
+			'subtitle'                => Popup::get_meta( $post->ID, 'arpc_subtitle' ),
+			'image_size'              => Popup::get_meta( $post->ID, 'arpc_image_size' ),
+			'popup_url'               => Popup::get_meta( $post->ID, 'arpc_popup_url' ),
+			'image_id'                => Popup::get_meta( $post->ID, 'arpc_image_id' ),
+			'image_url'               => Popup::get_meta( $post->ID, 'arpc_image_url' ),
+			'form_shortcode'          => Popup::get_meta( $post->ID, 'arpc_form_shortcode' ),
+			'categories'              => Popup::get_meta( $post->ID, 'arpc_categories' ),
+			'role_labels'             => Popup_Settings::role_labels(),
+			'manual_trigger'          => Popup_Settings::manual_trigger_key( $post->ID ),
+			'location_type_labels'    => Popup_Settings::location_type_choices(),
+			'location_targets'        => Popup_Settings::location_target_sources(),
+			'open_animation_options'  => Popup_Settings::opening_animation_options(),
 			'close_animation_options' => Popup_Settings::closing_animation_options(),
-			'popup_type_options' => Popup_Settings::popup_type_choices(),
+			'popup_type_options'      => Popup_Settings::popup_type_choices(),
+			'period_unit_options'     => Popup_Settings::period_unit_choices(),
 		);
 
-		extract( $data ); // phpcs:ignore WordPress.CodeAnalysis.AssignmentInCondition.Found
+		// phpcs:ignore WordPress.PHP.DontExtract.extract_extract -- Keys are a fixed, locally-defined list; the view consumes them by name.
+		extract( $data );
 
 		include ARPC_PATH . '/includes/Views/admin/metabox.php';
 	}
@@ -89,7 +96,7 @@ class Metabox {
 	 * @return bool
 	 */
 	private function is_secured( $nonce_field, $action, $post_id ) {
-		$nonce = isset( $_POST[ $nonce_field ] ) ? $_POST[ $nonce_field ] : '';
+		$nonce = isset( $_POST[ $nonce_field ] ) ? sanitize_text_field( wp_unslash( $_POST[ $nonce_field ] ) ) : '';
 
 		if ( empty( $nonce ) ) {
 			return false;
@@ -124,8 +131,10 @@ class Metabox {
 			return;
 		}
 
+		// phpcs:disable WordPress.Security.NonceVerification.Missing -- Nonce and capability are verified in is_secured() above.
 		$settings = isset( $_POST['arpc_popup_settings'] ) ? wp_unslash( $_POST['arpc_popup_settings'] ) : array();
 		Popup_Settings::save( $post_id, $settings );
 		Popup::save_metabox( $post_id, $_POST );
+		// phpcs:enable WordPress.Security.NonceVerification.Missing
 	}
 }
