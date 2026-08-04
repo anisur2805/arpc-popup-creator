@@ -63,14 +63,6 @@ class Metabox {
 
 		$data = array(
 			'popup_settings'                   => Popup_Settings::get( $post->ID ),
-			'title'                            => Popup::get_meta( $post->ID, 'arpc_title' ),
-			'subtitle'                         => Popup::get_meta( $post->ID, 'arpc_subtitle' ),
-			'image_size'                       => Popup::get_meta( $post->ID, 'arpc_image_size' ),
-			'popup_url'                        => Popup::get_meta( $post->ID, 'arpc_popup_url' ),
-			'image_id'                         => Popup::get_meta( $post->ID, 'arpc_image_id' ),
-			'image_url'                        => Popup::get_meta( $post->ID, 'arpc_image_url' ),
-			'form_shortcode'                   => Popup::get_meta( $post->ID, 'arpc_form_shortcode' ),
-			'categories'                       => Popup::get_meta( $post->ID, 'arpc_categories' ),
 			'role_labels'                      => Popup_Settings::role_labels(),
 			'manual_trigger'                   => Popup_Settings::manual_trigger_key( $post->ID ),
 			'location_type_labels'             => Popup_Settings::location_type_choices(),

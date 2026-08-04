@@ -5,12 +5,6 @@
  * @package ARPC\Popup
  *
  * @var array  $popup_settings
- * @var string $title
- * @var string $subtitle
- * @var string $image_size
- * @var string $popup_url
- * @var string $image_id
- * @var string $image_url
  * @var array  $role_labels
  * @var string $manual_trigger
  * @var array  $location_type_labels
@@ -304,68 +298,6 @@ $render_location_row = static function ( $index, $location, $location_type_label
 				</div>
 			</div>
 
-			<div class="arpc-settings-card">
-				<h3><?php esc_html_e( 'Content & Media', 'arpc-popup-creator' ); ?></h3>
-				<div class="arpc-field-grid">
-					<div class="arpc-field">
-						<label for="arpc-title"><?php esc_html_e( 'Popup Title', 'arpc-popup-creator' ); ?></label>
-						<input id="arpc-title" type="text" name="arpc_title" value="<?php echo esc_attr( $title ); ?>" placeholder="<?php esc_attr_e( 'Our Spring Sale Has Started', 'arpc-popup-creator' ); ?>" />
-					</div>
-					<div class="arpc-field">
-						<label for="arpc-subtitle"><?php esc_html_e( 'Popup Subtitle', 'arpc-popup-creator' ); ?></label>
-						<input id="arpc-subtitle" type="text" name="arpc_subtitle" value="<?php echo esc_attr( $subtitle ); ?>" placeholder="<?php esc_attr_e( 'Subscribe to our newsletter', 'arpc-popup-creator' ); ?>" />
-					</div>
-					<div class="arpc-field">
-						<label for="arpc-popup-url"><?php esc_html_e( 'Popup URL', 'arpc-popup-creator' ); ?></label>
-						<input id="arpc-popup-url" type="url" name="arpc_popup_url" value="<?php echo esc_url( $popup_url ); ?>" placeholder="https://example.com" />
-					</div>
-					<div class="arpc-field">
-						<label for="arpc-form-shortcode"><?php esc_html_e( 'Form Shortcode', 'arpc-popup-creator' ); ?></label>
-						<input id="arpc-form-shortcode" type="text" name="arpc_form_shortcode" value="<?php echo esc_attr( $form_shortcode ); ?>" placeholder="[contact-form-7 id=\"123\"]" />
-						<small><?php esc_html_e( 'Paste any form builder shortcode (CF7, Gravity Forms, etc.). Entries from third-party forms are managed by the form plugin — they won\'t appear in the Subscribers table. Leave empty to use the built-in newsletter form (entries stored in Subscribers table).', 'arpc-popup-creator' ); ?></small>
-					</div>
-					<div class="arpc-field arpc-field--full">
-						<label><?php esc_html_e( 'Interest Categories', 'arpc-popup-creator' ); ?></label>
-						<div class="arpc-repeatable" data-arpc-repeatable="categories">
-							<?php
-							$categories = is_array( $categories ) ? $categories : array();
-							if ( empty( $categories ) ) {
-								$categories = array( '', '' );
-							}
-							foreach ( $categories as $category ) :
-								?>
-								<div class="arpc-repeatable__row">
-									<input type="text" name="arpc_categories[]" value="<?php echo esc_attr( $category ); ?>" placeholder="<?php esc_attr_e( 'e.g. Tutorials', 'arpc-popup-creator' ); ?>" />
-									<button type="button" class="button arpc-repeatable__remove"><?php esc_html_e( 'Remove', 'arpc-popup-creator' ); ?></button>
-								</div>
-							<?php endforeach; ?>
-							<button type="button" class="button arpc-repeatable__add"><?php esc_html_e( 'Add Category', 'arpc-popup-creator' ); ?></button>
-							<small><?php esc_html_e( 'Interest categories shown as checkboxes in Template 3.', 'arpc-popup-creator' ); ?></small>
-						</div>
-					</div>
-					<div class="arpc-field">
-						<label for="arpc-image-size"><?php esc_html_e( 'Select Image Size', 'arpc-popup-creator' ); ?></label>
-						<select id="arpc-image-size" name="arpc_image_size">
-							<option value=""><?php esc_html_e( 'Featured Image Default', 'arpc-popup-creator' ); ?></option>
-							<option value="original" <?php selected( 'original', $image_size ); ?>><?php esc_html_e( 'Original', 'arpc-popup-creator' ); ?></option>
-							<option value="landscape" <?php selected( 'landscape', $image_size ); ?>><?php esc_html_e( 'Landscape', 'arpc-popup-creator' ); ?></option>
-							<option value="square" <?php selected( 'square', $image_size ); ?>><?php esc_html_e( 'Square', 'arpc-popup-creator' ); ?></option>
-						</select>
-					</div>
-					<div class="arpc-field arpc-field--full">
-						<label><?php esc_html_e( 'Fallback Image', 'arpc-popup-creator' ); ?></label>
-						<div id="myImageMetaBox" class="arpc-image-uploader">
-							<div class="arpc-image-uploader__actions">
-								<button type="button" class="button" id="arpc_upload_image"><?php esc_html_e( 'Upload Image', 'arpc-popup-creator' ); ?></button>
-								<button type="button" class="button <?php echo $image_url ? '' : 'hidden'; ?>" name="arpc_image_remove" id="arpc_delete_custom_img"><?php esc_html_e( 'Remove Image', 'arpc-popup-creator' ); ?></button>
-							</div>
-							<input type="hidden" name="arpc_image_id" id="arpc_image_id" value="<?php echo esc_attr( $image_id ); ?>" />
-							<input type="hidden" name="arpc_image_url" id="arpc_image_url" value="<?php echo esc_attr( $image_url ); ?>" />
-							<div id="arpc_image_container" class="arpc-image-uploader__preview"></div>
-						</div>
-					</div>
-				</div>
-			</div>
 		</section>
 
 		<section class="arpc-settings-panel__section" data-arpc-panel="customization">

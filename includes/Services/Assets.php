@@ -54,7 +54,7 @@ class Assets {
 				'version' => filemtime( ARPC_PATH . '/assets/js/tabbed.js' ),
 				'deps'    => array(),
 			),
-			'admin-subscriber'    => array(
+			'arpc-admin-subscriber' => array(
 				'src'     => ARPC_ASSETS . '/js/admin-subscriber.js',
 				'version' => filemtime( ARPC_PATH . '/assets/js/admin-subscriber.js' ),
 				'deps'    => array( 'jquery', 'wp-util' ),
@@ -117,10 +117,10 @@ class Assets {
 		);
 
 		wp_localize_script(
-			'admin-subscriber',
+			'arpc-admin-subscriber',
 			'arpcAdminSub',
 			array(
-				'nonce'   => wp_create_nonce( 'admin-subscriber' ),
+				'nonce'   => wp_create_nonce( 'arpc-admin-subscriber' ),
 				'ajaxUrl' => admin_url( 'admin-ajax.php' ),
 				'confirm' => __( 'Are you sure?', 'arpc-popup-creator' ),
 				'success' => __( 'Thanks for subscribe', 'arpc-popup-creator' ),

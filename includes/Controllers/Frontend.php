@@ -43,9 +43,14 @@ class Frontend {
 			'post_status'    => 'publish',
 			'posts_per_page' => -1,
 			'meta_query'     => array(
+				'relation' => 'OR',
 				array(
 					'key'   => 'arpc_active',
-					'value' => 1,
+					'value' => '1',
+				),
+				array(
+					'key'     => 'arpc_active',
+					'compare' => 'NOT EXISTS',
 				),
 			),
 		);

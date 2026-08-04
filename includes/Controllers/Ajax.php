@@ -86,7 +86,7 @@ class Ajax {
 
 		$nonce = isset( $_REQUEST['_wpnonce'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['_wpnonce'] ) ) : '';
 
-		if ( ! wp_verify_nonce( $nonce, 'admin-subscriber' ) ) {
+		if ( ! wp_verify_nonce( $nonce, 'arpc-admin-subscriber' ) ) {
 			wp_send_json_error( __( 'No Cheating', 'arpc-popup-creator' ) );
 		}
 

@@ -278,7 +278,7 @@ class Subscribers_List_Table extends \WP_List_Table {
 	 * @return string
 	 */
 	public function column_name( $item ) {
-		// The delete request is nonced client-side via the localised admin-subscriber nonce.
+		// The delete request is nonced client-side via the localised arpc-admin-subscriber nonce.
 		$actions = array(
 			'delete' => sprintf(
 				'<a class="arpc-subscriber-delete" data-id="%1$d" href="#" title="%2$s">%2$s</a>',

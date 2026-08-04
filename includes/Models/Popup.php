@@ -83,31 +83,7 @@ class Popup {
 	 * @return void
 	 */
 	public static function save_metabox( $post_id, $data ) {
-		$fields = array(
-			'arpc_popup_url',
-			'arpc_image_size',
-			'arpc_title',
-			'arpc_subtitle',
-			'arpc_image_id',
-			'arpc_image_url',
-			'arpc_form_shortcode',
-		);
-
-		foreach ( $fields as $field ) {
-			if ( isset( $data[ $field ] ) ) {
-				self::update_meta( $post_id, $field, $data[ $field ] );
-			}
-		}
-
-		if ( isset( $data['arpc_categories'] ) && is_array( $data['arpc_categories'] ) ) {
-			$categories = array_map( 'sanitize_text_field', wp_unslash( $data['arpc_categories'] ) );
-			update_post_meta( $post_id, 'arpc_categories', $categories );
-		} else {
-			delete_post_meta( $post_id, 'arpc_categories' );
-		}
-
-		if ( isset( $data['arpc_ww_show'] ) ) {
-			self::update_meta( $post_id, 'arpc_ww_show', absint( $data['arpc_ww_show'] ) );
-		}
+		// Legacy fields removed. Gutenberg block content is now the primary
+		// popup body; the metabox owns behavior, targeting, and appearance only.
 	}
 }
