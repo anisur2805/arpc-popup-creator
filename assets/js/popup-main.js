@@ -105,8 +105,14 @@
 		document.body.classList.toggle("arpc-popup-open", shouldLock)
 	}
 
-	function openPopup(instance) {
-		if (!instance || instance.isOpen || shouldHideOnDevice(instance) || wasAlreadyShown(instance)) {
+	// bypassFrequency is used by the floating launcher: an explicit click should
+	// open the popup even when the frequency rule says it was already shown.
+	function openPopup(instance, bypassFrequency) {
+		if (!instance || instance.isOpen || shouldHideOnDevice(instance)) {
+			return
+		}
+
+		if (!bypassFrequency && wasAlreadyShown(instance)) {
 			return
 		}
 
@@ -203,6 +209,8 @@
 		$(document).on("click", function (event) {
 			var target = event.target
 
+			var floatingTrigger = target.closest("[data-arpc-floating-trigger]")
+
 			popupInstances.forEach(function (instance) {
 				var triggerElement = matchesSelectorList(target, instance.openSelectors)
 				if (triggerElement && instance.settings.trigger_mode === "click") {
@@ -211,6 +219,18 @@
 					}
 
 					triggerOpenWithDelay(instance)
+				}
+
+				// The floating launcher opens its popup under any trigger mode, so a
+				// visitor can re-open a popup they already dismissed. It bypasses
+				// open_delay because the click is the intent.
+				if (
+					floatingTrigger &&
+					floatingTrigger.getAttribute("data-arpc-floating-trigger") === instance.triggerKey &&
+					!instance.isOpen
+				) {
+					event.preventDefault()
+					openPopup(instance, true)
 				}
 
 				if (instance.settings.close_selector) {
@@ -410,7 +430,11 @@
 				historyPushed: false,
 			}
 
-			if (!shouldHideOnDevice(instance)) {
+			if (shouldHideOnDevice(instance)) {
+				// The launcher is rendered server-side, so it must be removed here
+				// or it would open a popup that is hidden on this device.
+				$('[data-arpc-floating-trigger="' + instance.triggerKey + '"]').remove()
+			} else {
 				setupTrigger(instance)
 			}
 

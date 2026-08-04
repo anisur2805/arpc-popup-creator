@@ -104,6 +104,15 @@
 			container.find("[data-periodicity-options]").toggleClass("is-hidden", !isVisible)
 		})
 
+		container.on("change", "#arpc-floating-button-enabled", function () {
+			container.find("[data-floating-button-options]").toggleClass("is-hidden", !this.checked)
+		})
+
+		container.on("change", 'input[name="arpc_popup_settings[layout_style]"]', function () {
+			var isBox = $(this).val() === "box"
+			container.find('[data-layout-section="box"]').toggleClass("is-hidden", !isBox)
+		})
+
 		container.on("change", 'input[name="arpc_popup_settings[activity_mode]"]', function () {
 			var isVisible = $(this).val() === "certain_period"
 			container.find("[data-activity-options]").toggleClass("is-hidden", !isVisible)

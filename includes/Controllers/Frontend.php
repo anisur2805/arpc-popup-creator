@@ -1,4 +1,9 @@
 <?php
+/**
+ * Frontend popup rendering and shortcodes.
+ *
+ * @package ARPC\Popup
+ */
 
 namespace ARPC\Popup\Controllers;
 
@@ -51,16 +56,16 @@ class Frontend {
 				continue;
 			}
 
-			$image_size    = get_post_meta( $popup_id, 'arpc_image_size', true );
-			$title         = get_post_meta( $popup_id, 'arpc_title', true );
-			$subtitle      = get_post_meta( $popup_id, 'arpc_subtitle', true );
-			$feature_image   = $this->get_feature_image_url( $popup_id, $image_size );
-			$popup_url       = get_post_meta( $popup_id, 'arpc_popup_url', true );
-			$form_shortcode  = get_post_meta( $popup_id, 'arpc_form_shortcode', true );
-			$categories      = get_post_meta( $popup_id, 'arpc_categories', true );
-			$categories      = is_array( $categories ) ? array_filter( array_map( 'trim', $categories ) ) : array();
-			$template        = ! empty( $value ) ? $value : ( isset( $options['arpc_choose_temp'] ) ? $options['arpc_choose_temp'] : 'template1' );
-			$popup_config  = array(
+			$image_size     = get_post_meta( $popup_id, 'arpc_image_size', true );
+			$title          = get_post_meta( $popup_id, 'arpc_title', true );
+			$subtitle       = get_post_meta( $popup_id, 'arpc_subtitle', true );
+			$feature_image  = $this->get_feature_image_url( $popup_id, $image_size );
+			$popup_url      = get_post_meta( $popup_id, 'arpc_popup_url', true );
+			$form_shortcode = get_post_meta( $popup_id, 'arpc_form_shortcode', true );
+			$categories     = get_post_meta( $popup_id, 'arpc_categories', true );
+			$categories     = is_array( $categories ) ? array_filter( array_map( 'trim', $categories ) ) : array();
+			$template       = ! empty( $value ) ? $value : ( isset( $options['arpc_choose_temp'] ) ? $options['arpc_choose_temp'] : 'template1' );
+			$popup_config   = array(
 				'id'            => $popup_id,
 				'triggerKey'    => Popup_Settings::manual_trigger_key( $popup_id ),
 				'settings'      => $popup_settings,
@@ -77,6 +82,7 @@ class Frontend {
 			);
 
 			include ARPC_PATH . '/includes/Views/frontend/modal.php';
+			include ARPC_PATH . '/includes/Views/frontend/floating-button.php';
 		}
 
 		wp_reset_postdata();
@@ -162,7 +168,7 @@ class Frontend {
 		$class_names   = array_filter( array_map( 'sanitize_html_class', $class_names ) );
 		$class_names[] = 'arpc-popup-trigger';
 		$class_name    = trim( implode( ' ', array_unique( $class_names ) ) );
-		$label      = esc_html( $atts['label'] );
+		$label         = esc_html( $atts['label'] );
 
 		if ( 'a' === $tag ) {
 			return '<a href="#" class="' . esc_attr( $class_name ) . '" data-arpc-trigger="' . esc_attr( $id ) . '">' . $label . '</a>';

@@ -2,6 +2,8 @@
 /**
  * Modal popup view template.
  *
+ * @package ARPC\Popup
+ *
  * @var string $image_size
  * @var string $title
  * @var string $subtitle
@@ -36,9 +38,9 @@ $position_pair = explode( '|', $position_pair );
 if ( 'notification-bar' === $popup_settings['popup_type'] ) {
 	$position_pair[1] = 'bottom' === $popup_settings['bar_position'] ? 'flex-end' : 'flex-start';
 }
-$close_margin  = $popup_settings['close_button_margin'];
-$close_padding = $popup_settings['close_button_padding'];
-$close_radius  = $popup_settings['close_button_border_radius'];
+$close_margin           = $popup_settings['close_button_margin'];
+$close_padding          = $popup_settings['close_button_padding'];
+$close_radius           = $popup_settings['close_button_border_radius'];
 $open_animation_family  = \ARPC\Popup\Services\Popup_Settings::animation_family( $popup_settings['open_animation'] );
 $close_animation_family = \ARPC\Popup\Services\Popup_Settings::animation_family( $popup_settings['close_animation'] );
 
@@ -57,6 +59,20 @@ $style_vars = array(
 	'--arpc-tooltip-text:' . $popup_settings['tooltip_text_color'],
 	'--arpc-tooltip-bg:' . $popup_settings['tooltip_background_color'],
 );
+
+// Per-device widths. A width of 0 means "inherit the next larger breakpoint",
+// so the variable is only emitted when the author set an explicit value.
+$width_map = array(
+	'--arpc-width-desktop' => isset( $popup_settings['width_desktop'] ) ? absint( $popup_settings['width_desktop'] ) : 0,
+	'--arpc-width-tablet'  => isset( $popup_settings['width_tablet'] ) ? absint( $popup_settings['width_tablet'] ) : 0,
+	'--arpc-width-mobile'  => isset( $popup_settings['width_mobile'] ) ? absint( $popup_settings['width_mobile'] ) : 0,
+);
+
+foreach ( $width_map as $width_var => $width_value ) {
+	if ( $width_value > 0 ) {
+		$style_vars[] = $width_var . ':' . $width_value . 'px';
+	}
+}
 
 $wrapper_classes = array(
 	'arpc-popup-creator',

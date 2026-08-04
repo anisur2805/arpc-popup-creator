@@ -45,6 +45,9 @@ class Popup_Settings {
 			'close_overlay'                 => true,
 			'prevent_scroll'                => true,
 			'close_back'                    => true,
+			'floating_button_enabled'       => false,
+			'floating_button_label'         => '',
+			'floating_button_position'      => 'bottom-right',
 			'countdown_enabled'             => false,
 			'countdown_target'              => '',
 			'countdown_expire_text'         => '',
@@ -55,6 +58,9 @@ class Popup_Settings {
 			'overlay_blur_amount'           => 4,
 			'overlay_z_index'               => 999999,
 			'layout_style'                  => 'box',
+			'width_desktop'                 => 640,
+			'width_tablet'                  => 0,
+			'width_mobile'                  => 0,
 			'popup_position'                => 'center-center',
 			'open_animation'                => 'select',
 			'close_animation'               => 'select',
@@ -158,6 +164,9 @@ class Popup_Settings {
 			'open_selector'                 => self::sanitize_text( $raw_settings, 'open_selector' ),
 			'close_selector'                => self::sanitize_text( $raw_settings, 'close_selector' ),
 			'disable_link'                  => ! empty( $raw_settings['disable_link'] ),
+			'floating_button_enabled'       => ! empty( $raw_settings['floating_button_enabled'] ),
+			'floating_button_label'         => self::sanitize_text( $raw_settings, 'floating_button_label' ),
+			'floating_button_position'      => self::sanitize_choice( $raw_settings, 'floating_button_position', array_keys( self::floating_button_position_choices() ), $defaults['floating_button_position'] ),
 			'countdown_enabled'             => ! empty( $raw_settings['countdown_enabled'] ),
 			'countdown_target'              => self::sanitize_datetime( $raw_settings, 'countdown_target' ),
 			'countdown_expire_text'         => self::sanitize_text( $raw_settings, 'countdown_expire_text' ),
@@ -171,6 +180,9 @@ class Popup_Settings {
 			'overlay_blur_amount'           => self::sanitize_int( $raw_settings, 'overlay_blur_amount', 0, 40, $defaults['overlay_blur_amount'] ),
 			'overlay_z_index'               => self::sanitize_int( $raw_settings, 'overlay_z_index', 1, 99999999, $defaults['overlay_z_index'] ),
 			'layout_style'                  => self::sanitize_choice( $raw_settings, 'layout_style', array( 'box', 'full' ), $defaults['layout_style'] ),
+			'width_desktop'                 => self::sanitize_int( $raw_settings, 'width_desktop', 0, 2000, $defaults['width_desktop'] ),
+			'width_tablet'                  => self::sanitize_int( $raw_settings, 'width_tablet', 0, 2000, $defaults['width_tablet'] ),
+			'width_mobile'                  => self::sanitize_int( $raw_settings, 'width_mobile', 0, 2000, $defaults['width_mobile'] ),
 			'popup_position'                => self::sanitize_choice( $raw_settings, 'popup_position', self::position_choices(), $defaults['popup_position'] ),
 			'open_animation'                => self::sanitize_choice( $raw_settings, 'open_animation', array_keys( self::opening_animation_options() ), $defaults['open_animation'] ),
 			'close_animation'               => self::sanitize_choice( $raw_settings, 'close_animation', array_keys( self::closing_animation_options() ), $defaults['close_animation'] ),
@@ -295,6 +307,22 @@ class Popup_Settings {
 			'slide-in'         => __( 'Slide In', 'arpc-popup-creator' ),
 			'notification-bar' => __( 'Notification Bar', 'arpc-popup-creator' ),
 			'fullscreen'       => __( 'Fullscreen', 'arpc-popup-creator' ),
+		);
+	}
+
+	/**
+	 * Get the screen corners available for the floating launcher button.
+	 *
+	 * Keys are used directly as CSS modifier classes (arpc-floating-button--<key>).
+	 *
+	 * @return array
+	 */
+	public static function floating_button_position_choices() {
+		return array(
+			'bottom-right' => __( 'Bottom Right', 'arpc-popup-creator' ),
+			'bottom-left'  => __( 'Bottom Left', 'arpc-popup-creator' ),
+			'top-right'    => __( 'Top Right', 'arpc-popup-creator' ),
+			'top-left'     => __( 'Top Left', 'arpc-popup-creator' ),
 		);
 	}
 

@@ -105,8 +105,22 @@ frequency control (every time / once per period / once only)
 
 ### FREE roadmap — NOT built, do NOT advertise
 
-Floating Button Popup · Video Popup · Social Proof block · per-device sizing controls ·
-frequency period units beyond hours.
+Video Popup · Social Proof block.
+
+~~Floating Button Popup~~ — **DONE 2026-08-04.** `floating_button_enabled` / `_label` /
+`_position` render a fixed launcher (`includes/Views/frontend/floating-button.php`) outside the
+hidden popup wrapper. It opens the popup under any trigger mode and bypasses the frequency rule
+via `openPopup(instance, true)`, so a dismissed popup can be re-opened. Removed at init when the
+popup is hidden on the current device. Known limitation: two popups sharing a corner overlap.
+
+~~Per-device sizing controls~~ — **DONE 2026-08-04.** `width_desktop` / `width_tablet` /
+`width_mobile` emit `--arpc-width-*` custom properties; 0 inherits the next larger breakpoint.
+Applies to the Box Width layout only. CSS breakpoints (1024 / 767) match `currentDevice()`.
+
+~~Frequency period units beyond hours~~ — **DONE 2026-08-04.** "Once Per Period" now offers
+minutes / hours / days / weeks / months via `Popup_Settings::period_unit_choices()`; the keys are
+kept in sync with the multiplier table in `assets/js/popup-main.js`. Default remains `hour`, so
+existing popups are unaffected.
 
 ### Gated as PRO but present in code
 

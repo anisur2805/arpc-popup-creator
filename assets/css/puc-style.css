@@ -44,11 +44,25 @@
 	position: relative;
 	z-index: 1;
 	width: 100%;
-	max-width: 640px;
+	max-width: min(var(--arpc-width-desktop, 640px), calc(100vw - 40px));
 	opacity: 0;
 	transform: translateY(10px) scale(0.98);
 	transition: opacity 0.24s ease, transform 0.24s ease;
 	transform-origin: center center;
+}
+
+/* Per-device widths. Each breakpoint falls back to the next larger size when
+   the author left it at 0. Breakpoints match currentDevice() in popup-main.js. */
+@media (max-width: 1024px) {
+	.arpc-popup-creator__dialog {
+		max-width: min(var(--arpc-width-tablet, var(--arpc-width-desktop, 640px)), calc(100vw - 40px));
+	}
+}
+
+@media (max-width: 767px) {
+	.arpc-popup-creator__dialog {
+		max-width: min(var(--arpc-width-mobile, var(--arpc-width-tablet, var(--arpc-width-desktop, 640px))), calc(100vw - 40px));
+	}
 }
 
 .arpc-popup-creator.is-open .arpc-popup-creator__dialog {
@@ -1106,4 +1120,59 @@
 	font-weight: 600;
 	text-align: center;
 	color: #fff;
+}
+
+/* Floating launcher button. Rendered outside the popup wrapper so it stays
+   visible after the popup is dismissed. */
+.arpc-floating-button {
+	position: fixed;
+	z-index: 99998;
+	padding: 12px 20px;
+	border: 0;
+	border-radius: 999px;
+	background: #4c46e0;
+	color: #fff;
+	font-size: 15px;
+	font-weight: 600;
+	line-height: 1.2;
+	cursor: pointer;
+	box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+	transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.arpc-floating-button:hover,
+.arpc-floating-button:focus-visible {
+	transform: translateY(-2px);
+	box-shadow: 0 10px 24px rgba(0, 0, 0, 0.24);
+}
+
+.arpc-floating-button--bottom-right {
+	right: 24px;
+	bottom: 24px;
+}
+
+.arpc-floating-button--bottom-left {
+	left: 24px;
+	bottom: 24px;
+}
+
+.arpc-floating-button--top-right {
+	right: 24px;
+	top: 24px;
+}
+
+.arpc-floating-button--top-left {
+	left: 24px;
+	top: 24px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.arpc-floating-button {
+		transition: none;
+	}
+
+	.arpc-floating-button:hover,
+	.arpc-floating-button:focus-visible {
+		transform: none;
+	}
 }

@@ -15,6 +15,7 @@
  * @var string $manual_trigger
  * @var array  $location_type_labels
  * @var array  $period_unit_options
+ * @var array  $floating_button_position_options
  * @var array  $location_targets
  * @var array  $open_animation_options
  * @var array  $close_animation_options
@@ -195,6 +196,29 @@ $render_location_row = static function ( $index, $location, $location_type_label
 									<?php endforeach; ?>
 								</select>
 								<small><?php esc_html_e( 'Period Unit', 'arpc-popup-creator' ); ?></small>
+							</div>
+						</div>
+					</div>
+
+					<div class="arpc-field">
+						<label for="arpc-floating-button-enabled"><?php esc_html_e( 'Floating Button', 'arpc-popup-creator' ); ?></label>
+						<label class="arpc-switch">
+							<input id="arpc-floating-button-enabled" type="checkbox" name="arpc_popup_settings[floating_button_enabled]" value="1" <?php checked( ! empty( $popup_settings['floating_button_enabled'] ) ); ?> />
+							<span class="arpc-switch__slider"></span>
+						</label>
+						<small><?php esc_html_e( 'Show a fixed button that opens this popup at any time, even after it has been dismissed.', 'arpc-popup-creator' ); ?></small>
+						<div class="arpc-inline-inputs <?php echo ! empty( $popup_settings['floating_button_enabled'] ) ? '' : 'is-hidden'; ?>" data-floating-button-options>
+							<div>
+								<input type="text" id="arpc-floating-button-label" name="arpc_popup_settings[floating_button_label]" value="<?php echo esc_attr( $popup_settings['floating_button_label'] ); ?>" placeholder="<?php esc_attr_e( 'Open', 'arpc-popup-creator' ); ?>" />
+								<small><?php esc_html_e( 'Button Label', 'arpc-popup-creator' ); ?></small>
+							</div>
+							<div>
+								<select id="arpc-floating-button-position" name="arpc_popup_settings[floating_button_position]">
+									<?php foreach ( $floating_button_position_options as $corner_key => $corner_label ) : ?>
+										<option value="<?php echo esc_attr( $corner_key ); ?>" <?php selected( $popup_settings['floating_button_position'], $corner_key ); ?>><?php echo esc_html( $corner_label ); ?></option>
+									<?php endforeach; ?>
+								</select>
+								<small><?php esc_html_e( 'Button Position', 'arpc-popup-creator' ); ?></small>
 							</div>
 						</div>
 					</div>
@@ -433,6 +457,25 @@ $render_location_row = static function ( $index, $location, $location_type_label
 								<span><?php esc_html_e( 'Full Width', 'arpc-popup-creator' ); ?></span>
 							</label>
 						</div>
+					</div>
+
+					<div class="arpc-field <?php echo 'box' === $popup_settings['layout_style'] ? '' : 'is-hidden'; ?>" data-layout-section="box">
+						<label><?php esc_html_e( 'Popup Width', 'arpc-popup-creator' ); ?></label>
+						<div class="arpc-inline-inputs">
+							<div>
+								<input type="number" min="0" max="2000" id="arpc-width-desktop" name="arpc_popup_settings[width_desktop]" value="<?php echo esc_attr( $popup_settings['width_desktop'] ); ?>" />
+								<small><?php esc_html_e( 'Desktop (px)', 'arpc-popup-creator' ); ?></small>
+							</div>
+							<div>
+								<input type="number" min="0" max="2000" id="arpc-width-tablet" name="arpc_popup_settings[width_tablet]" value="<?php echo esc_attr( $popup_settings['width_tablet'] ); ?>" />
+								<small><?php esc_html_e( 'Tablet (px)', 'arpc-popup-creator' ); ?></small>
+							</div>
+							<div>
+								<input type="number" min="0" max="2000" id="arpc-width-mobile" name="arpc_popup_settings[width_mobile]" value="<?php echo esc_attr( $popup_settings['width_mobile'] ); ?>" />
+								<small><?php esc_html_e( 'Mobile (px)', 'arpc-popup-creator' ); ?></small>
+							</div>
+						</div>
+						<small><?php esc_html_e( 'Set 0 to inherit the next larger size. Only applies to the Box Width layout.', 'arpc-popup-creator' ); ?></small>
 					</div>
 
 					<div class="arpc-field">
