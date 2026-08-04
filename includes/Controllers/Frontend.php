@@ -44,6 +44,14 @@ class Frontend {
 			'posts_per_page' => -1,
 		);
 
+		// Preview mode: render only the requested popup, bypassing all
+		// targeting/frequency rules. Gated to logged-in editors+ so visitors
+		// cannot trigger arbitrary popups via query string.
+		$preview_id = 0;
+		if ( is_user_logged_in() && current_user_can( 'edit_posts' ) ) {
+			$preview_id = isset( $_GET['arpc_popup_preview'] ) ? absint( $_GET['arpc_popup_preview'] ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Preview is capability-gated, not a write action.
+		}
+
 		$arpc_query = new \WP_Query( $args );
 
 		while ( $arpc_query->have_posts() ) {
@@ -52,7 +60,11 @@ class Frontend {
 			$popup_id       = get_the_ID();
 			$popup_settings = Popup_Settings::get( $popup_id );
 
-			if ( ! Popup_Settings::matches_request( $popup_id, $popup_settings ) ) {
+			if ( ! $preview_id && ! Popup_Settings::matches_request( $popup_id, $popup_settings ) ) {
+				continue;
+			}
+
+			if ( $preview_id && $preview_id !== $popup_id ) {
 				continue;
 			}
 

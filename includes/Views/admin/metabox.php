@@ -100,6 +100,10 @@ $render_location_row = static function ( $index, $location, $location_type_label
 ?>
 
 <div class="arpc-settings-panel" data-arpc-metabox>
+	<p class="arpc-preview-bar">
+		<a class="button button-primary" href="<?php echo esc_url( add_query_arg( 'arpc_popup_preview', get_the_ID() ) ); ?>" target="_blank"><?php esc_html_e( 'Preview Popup', 'arpc-popup-creator' ); ?></a>
+		<span class="arpc-preview-hint"><?php esc_html_e( 'Opens the popup on the front page, bypassing targeting and frequency rules.', 'arpc-popup-creator' ); ?></span>
+	</p>
 	<div class="arpc-settings-panel__tabs" role="tablist">
 		<button type="button" class="arpc-settings-panel__tab is-active" data-arpc-tab="general"><?php esc_html_e( 'General', 'arpc-popup-creator' ); ?></button>
 		<button type="button" class="arpc-settings-panel__tab" data-arpc-tab="customization"><?php esc_html_e( 'Customization', 'arpc-popup-creator' ); ?></button>
