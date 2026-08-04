@@ -82,6 +82,15 @@ class Admin {
 
 		add_action( "load-$hook", array( $this, 'load_subscribers_screen_options' ) );
 
+		add_submenu_page(
+			$parent_slug,
+			__( 'Analytics', 'arpc-popup-creator' ),
+			__( 'Analytics', 'arpc-popup-creator' ),
+			$capability,
+			'arpc-popup-analytics',
+			array( $this, 'analytics_page' )
+		);
+
 		wp_enqueue_style( 'arpc-admin-style' );
 		wp_enqueue_script( 'arpc-tabbed' );
 		wp_enqueue_script( 'admin-subscriber' );
@@ -147,5 +156,16 @@ class Admin {
 		$subscriber_table = new Subscribers_List_Table();
 
 		include ARPC_PATH . '/includes/Views/admin/subscribers.php';
+	}
+
+	/**
+	 * Render analytics page.
+	 */
+	public function analytics_page() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
+		include ARPC_PATH . '/includes/Views/admin/analytics.php';
 	}
 }

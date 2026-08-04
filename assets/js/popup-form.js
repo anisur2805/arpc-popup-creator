@@ -44,6 +44,13 @@
                     if ( response.success ) {
                         showResponse( arpcModalForm.success, "success" );
                         $form[0].reset();
+
+                        // Fire conversion event for the owning popup.
+                        var popupId = $form.closest(".arpc-popup-creator-wrapper").data("arpc-popup-id")
+                        if ( popupId && arpcAnalytics ) {
+                            arpcTrackEvent(popupId, "conversion")
+                        }
+
                         return;
                     }
 

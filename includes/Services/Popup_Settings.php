@@ -254,6 +254,40 @@ class Popup_Settings {
 	}
 
 	/**
+	 * Bump an analytics counter for a popup.
+	 *
+	 * @param int    $post_id Popup post ID.
+	 * @param string $event   Event name: view | open | close | conversion
+	 * @return void
+	 */
+	public static function increment_analytics( $post_id, $event ) {
+		$allowed = array( 'view', 'open', 'close', 'conversion' );
+
+		if ( ! in_array( $event, $allowed, true ) ) {
+			return;
+		}
+
+		$key = 'arpc_analytics_' . $event;
+		$current = (int) get_post_meta( $post_id, $key, true );
+		update_post_meta( $post_id, $key, $current + 1 );
+	}
+
+	/**
+	 * Get analytics counters for a popup.
+	 *
+	 * @param int $post_id Popup post ID.
+	 * @return array
+	 */
+	public static function get_analytics( $post_id ) {
+		return array(
+			'view'        => (int) get_post_meta( $post_id, 'arpc_analytics_view', true ),
+			'open'        => (int) get_post_meta( $post_id, 'arpc_analytics_open', true ),
+			'close'       => (int) get_post_meta( $post_id, 'arpc_analytics_close', true ),
+			'conversion'  => (int) get_post_meta( $post_id, 'arpc_analytics_conversion', true ),
+		);
+	}
+
+	/**
 	 * Get available role labels.
 	 *
 	 * @return array

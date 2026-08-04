@@ -1,4 +1,9 @@
 <?php
+/**
+ * Assets service.
+ *
+ * @package ARPC\Popup
+ */
 
 namespace ARPC\Popup\Services;
 
@@ -99,6 +104,15 @@ class Assets {
 				'ajaxUrl' => admin_url( 'admin-ajax.php' ),
 				'success' => __( 'Thanks for subscribe', 'arpc-popup-creator' ),
 				'error'   => __( 'Something went wrong in Front area', 'arpc-popup-creator' ),
+			)
+		);
+
+		wp_localize_script(
+			'arpc-main',
+			'arpcAnalytics',
+			array(
+				'ajaxUrl' => admin_url( 'admin-ajax.php' ),
+				'nonce'   => wp_create_nonce( 'arpc_analytics' ),
 			)
 		);
 

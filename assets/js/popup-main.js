@@ -145,6 +145,10 @@
 
 		markSeen(instance)
 		updateBodyScrollState()
+
+		if (arpcAnalytics) {
+			arpcTrackEvent(instance.id, "open")
+		}
 	}
 
 	function closePopup(instance) {
@@ -171,6 +175,10 @@
 		}
 
 		updateBodyScrollState()
+
+		if (arpcAnalytics) {
+			arpcTrackEvent(instance.id, "close")
+		}
 	}
 
 	function triggerOpenWithDelay(instance) {
@@ -430,6 +438,12 @@
 				historyPushed: false,
 			}
 
+			// Count a view for every rendered popup that is not hidden on the
+			// current device. Views represent eligibility/impression, not opens.
+			if (arpcAnalytics && !shouldHideOnDevice(instance)) {
+				arpcTrackEvent(instance.id, "view")
+			}
+
 			if (shouldHideOnDevice(instance)) {
 				// The launcher is rendered server-side, so it must be removed here
 				// or it would open a popup that is hidden on this device.
@@ -451,4 +465,26 @@
 		bindKeyboardHandler()
 		bindPopStateHandler()
 	})
+
+	window.arpcTrackEvent = function (popupId, event) {
+		if (!arpcAnalytics || !arpcAnalytics.ajaxUrl) {
+			return
+		}
+
+		var payload = new FormData()
+		payload.append("action", "arpc_track_event")
+		payload.append("_wpnonce", arpcAnalytics.nonce)
+		payload.append("popup_id", popupId)
+		payload.append("event", event)
+
+		if (navigator.sendBeacon) {
+			navigator.sendBeacon(arpcAnalytics.ajaxUrl, payload)
+		} else {
+			fetch(arpcAnalytics.ajaxUrl, {
+				method: "POST",
+				body: payload,
+				credentials: "same-origin",
+			})
+		}
+	}
 })(jQuery)

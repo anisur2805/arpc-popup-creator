@@ -8,6 +8,7 @@
 namespace ARPC\Popup\Controllers;
 
 use ARPC\Popup\Models\Subscriber;
+use ARPC\Popup\Services\Popup_Settings;
 
 /**
  * Ajax Controller
@@ -23,6 +24,8 @@ class Ajax {
 		add_action( 'wp_ajax_arpc_modal_form_action', array( $this, 'handle_modal_form' ) );
 		add_action( 'wp_ajax_nopriv_arpc_modal_form_action', array( $this, 'handle_modal_form' ) );
 		add_action( 'wp_ajax_arpc-delete-subscriber', array( $this, 'handle_delete_subscriber' ) );
+		add_action( 'wp_ajax_arpc_track_event', array( $this, 'handle_track_event' ) );
+		add_action( 'wp_ajax_nopriv_arpc_track_event', array( $this, 'handle_track_event' ) );
 	}
 
 	/**
@@ -92,5 +95,29 @@ class Ajax {
 		Subscriber::delete( $id );
 
 		wp_send_json_success( __( 'Deleted successfully', 'arpc-popup-creator' ) );
+	}
+
+	/**
+	 * Handle analytics event tracking.
+	 *
+	 * Accepts view / open / close / conversion events from the frontend.
+	 */
+	public function handle_track_event() {
+		$nonce = isset( $_REQUEST['_wpnonce'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['_wpnonce'] ) ) : '';
+
+		if ( ! wp_verify_nonce( $nonce, 'arpc_analytics' ) ) {
+			wp_send_json_error( array( 'message' => __( 'Nonce verify failed!', 'arpc-popup-creator' ) ) );
+		}
+
+		$popup_id = isset( $_POST['popup_id'] ) ? absint( $_POST['popup_id'] ) : 0;
+		$event    = isset( $_POST['event'] ) ? sanitize_text_field( wp_unslash( $_POST['event'] ) ) : '';
+
+		if ( ! $popup_id || ! $event ) {
+			wp_send_json_error( array( 'message' => __( 'Invalid request.', 'arpc-popup-creator' ) ) );
+		}
+
+		Popup_Settings::increment_analytics( $popup_id, $event );
+
+		wp_send_json_success();
 	}
 }
