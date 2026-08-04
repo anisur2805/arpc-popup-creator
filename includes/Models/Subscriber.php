@@ -1,4 +1,9 @@
 <?php
+/**
+ * Subscriber data model.
+ *
+ * @package ARPC\Popup
+ */
 
 namespace ARPC\Popup\Models;
 
@@ -50,26 +55,45 @@ class Subscriber {
 	}
 
 	/**
-	 * Remove optional columns (popup_id, interests) if they don't exist yet.
+	 * Check whether an optional column exists on the subscriber table.
+	 *
+	 * Result is cached per request so repeated lookups cost one query each.
+	 *
+	 * @param string $column Column name. Only 'popup_id' and 'interests' are supported.
+	 * @return bool
 	 */
-	private static function filter_optional_columns( $data ) {
+	public static function has_column( $column ) {
 		global $wpdb;
 
-		static $has_popup_id   = null;
-		static $has_interests  = null;
+		static $cache = array();
 
-		if ( null === $has_popup_id ) {
-			$popup_col   = $wpdb->get_var( "SHOW COLUMNS FROM `{$wpdb->prefix}arpc_subscriber` LIKE 'popup_id'" );
-			$int_col     = $wpdb->get_var( "SHOW COLUMNS FROM `{$wpdb->prefix}arpc_subscriber` LIKE 'interests'" );
-			$has_popup_id  = ! empty( $popup_col );
-			$has_interests = ! empty( $int_col );
+		if ( ! in_array( $column, array( 'popup_id', 'interests' ), true ) ) {
+			return false;
 		}
 
-		if ( ! $has_popup_id && isset( $data['popup_id'] ) ) {
+		if ( ! isset( $cache[ $column ] ) ) {
+			$found = ( 'popup_id' === $column )
+				? $wpdb->get_var( "SHOW COLUMNS FROM `{$wpdb->prefix}arpc_subscriber` LIKE 'popup_id'" )
+				: $wpdb->get_var( "SHOW COLUMNS FROM `{$wpdb->prefix}arpc_subscriber` LIKE 'interests'" );
+
+			$cache[ $column ] = ! empty( $found );
+		}
+
+		return $cache[ $column ];
+	}
+
+	/**
+	 * Remove optional columns (popup_id, interests) if they don't exist yet.
+	 *
+	 * @param array $data Row data keyed by column name.
+	 * @return array
+	 */
+	private static function filter_optional_columns( $data ) {
+		if ( ! self::has_column( 'popup_id' ) && isset( $data['popup_id'] ) ) {
 			unset( $data['popup_id'] );
 		}
 
-		if ( ! $has_interests && isset( $data['interests'] ) ) {
+		if ( ! self::has_column( 'interests' ) && isset( $data['interests'] ) ) {
 			unset( $data['interests'] );
 		}
 

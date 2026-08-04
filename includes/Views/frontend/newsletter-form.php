@@ -5,12 +5,18 @@
  * Used by all template files to keep a single form that includes
  * both the email input and the interest category checkboxes.
  *
- * @var array  $categories List of interest category labels.
+ * @package ARPC\Popup
+ *
+ * @var array $categories List of interest category labels.
+ * @var int   $popup_id   Popup ID that owns this form.
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
+// Attribute the submission to the owning popup, not the page it renders on.
+$arpc_form_popup_id = ! empty( $popup_id ) ? absint( $popup_id ) : absint( get_the_ID() );
 
 // Show checkboxes only when using the built-in newsletter (not a custom form shortcode).
 // Use saved categories; fall back to defaults when none are configured.
@@ -23,8 +29,8 @@ if ( empty( $form_shortcode ) ) {
 	$display_categories = array();
 }
 ?>
-<div class="arpc-popup-creator-wrapper" id="arpc-popup-creator-wrapper">
-	<form action="" method="post">
+<div class="arpc-popup-creator-wrapper" data-arpc-popup-id="<?php echo esc_attr( $arpc_form_popup_id ); ?>">
+	<form action="" method="post" class="arpc-subscribe-form">
 		<div class="arpc-form-group-row">
 			<input class="regular-text arpc_input" type="text" name="arpc-name" value="" placeholder="<?php esc_attr_e( 'Enter your name', 'arpc-popup-creator' ); ?>" />
 		</div>
@@ -33,7 +39,7 @@ if ( empty( $form_shortcode ) ) {
 			<button type="submit" class="arpc_submit" name="arpc_submit"><?php esc_html_e( 'Subscribe Now', 'arpc-popup-creator' ); ?></button>
 			<?php wp_nonce_field( 'arpc-modal-form' ); ?>
 			<input type="hidden" name="action" value="arpc_modal_form_action">
-			<input type="hidden" name="arpc-popup-id" value="<?php echo esc_attr( get_the_ID() ); ?>" />
+			<input type="hidden" name="arpc-popup-id" value="<?php echo esc_attr( $arpc_form_popup_id ); ?>" />
 		</div>
 		<?php if ( ! empty( $display_categories ) ) : ?>
 			<ul class="arpc_categories">

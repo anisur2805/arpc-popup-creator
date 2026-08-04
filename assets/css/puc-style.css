@@ -629,6 +629,15 @@
 	visibility: visible;
 }
 
+.arpc-template3 p.error,
+.arpc-form-group-row p.error {
+	color: #b32d2e;
+	margin: 10px auto;
+	text-align: center;
+	opacity: 1;
+	visibility: visible;
+}
+
 .arpc-close-button {
 	position: absolute;
 	display: inline-flex;
