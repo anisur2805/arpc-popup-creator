@@ -123,7 +123,7 @@ class Frontend {
 	 * @param string $content Shortcode content.
 	 * @return string
 	 */
-	public function render_newsletter_shortcode( $atts, $content = '' ) {
+	public function render_newsletter_shortcode( $atts, $content = '' ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed -- Required by the shortcode callback signature.
 		$atts = shortcode_atts(
 			array(
 				'title'    => __( 'Sign up for Snappy News!', 'arpc-popup-creator' ),
@@ -148,7 +148,7 @@ class Frontend {
 	 * @param string $content Shortcode content.
 	 * @return string
 	 */
-	public function render_newsletter2_shortcode( $atts, $content = '' ) {
+	public function render_newsletter2_shortcode( $atts, $content = '' ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed -- Required by the shortcode callback signature.
 		$atts = shortcode_atts(
 			array(
 				'title'   => __( 'Sign up for Snappy News!', 'arpc-popup-creator' ),

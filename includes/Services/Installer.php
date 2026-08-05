@@ -1,4 +1,9 @@
 <?php
+/**
+ * Installer service.
+ *
+ * @package ARPC\Popup
+ */
 
 namespace ARPC\Popup\Services;
 
@@ -88,6 +93,7 @@ class Installer {
 		global $wpdb;
 
 		$table = "{$wpdb->prefix}arpc_subscriber";
+		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table name is built from $wpdb->prefix; identifiers cannot be prepared.
 		$cols  = $wpdb->get_results( "SHOW COLUMNS FROM `{$table}`" );
 		$names = wp_list_pluck( $cols, 'Field' );
 

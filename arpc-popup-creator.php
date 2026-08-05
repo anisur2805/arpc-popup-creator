@@ -1,14 +1,18 @@
 <?php
 /**
- * Plugin Name: Popup Creator
- * Description: Awesome Popup Creator
- * Plugin URI:  http://github.com/anisur2805/arpc-popup-creator
- * Version:     1.0
- * Author:      Anisur Rahman
- * Author URI:  http://github.com/anisur2805
- * Text Domain: arpc-popup-creator
- * License:     GPL v2 or later
- * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
+ * Plugin Name:       Popup Creator
+ * Description:       Build popups, slide-ins, notification bars and fullscreen offers in the block editor.
+ * Plugin URI:        https://github.com/anisur2805/arpc-popup-creator
+ * Version:           1.0.0
+ * Author:            Anisur Rahman
+ * Author URI:        https://github.com/anisur2805
+ * Text Domain:       arpc-popup-creator
+ * Requires at least: 6.0
+ * Requires PHP:      7.4
+ * License:           GPL v2 or later
+ * License URI:       https://www.gnu.org/licenses/gpl-2.0.txt
+ *
+ * @package ARPC\Popup
  */
 
 if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
@@ -36,7 +40,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 final class ARPC_Popup_Creator {
 
-	const VERSION = '1.0';
+	const VERSION = '1.0.0';
 
 	/**
 	 * Constructor.
@@ -135,9 +139,9 @@ add_action(
 add_filter(
 	'enter_title_here',
 	function ( $title ) {
-		$screen = get_current_screen();
+		$screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
 
-		if ( 'arpc_popup' === $screen->post_type ) {
+		if ( $screen && 'arpc_popup' === $screen->post_type ) {
 			$title = __( 'Add Popup title', 'arpc-popup-creator' );
 		}
 

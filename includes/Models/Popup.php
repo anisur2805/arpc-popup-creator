@@ -1,4 +1,9 @@
 <?php
+/**
+ * Popup model.
+ *
+ * @package ARPC\Popup
+ */
 
 namespace ARPC\Popup\Models;
 

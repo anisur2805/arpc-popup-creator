@@ -1,4 +1,9 @@
 <?php
+/**
+ * Settings service.
+ *
+ * @package ARPC\Popup
+ */
 
 namespace ARPC\Popup\Services;
 
@@ -117,7 +122,7 @@ class Settings {
 	 *
 	 * @param array $args Field arguments.
 	 */
-	public function legacy_template_callback( $args ) {
+	public function legacy_template_callback( $args ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found -- Required by the add_settings_field() callback signature.
 		$options = get_option( 'arpc_setting_opn' );
 		?>
 		<div class="arpc_tabbed_wrapper">

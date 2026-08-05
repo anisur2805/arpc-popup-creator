@@ -1,4 +1,9 @@
 <?php
+/**
+ * Popup post type controller.
+ *
+ * @package ARPC\Popup
+ */
 
 namespace ARPC\Popup\Controllers;
 

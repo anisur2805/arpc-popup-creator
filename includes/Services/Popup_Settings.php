@@ -257,7 +257,7 @@ class Popup_Settings {
 	 * Bump an analytics counter for a popup.
 	 *
 	 * @param int    $post_id Popup post ID.
-	 * @param string $event   Event name: view | open | close | conversion
+	 * @param string $event   Event name: view | open | close | conversion.
 	 * @return void
 	 */
 	public static function increment_analytics( $post_id, $event ) {
@@ -267,7 +267,7 @@ class Popup_Settings {
 			return;
 		}
 
-		$key = 'arpc_analytics_' . $event;
+		$key     = 'arpc_analytics_' . $event;
 		$current = (int) get_post_meta( $post_id, $key, true );
 		update_post_meta( $post_id, $key, $current + 1 );
 	}
@@ -280,10 +280,10 @@ class Popup_Settings {
 	 */
 	public static function get_analytics( $post_id ) {
 		return array(
-			'view'        => (int) get_post_meta( $post_id, 'arpc_analytics_view', true ),
-			'open'        => (int) get_post_meta( $post_id, 'arpc_analytics_open', true ),
-			'close'       => (int) get_post_meta( $post_id, 'arpc_analytics_close', true ),
-			'conversion'  => (int) get_post_meta( $post_id, 'arpc_analytics_conversion', true ),
+			'view'       => (int) get_post_meta( $post_id, 'arpc_analytics_view', true ),
+			'open'       => (int) get_post_meta( $post_id, 'arpc_analytics_open', true ),
+			'close'      => (int) get_post_meta( $post_id, 'arpc_analytics_close', true ),
+			'conversion' => (int) get_post_meta( $post_id, 'arpc_analytics_conversion', true ),
 		);
 	}
 
@@ -403,50 +403,50 @@ class Popup_Settings {
 	 */
 	public static function opening_animation_options() {
 		return array(
-			'select'                 => __( 'Select', 'arpc-popup-creator' ),
-			'popup-load'             => __( 'Popup Load', 'arpc-popup-creator' ),
-			'zoom-center'            => __( 'Zoom Center', 'arpc-popup-creator' ),
-			'zoom-center-rev'        => __( 'Zoom Center Rev', 'arpc-popup-creator' ),
-			'slide-left'             => __( 'Slide Left', 'arpc-popup-creator' ),
-			'slide-right-rev'        => __( 'Slide Right Rev', 'arpc-popup-creator' ),
-			'slide-up'               => __( 'Slide Up', 'arpc-popup-creator' ),
-			'slide-up-rev'           => __( 'Slide Up Rev', 'arpc-popup-creator' ),
-			'slide-down'             => __( 'Slide Down', 'arpc-popup-creator' ),
-			'slide-down-rev'         => __( 'Slide Down Rev', 'arpc-popup-creator' ),
-			'fade-in-rev'            => __( 'Fade In Rev', 'arpc-popup-creator' ),
-			'bounce'                 => __( 'Bounce', 'arpc-popup-creator' ),
-			'pulse'                  => __( 'Pulse', 'arpc-popup-creator' ),
-			'shake-x'                => __( 'ShakeX', 'arpc-popup-creator' ),
-			'shake-y'                => __( 'ShakeY', 'arpc-popup-creator' ),
-			'head-shake'             => __( 'headShake', 'arpc-popup-creator' ),
-			'heart-beat'             => __( 'heartBeat', 'arpc-popup-creator' ),
-			'bounce-in'              => __( 'BounceIn', 'arpc-popup-creator' ),
-			'bounce-in-down'         => __( 'BounceInDown', 'arpc-popup-creator' ),
-			'bounce-in-left'         => __( 'BounceInLeft', 'arpc-popup-creator' ),
-			'bounce-in-right'        => __( 'BounceInRight', 'arpc-popup-creator' ),
-			'bounce-in-up'           => __( 'BounceInUp', 'arpc-popup-creator' ),
-			'fade-in-down'           => __( 'FadeInDown', 'arpc-popup-creator' ),
-			'fade-in-down-big'       => __( 'FadeInDownBig', 'arpc-popup-creator' ),
-			'fade-in-left'           => __( 'FadeInLeft', 'arpc-popup-creator' ),
-			'fade-in-left-big'       => __( 'FadeInLeftBig', 'arpc-popup-creator' ),
-			'fade-in-right'          => __( 'FadeInRight', 'arpc-popup-creator' ),
-			'fade-in-right-big'      => __( 'FadeInRightBig', 'arpc-popup-creator' ),
-			'fade-in-up-big'         => __( 'FadeInUpBig', 'arpc-popup-creator' ),
-			'fade-out'               => __( 'FadeOut', 'arpc-popup-creator' ),
-			'fade-out-down'          => __( 'FadeOutDown', 'arpc-popup-creator' ),
-			'fade-out-left'          => __( 'FadeOutLeft', 'arpc-popup-creator' ),
-			'fade-out-right'         => __( 'FadeOutRight', 'arpc-popup-creator' ),
-			'fade-out-up'            => __( 'FadeOutUp', 'arpc-popup-creator' ),
-			'flip-in-x'              => __( 'FlipInX', 'arpc-popup-creator' ),
-			'flip-in-y'              => __( 'FlipInY', 'arpc-popup-creator' ),
-			'light-speed-in-right'   => __( 'LightSpeedInRight', 'arpc-popup-creator' ),
-			'light-speed-in-left'    => __( 'LightSpeedInLeft', 'arpc-popup-creator' ),
-			'light-speed-out-right'  => __( 'LightSpeedOutRight', 'arpc-popup-creator' ),
-			'light-speed-out-left'   => __( 'LightSpeedOutLeft', 'arpc-popup-creator' ),
-			'zoom-in'                => __( 'zoomIn', 'arpc-popup-creator' ),
-			'zoom-in-down'           => __( 'zoomInDown', 'arpc-popup-creator' ),
-			'zoom-out'               => __( 'zoomOut', 'arpc-popup-creator' ),
-			'zoom-out-down'          => __( 'zoomOutDown', 'arpc-popup-creator' ),
+			'select'                => __( 'Select', 'arpc-popup-creator' ),
+			'popup-load'            => __( 'Popup Load', 'arpc-popup-creator' ),
+			'zoom-center'           => __( 'Zoom Center', 'arpc-popup-creator' ),
+			'zoom-center-rev'       => __( 'Zoom Center Rev', 'arpc-popup-creator' ),
+			'slide-left'            => __( 'Slide Left', 'arpc-popup-creator' ),
+			'slide-right-rev'       => __( 'Slide Right Rev', 'arpc-popup-creator' ),
+			'slide-up'              => __( 'Slide Up', 'arpc-popup-creator' ),
+			'slide-up-rev'          => __( 'Slide Up Rev', 'arpc-popup-creator' ),
+			'slide-down'            => __( 'Slide Down', 'arpc-popup-creator' ),
+			'slide-down-rev'        => __( 'Slide Down Rev', 'arpc-popup-creator' ),
+			'fade-in-rev'           => __( 'Fade In Rev', 'arpc-popup-creator' ),
+			'bounce'                => __( 'Bounce', 'arpc-popup-creator' ),
+			'pulse'                 => __( 'Pulse', 'arpc-popup-creator' ),
+			'shake-x'               => __( 'ShakeX', 'arpc-popup-creator' ),
+			'shake-y'               => __( 'ShakeY', 'arpc-popup-creator' ),
+			'head-shake'            => __( 'headShake', 'arpc-popup-creator' ),
+			'heart-beat'            => __( 'heartBeat', 'arpc-popup-creator' ),
+			'bounce-in'             => __( 'BounceIn', 'arpc-popup-creator' ),
+			'bounce-in-down'        => __( 'BounceInDown', 'arpc-popup-creator' ),
+			'bounce-in-left'        => __( 'BounceInLeft', 'arpc-popup-creator' ),
+			'bounce-in-right'       => __( 'BounceInRight', 'arpc-popup-creator' ),
+			'bounce-in-up'          => __( 'BounceInUp', 'arpc-popup-creator' ),
+			'fade-in-down'          => __( 'FadeInDown', 'arpc-popup-creator' ),
+			'fade-in-down-big'      => __( 'FadeInDownBig', 'arpc-popup-creator' ),
+			'fade-in-left'          => __( 'FadeInLeft', 'arpc-popup-creator' ),
+			'fade-in-left-big'      => __( 'FadeInLeftBig', 'arpc-popup-creator' ),
+			'fade-in-right'         => __( 'FadeInRight', 'arpc-popup-creator' ),
+			'fade-in-right-big'     => __( 'FadeInRightBig', 'arpc-popup-creator' ),
+			'fade-in-up-big'        => __( 'FadeInUpBig', 'arpc-popup-creator' ),
+			'fade-out'              => __( 'FadeOut', 'arpc-popup-creator' ),
+			'fade-out-down'         => __( 'FadeOutDown', 'arpc-popup-creator' ),
+			'fade-out-left'         => __( 'FadeOutLeft', 'arpc-popup-creator' ),
+			'fade-out-right'        => __( 'FadeOutRight', 'arpc-popup-creator' ),
+			'fade-out-up'           => __( 'FadeOutUp', 'arpc-popup-creator' ),
+			'flip-in-x'             => __( 'FlipInX', 'arpc-popup-creator' ),
+			'flip-in-y'             => __( 'FlipInY', 'arpc-popup-creator' ),
+			'light-speed-in-right'  => __( 'LightSpeedInRight', 'arpc-popup-creator' ),
+			'light-speed-in-left'   => __( 'LightSpeedInLeft', 'arpc-popup-creator' ),
+			'light-speed-out-right' => __( 'LightSpeedOutRight', 'arpc-popup-creator' ),
+			'light-speed-out-left'  => __( 'LightSpeedOutLeft', 'arpc-popup-creator' ),
+			'zoom-in'               => __( 'zoomIn', 'arpc-popup-creator' ),
+			'zoom-in-down'          => __( 'zoomInDown', 'arpc-popup-creator' ),
+			'zoom-out'              => __( 'zoomOut', 'arpc-popup-creator' ),
+			'zoom-out-down'         => __( 'zoomOutDown', 'arpc-popup-creator' ),
 		);
 	}
 
@@ -547,7 +547,7 @@ class Popup_Settings {
 						array(
 							'post_type'        => 'post',
 							'post_status'      => 'publish',
-							'numberposts'      => 200,
+							'numberposts'      => 200, // phpcs:ignore WordPress.WP.PostsPerPage.posts_per_page_numberposts -- Bounded list for the admin targeting picker.
 							'orderby'          => 'title',
 							'order'            => 'ASC',
 							'suppress_filters' => false,
@@ -577,7 +577,7 @@ class Popup_Settings {
 						array(
 							'post_type'        => $type,
 							'post_status'      => 'publish',
-							'numberposts'      => 200,
+							'numberposts'      => 200, // phpcs:ignore WordPress.WP.PostsPerPage.posts_per_page_numberposts -- Bounded list for the admin targeting picker.
 							'orderby'          => 'title',
 							'order'            => 'ASC',
 							'suppress_filters' => false,
@@ -791,17 +791,18 @@ class Popup_Settings {
 			return true;
 		}
 
-		$now = current_time( 'timestamp' );
+		// The activity dates are entered in site time, so convert them to UTC before comparing.
+		$now = time();
 
 		if ( ! empty( $settings['activity_start'] ) ) {
-			$start = strtotime( $settings['activity_start'] );
+			$start = strtotime( get_gmt_from_date( $settings['activity_start'] ) . ' UTC' );
 			if ( $start && $now < $start ) {
 				return false;
 			}
 		}
 
 		if ( ! empty( $settings['activity_end'] ) ) {
-			$end = strtotime( $settings['activity_end'] );
+			$end = strtotime( get_gmt_from_date( $settings['activity_end'] ) . ' UTC' );
 			if ( $end && $now > $end ) {
 				return false;
 			}
@@ -933,12 +934,12 @@ class Popup_Settings {
 	 * @param string $key Field key.
 	 * @param int    $min Minimum value.
 	 * @param int    $max Maximum value.
-	 * @param int    $default Default value.
+	 * @param int    $fallback Value used when the field is missing or empty.
 	 * @return int
 	 */
-	private static function sanitize_int( $payload, $key, $min, $max, $default ) {
+	private static function sanitize_int( $payload, $key, $min, $max, $fallback ) {
 		if ( ! isset( $payload[ $key ] ) || '' === $payload[ $key ] ) {
-			return $default;
+			return $fallback;
 		}
 
 		$value = intval( $payload[ $key ] );
@@ -959,12 +960,12 @@ class Popup_Settings {
 	 * @param array  $payload Raw payload.
 	 * @param string $key Field key.
 	 * @param array  $choices Allowed choices.
-	 * @param string $default Default value.
+	 * @param string $fallback Value used when the field is missing or not allowed.
 	 * @return string
 	 */
-	private static function sanitize_choice( $payload, $key, $choices, $default ) {
-		$value = isset( $payload[ $key ] ) && is_scalar( $payload[ $key ] ) ? sanitize_text_field( wp_unslash( (string) $payload[ $key ] ) ) : $default;
-		return in_array( $value, $choices, true ) ? $value : $default;
+	private static function sanitize_choice( $payload, $key, $choices, $fallback ) {
+		$value = isset( $payload[ $key ] ) && is_scalar( $payload[ $key ] ) ? sanitize_text_field( wp_unslash( (string) $payload[ $key ] ) ) : $fallback;
+		return in_array( $value, $choices, true ) ? $value : $fallback;
 	}
 
 	/**
@@ -972,10 +973,10 @@ class Popup_Settings {
 	 *
 	 * @param array  $payload Raw payload.
 	 * @param string $key Field key.
-	 * @param string $default Default value.
+	 * @param string $fallback Value used when the field is missing or not a valid color.
 	 * @return string
 	 */
-	private static function sanitize_color_string( $payload, $key, $default ) {
+	private static function sanitize_color_string( $payload, $key, $fallback ) {
 		$value = isset( $payload[ $key ] ) ? sanitize_text_field( wp_unslash( $payload[ $key ] ) ) : '';
 
 		if ( preg_match( '/^#([A-Fa-f0-9]{3}|[A-Fa-f0-9]{6})$/', $value ) ) {
@@ -986,7 +987,7 @@ class Popup_Settings {
 			return $value;
 		}
 
-		return $default;
+		return $fallback;
 	}
 
 	/**
@@ -1089,10 +1090,10 @@ class Popup_Settings {
 				continue;
 			}
 
-			$mode = isset( $location['mode'] ) && 'exclude' === $location['mode'] ? 'exclude' : 'include';
+			$mode          = isset( $location['mode'] ) && 'exclude' === $location['mode'] ? 'exclude' : 'include';
 			$allowed_types = array_keys( self::location_type_choices() );
 			$type          = isset( $location['type'] ) && in_array( $location['type'], $allowed_types, true ) ? $location['type'] : 'sitewide';
-			$ids  = isset( $location['ids'] ) ? $location['ids'] : array();
+			$ids           = isset( $location['ids'] ) ? $location['ids'] : array();
 
 			if ( ! is_array( $ids ) ) {
 				$ids = explode( ',', (string) $ids );

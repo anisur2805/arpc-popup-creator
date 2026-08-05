@@ -1,4 +1,9 @@
 <?php
+/**
+ * Popup list table columns.
+ *
+ * @package ARPC\Popup
+ */
 
 namespace ARPC\Popup\Data_Table;
 
@@ -54,7 +59,7 @@ class Data_Table {
 				break;
 			case 'show_time':
 				$show_time = get_post_meta( $post_id, 'arpc_show_on_exit', true );
-				echo esc_html( 0 == $show_time ? __( 'On Page Exit', 'arpc-popup-creator' ) : __( 'On Page Reload', 'arpc-popup-creator' ) );
+				echo esc_html( '0' === (string) $show_time ? __( 'On Page Exit', 'arpc-popup-creator' ) : __( 'On Page Reload', 'arpc-popup-creator' ) );
 				break;
 			case 'active':
 				$is_active = get_post_meta( $post_id, 'arpc_active', true );

@@ -1,4 +1,9 @@
 <?php
+/**
+ * Admin controller.
+ *
+ * @package ARPC\Popup
+ */
 
 namespace ARPC\Popup\Controllers;
 
@@ -131,6 +136,7 @@ class Admin {
 			return;
 		}
 
+		// phpcs:disable WordPress.Security.NonceVerification.Recommended -- Read-only tab state; the Settings API nonce guards the actual save.
 		if ( isset( $_GET['settings-updated'] ) ) {
 			add_settings_error(
 				'arpc_settings_messages',
@@ -140,7 +146,8 @@ class Admin {
 			);
 		}
 
-		$active_tab = isset( $_GET['tab'] ) ? sanitize_text_field( $_GET['tab'] ) : 'general';
+		$active_tab = isset( $_GET['tab'] ) ? sanitize_key( wp_unslash( $_GET['tab'] ) ) : 'general';
+		// phpcs:enable WordPress.Security.NonceVerification.Recommended
 
 		include ARPC_PATH . '/includes/Views/admin/settings.php';
 	}

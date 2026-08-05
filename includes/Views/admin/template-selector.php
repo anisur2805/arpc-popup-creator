@@ -2,6 +2,8 @@
 /**
  * Template selector view for settings.
  *
+ * @package ARPC\Popup
+ *
  * @var string $value Current template value.
  */
 

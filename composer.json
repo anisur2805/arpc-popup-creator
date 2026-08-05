@@ -14,7 +14,7 @@
 			"email": "anisur2805@gmail.com"
 		}
 	],
-	"minimum-stability": "dev",
+	"minimum-stability": "stable",
 	"require-dev": {
 		"dealerdirect/phpcodesniffer-composer-installer": "^1.0",
 		"wp-coding-standards/wpcs": "^3.0",
@@ -23,7 +23,9 @@
 	},
 	"scripts": {
 		"phpcs": "vendor/bin/phpcs",
-		"phpcbf": "vendor/bin/phpcbf"
+		"phpcbf": "vendor/bin/phpcbf",
+		"lint": "vendor/bin/phpcs",
+		"format": "vendor/bin/phpcbf"
 	},
 	"config": {
 		"allow-plugins": {

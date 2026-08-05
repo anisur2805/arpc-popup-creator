@@ -29,27 +29,27 @@ class Assets {
 	 */
 	public function get_scripts() {
 		return array(
-			'plain-modal'         => array(
+			'plain-modal'           => array(
 				'src'     => ARPC_ASSETS . '/js/jquery.plainmodal.min.js',
 				'version' => filemtime( ARPC_PATH . '/assets/js/jquery.plainmodal.min.js' ),
 				'deps'    => array( 'jquery' ),
 			),
-			'arpc-main'           => array(
+			'arpc-main'             => array(
 				'src'     => ARPC_ASSETS . '/js/popup-main.js',
 				'version' => filemtime( ARPC_PATH . '/assets/js/popup-main.js' ),
 				'deps'    => array( 'jquery' ),
 			),
-			'arpc-metabox-script' => array(
+			'arpc-metabox-script'   => array(
 				'src'     => ARPC_ASSETS . '/js/metabox.js',
 				'version' => filemtime( ARPC_PATH . '/assets/js/metabox.js' ),
 				'deps'    => array( 'jquery' ),
 			),
-			'arpc-modal-form'     => array(
+			'arpc-modal-form'       => array(
 				'src'     => ARPC_ASSETS . '/js/popup-form.js',
 				'version' => filemtime( ARPC_PATH . '/assets/js/popup-form.js' ),
 				'deps'    => array( 'jquery' ),
 			),
-			'arpc-tabbed'         => array(
+			'arpc-tabbed'           => array(
 				'src'     => ARPC_ASSETS . '/js/tabbed.js',
 				'version' => filemtime( ARPC_PATH . '/assets/js/tabbed.js' ),
 				'deps'    => array(),

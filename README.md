@@ -1,4 +1,7 @@
-# Load More Posts by Ajax
+# Popup Creator
+
+A WordPress popup plugin where the popup body is the block editor canvas. See `MASTER_PROMPT.md`
+for the product spec and `readme.txt` for the user-facing description.
 
 ## Coding Standards
 

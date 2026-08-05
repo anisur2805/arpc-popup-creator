@@ -27,6 +27,13 @@
 		<exclude-pattern>tests/*</exclude-pattern>
 		<exclude-pattern>src/*</exclude-pattern>
 		<exclude-pattern>includes/*</exclude-pattern>
+		<!-- The bootstrap file must be named after the plugin slug. -->
+		<exclude-pattern>arpc-popup-creator.php</exclude-pattern>
+	</rule>
+
+	<!-- The bootstrap file holds both the plugin class and its init function by design. -->
+	<rule ref="Universal.Files.SeparateFunctionsFromOO.Mixed">
+		<exclude-pattern>arpc-popup-creator.php</exclude-pattern>
 	</rule>
 
 	<rule ref="WordPress.WP.GlobalVariablesOverride.Prohibited">

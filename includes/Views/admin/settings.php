@@ -2,6 +2,8 @@
 /**
  * Settings page view template.
  *
+ * @package ARPC\Popup
+ *
  * @var string $active_tab Current active tab.
  */
 
