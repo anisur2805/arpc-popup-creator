@@ -27,6 +27,18 @@ foreach ( $arpc_options as $arpc_option ) {
 	delete_option( $arpc_option );
 }
 
+// Remove the social proof count transients, whose keys vary by time window.
+$arpc_transients = $wpdb->get_col(
+	$wpdb->prepare(
+		"SELECT option_name FROM {$wpdb->options} WHERE option_name LIKE %s",
+		$wpdb->esc_like( '_transient_arpc_social_proof_' ) . '%'
+	)
+); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- One-off cleanup on uninstall.
+
+foreach ( $arpc_transients as $arpc_transient ) {
+	delete_transient( str_replace( '_transient_', '', $arpc_transient ) );
+}
+
 // Delete every popup. wp_delete_post() with $force_delete also removes the post meta.
 $arpc_popup_ids = $wpdb->get_col(
 	$wpdb->prepare( "SELECT ID FROM {$wpdb->posts} WHERE post_type = %s", 'arpc_popup' )

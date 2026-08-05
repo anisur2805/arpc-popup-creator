@@ -164,6 +164,43 @@ class Subscriber {
 	}
 
 	/**
+	 * Count subscribers added within the last N hours.
+	 *
+	 * `created_at` is written with current_time( 'mysql' ), so the threshold is
+	 * built in site time to match. The result is cached briefly because this runs
+	 * on front-end page loads.
+	 *
+	 * @param int $hours Size of the time window, in hours.
+	 * @return int
+	 */
+	public static function count_since( $hours ) {
+		global $wpdb;
+
+		$hours     = max( 1, absint( $hours ) );
+		$cache_key = 'arpc_social_proof_' . $hours;
+		$cached    = get_transient( $cache_key );
+
+		if ( false !== $cached ) {
+			return (int) $cached;
+		}
+
+		$threshold = current_datetime()
+			->modify( '-' . $hours . ' hours' )
+			->format( 'Y-m-d H:i:s' );
+
+		$count = (int) $wpdb->get_var( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Custom table; the result is cached in a transient just below.
+			$wpdb->prepare(
+				"SELECT COUNT(*) FROM {$wpdb->prefix}arpc_subscriber WHERE created_at >= %s",
+				$threshold
+			)
+		);
+
+		set_transient( $cache_key, $count, 5 * MINUTE_IN_SECONDS );
+
+		return $count;
+	}
+
+	/**
 	 * Get a single subscriber by ID.
 	 *
 	 * @param int $id Subscriber ID.

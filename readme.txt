@@ -1,7 +1,7 @@
 === Popup Creator ===
 Contributors: anisur2805
 Tags: popup, modal, notification bar, gutenberg, lead generation
-Requires at least: 6.0
+Requires at least: 6.3
 Tested up to: 7.0
 Requires PHP: 7.4
 Stable tag: 1.0.0
@@ -58,6 +58,7 @@ next to the editor.
 * Call-to-action buttons via the core Buttons block
 * Frequency control: every time, once per period (minutes to months), or once only
 * Floating launcher button that re-opens a dismissed popup
+* Social proof block showing how many people subscribed in a recent time window
 
 = Visitor experience =
 
@@ -69,6 +70,11 @@ next to the editor.
 = Analytics =
 
 Views, opens, closes and conversions are counted per popup and shown in the admin.
+
+= Privacy =
+
+The Popup Social Proof block reports an aggregate count only. Subscriber names and email
+addresses are never rendered on the front end.
 
 == Installation ==
 

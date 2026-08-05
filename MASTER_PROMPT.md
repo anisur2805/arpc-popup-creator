@@ -105,7 +105,19 @@ frequency control (every time / once per period / once only)
 
 ### FREE roadmap — NOT built, do NOT advertise
 
-Video Popup · Social Proof block.
+Nothing outstanding. The last two items were cleared on 2026-08-05:
+
+~~Video Popup~~ — **DONE.** Delivered as the `Video — Embed & Call to Action` starter pattern
+(`includes/Controllers/Block_Patterns.php`) rather than a dedicated popup type, which keeps the
+"Gutenberg is the builder" principle intact. There is no video-specific setting to maintain.
+
+~~Social Proof block~~ — **DONE 2026-08-05.** `arpc/social-proof` is a server-rendered block
+(`blocks/social-proof/`) registered from block.json by `includes/Controllers/Blocks.php`. It reads
+`Subscriber::count_since( $hours )` and renders "N people subscribed in the last H hours".
+Attributes: `hours` (1–720, default 24) and `minCount` (hide below, default 1). The count is cached
+in a 5-minute transient keyed `arpc_social_proof_<hours>`. **Aggregate count only — never names or
+emails**, so the block cannot leak subscriber PII. `apiVersion` 3 is why the plugin now requires
+WordPress 6.3.
 
 ~~Floating Button Popup~~ — **DONE 2026-08-04.** `floating_button_enabled` / `_label` /
 `_position` render a fixed launcher (`includes/Views/frontend/floating-button.php`) outside the

@@ -82,5 +82,9 @@
 	<exclude-pattern type="relative">assets/build/*</exclude-pattern>
 	<exclude-pattern type="relative">^logs/*</exclude-pattern>
 	<exclude-pattern>/assets/build/js/*.asset.php</exclude-pattern>
+	<!-- WordPress resolves block asset files by this exact name; it cannot be hyphenated. -->
+	<rule ref="WordPress.Files.FileName.NotHyphenatedLowercase">
+		<exclude-pattern>blocks/*/*.asset.php</exclude-pattern>
+	</rule>
 
 </ruleset>

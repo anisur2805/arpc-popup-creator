@@ -7,7 +7,7 @@
  * Author:            Anisur Rahman
  * Author URI:        https://github.com/anisur2805
  * Text Domain:       arpc-popup-creator
- * Requires at least: 6.0
+ * Requires at least: 6.3
  * Requires PHP:      7.4
  * License:           GPL v2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.txt
@@ -21,6 +21,7 @@ if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
 
 use ARPC\Popup\Controllers\Admin;
 use ARPC\Popup\Controllers\Ajax;
+use ARPC\Popup\Controllers\Blocks;
 use ARPC\Popup\Controllers\Frontend;
 use ARPC\Popup\Controllers\Post_Type;
 use ARPC\Popup\Controllers\Block_Patterns;
@@ -85,6 +86,7 @@ final class ARPC_Popup_Creator {
 		// so the block editor's REST routes are available for saving.
 		new Post_Type();
 		new Block_Patterns();
+		new Blocks();
 
 		if ( is_admin() ) {
 			new Admin();
