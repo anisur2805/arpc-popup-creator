@@ -1,0 +1,30 @@
+# Files and folders excluded from the distributed plugin zip.
+# Build the release with: wp dist-archive .
+
+.git
+.github
+.gitignore
+.distignore
+.wp-env.json
+.wp-env.override.json
+.commandcode
+.phpunit.result.cache
+.DS_Store
+
+node_modules
+tests
+ref
+
+composer.json
+composer.lock
+package.json
+pnpm-lock.yaml
+pnpm-workspace.yaml
+phpcs.xml
+phpunit.xml.dist
+
+FEATURE_CHECKLIST.md
+FEATURE_CHECKLIST-2.md
+Feature3.md
+MASTER_PROMPT.md
+README.md

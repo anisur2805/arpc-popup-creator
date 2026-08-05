@@ -22,11 +22,42 @@ class Settings {
 	}
 
 	/**
+	 * Sanitize a settings option before it is written to the options table.
+	 *
+	 * These legacy screens hold plain text and radio choices, so every scalar is
+	 * run through sanitize_text_field() and nested arrays are walked recursively.
+	 *
+	 * @param mixed $value Raw option value.
+	 * @return mixed Sanitized option value.
+	 */
+	public function sanitize_option( $value ) {
+		if ( is_array( $value ) ) {
+			$clean = array();
+
+			foreach ( $value as $key => $item ) {
+				$clean[ sanitize_key( $key ) ] = $this->sanitize_option( $item );
+			}
+
+			return $clean;
+		}
+
+		if ( is_scalar( $value ) ) {
+			return sanitize_text_field( (string) $value );
+		}
+
+		return '';
+	}
+
+	/**
 	 * Register settings, sections, and fields.
 	 */
 	public function register() {
 		// General settings.
-		register_setting( 'arpc-popup-general-settings', 'arpc_general_setting' );
+		register_setting(
+			'arpc-popup-general-settings',
+			'arpc_general_setting',
+			array( 'sanitize_callback' => array( $this, 'sanitize_option' ) )
+		);
 
 		add_settings_section(
 			'arpc_general_settings_section',
@@ -44,7 +75,11 @@ class Settings {
 		);
 
 		// Legacy settings (for backward compatibility).
-		register_setting( 'arpc_setting_opg', 'arpc_setting_opn' );
+		register_setting(
+			'arpc_setting_opg',
+			'arpc_setting_opn',
+			array( 'sanitize_callback' => array( $this, 'sanitize_option' ) )
+		);
 
 		add_settings_section(
 			'arpc_section_tabbed',
@@ -76,7 +111,11 @@ class Settings {
 		);
 
 		// Advanced settings.
-		register_setting( 'arpc-popup-adv-settings', 'arpc_adv_setting' );
+		register_setting(
+			'arpc-popup-adv-settings',
+			'arpc_adv_setting',
+			array( 'sanitize_callback' => array( $this, 'sanitize_option' ) )
+		);
 
 		add_settings_section(
 			'arpc_adv_settings_section',
